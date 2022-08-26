@@ -1,4 +1,4 @@
-import { onAuthStateChanged, signOut } from "firebase/auth"
+import { onAuthStateChanged, signOut, sendSignInLinkToEmail } from "firebase/auth"
 import { auth } from "../firebase"
 
 function addBtnVerifyEmail(user) { //i've to take it off from here
@@ -8,6 +8,7 @@ function addBtnVerifyEmail(user) { //i've to take it off from here
     if (user.email != "") {
 
       console.log(user.email)
+      linkMe(user.email)
 
 
     } else {
@@ -18,10 +19,50 @@ function addBtnVerifyEmail(user) { //i've to take it off from here
         console.log(`he canceled my PopUp`)
       } else {
         console.log(email)
+        linkMe(email)
+
       }
     }
   });
 }
+
+
+
+function linkMe(hisEmail) {
+  const auth = getAuth();
+  const actionCodeSettings = {
+    // URL you want to redirect back to. The domain (www.example.com) for this
+    // URL must be in the authorized domains list in the Firebase Console.
+    url: 'https://www.example.com/finishSignUp?cartId=1234',
+    // This must be true.
+    handleCodeInApp: true,
+    iOS: {
+      bundleId: 'com.example.ios'
+    },
+    android: {
+      packageName: 'com.example.android',
+      installApp: true,
+      minimumVersion: '12'
+    },
+    dynamicLinkDomain: 'example.page.link'
+  };
+
+  sendSignInLinkToEmail(auth, hisEmail, actionCodeSettings)
+    .then(() => {
+      // The link was successfully sent. Inform the user.
+      // Save the email locally so you don't need to ask the user for it again
+      // if they open the link on the same device.
+      window.localStorage.setItem('emailForSignIn', hisEmail);
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ...
+    });
+}
+
+
 
 
 function addBtnLogOut() {
@@ -47,22 +88,6 @@ const appendAnchorTag = (whereToPlace, whichElement, reference, text) => {
   list.appendChild(meh);
 };
 
-const actionCodeSettings = {
-  // URL you want to redirect back to. The domain (www.example.com) for this
-  // URL must be in the authorized domains list in the Firebase Console.
-  url: 'https://www.example.com/finishSignUp?cartId=1234',
-  // This must be true.
-  handleCodeInApp: true,
-  iOS: {
-    bundleId: 'com.example.ios'
-  },
-  android: {
-    packageName: 'com.example.android',
-    installApp: true,
-    minimumVersion: '12'
-  },
-  dynamicLinkDomain: 'example.page.link'
-};
 
 
 onAuthStateChanged(auth, user => {
