@@ -1,4 +1,4 @@
-import { onAuthStateChanged, signOut, sendSignInLinkToEmail } from "firebase/auth"
+import { onAuthStateChanged, signOut, getAuth, sendEmailVerification  } from "firebase/auth"
 import { auth } from "../firebase"
 
 function addBtnVerifyEmail(user) { //i've to take it off from here
@@ -10,7 +10,6 @@ function addBtnVerifyEmail(user) { //i've to take it off from here
       console.log(user.email)
       linkMe(user.email)
 
-
     } else {
 
       let email = prompt("Please enter your email:", "example@email.com");
@@ -19,8 +18,9 @@ function addBtnVerifyEmail(user) { //i've to take it off from here
         console.log(`he canceled my PopUp`)
       } else {
         console.log(email)
+        user.email = email
+        console.log(user)
         linkMe(email)
-
       }
     }
   });
@@ -29,42 +29,27 @@ function addBtnVerifyEmail(user) { //i've to take it off from here
 
 
 function linkMe(hisEmail) {
-  const auth = getAuth();
-  const actionCodeSettings = {
-    // URL you want to redirect back to. The domain (www.example.com) for this
-    // URL must be in the authorized domains list in the Firebase Console.
-    url: 'https://www.example.com/finishSignUp?cartId=1234',
-    // This must be true.
-    handleCodeInApp: true,
-    iOS: {
-      bundleId: 'com.example.ios'
-    },
-    android: {
-      packageName: 'com.example.android',
-      installApp: true,
-      minimumVersion: '12'
-    },
-    dynamicLinkDomain: 'example.page.link'
-  };
+  const auth = getAuth()
+  console.log(hisEmail)
+  sendEmailVerification(auth.currentUser)
+  .then(() => {
+    console.log(`Email verification sent to ${hisEmail}!`)
+       checkIfEmailHasBeenVerified()
+    // ...
+  });
 
-  sendSignInLinkToEmail(auth, hisEmail, actionCodeSettings)
-    .then(() => {
-      // The link was successfully sent. Inform the user.
-      // Save the email locally so you don't need to ask the user for it again
-      // if they open the link on the same device.
-      window.localStorage.setItem('emailForSignIn', hisEmail);
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ...
-    });
+
 }
 
-
-
-
+  onAuthStateChanged(auth, user => {
+    if(user.emailVerified) {
+      console.log('Email is verified')
+      console.log(user);
+  }else{
+      console.log("Email is not verified");
+  }
+  });
+  
 function addBtnLogOut() {
   document.querySelector("#logOutApp").innerHTML += '<button id="logOut" style="background-color:red; color:white">LogOut</button>'
   logOut.addEventListener('click', (e) => {
@@ -92,8 +77,9 @@ const appendAnchorTag = (whereToPlace, whichElement, reference, text) => {
 
 onAuthStateChanged(auth, user => {
   if (user) {
-    addBtnLogOut();
+    addBtnLogOut()
     console.log(`logged in ${user.displayName}`)
+    console.log(user)
     document.querySelector("#App").innerHTML = `Hello ${user.displayName}`
 
     // <a href="./pages/signIn.html">sign In</a>
