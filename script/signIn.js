@@ -1,22 +1,15 @@
 
 import {signInWithEmailAndPassword,  signInWithPopup,  GoogleAuthProvider, FacebookAuthProvider  , GithubAuthProvider , onAuthStateChanged  } from 'firebase/auth';
 import {auth} from "../firebase"
-
-
+import {redirectTo} from "./functions"
 
 onAuthStateChanged(auth ,user => {
   console.clear()
     if(user){
       redirectTo("../index.html")
-    }else{
-
     }
 
 });
-
-function redirectTo(where){
-  window.location = `${where}` 
-}
 
 submitDataSignIn.addEventListener('click', (e) => {
     var email = document.querySelector('#emailIn').value
@@ -39,7 +32,7 @@ submitDataSignIn.addEventListener('click', (e) => {
     });
   
   
-  });
+});
 
 loginGitHub.addEventListener('click', (e) => {
     const provider = new GithubAuthProvider();
@@ -72,7 +65,7 @@ loginGitHub.addEventListener('click', (e) => {
       // ...
     });
   
-  });
+});
   
 loginFacebook.addEventListener('click', (e) => {
       const provider = new FacebookAuthProvider();
@@ -110,7 +103,7 @@ loginFacebook.addEventListener('click', (e) => {
       // ...
     });
   
-  });
+});
       
 loginGoogle.addEventListener('click', (e) => {
       const provider = new GoogleAuthProvider();
@@ -141,24 +134,4 @@ loginGoogle.addEventListener('click', (e) => {
       console.log(error);
     });
   
-  });
-
-
-
-function writeUserData(userId, email, username, password, providerName) { //i'm not using but im gonna use "Tomorrow"
-    const database = getDatabase();
-    set(ref(database, 'users/' + userId), {
-      email: email,
-      username: username,
-      password: password,
-      provider: providerName
-  
-    })
-    .then(() => {
-      console.log('Data saved successfully!')
-    })
-    .catch((error) => {
-      console.log('The write failed...') 
-    });
-  
-}
+});

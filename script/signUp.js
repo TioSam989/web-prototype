@@ -1,6 +1,7 @@
 
 import {onAuthStateChanged , createUserWithEmailAndPassword } from 'firebase/auth';
 import {auth} from "../firebase"
+import {writeUserData} from "./functions"
 
 onAuthStateChanged(auth ,user => {
   if(user){
@@ -10,7 +11,6 @@ onAuthStateChanged(auth ,user => {
   }
 
 });
-
 
 submitDataSignUp.addEventListener('click', (e) =>{
 
@@ -40,4 +40,4 @@ submitDataSignUp.addEventListener('click', (e) =>{
         // ..
       });
   
-  });
+});
