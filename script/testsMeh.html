@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        let form1 = document.querySelector("#form1")
+        let form2 = document.querySelector("#form2")
+
+        function esconder(elemento){
+            elemento.removeAttribute("hidden")
+        }
+        function mostrar(elemento){
+            elemento.setAttribute("hidden","hidden")
+        }
+        function switchMeh(praEsconder, praMostrar){
+            esconder(praEsconder);
+            mostrar(praMostrar);
+        }
+
+    </script>
+
+    <form id="form1" name="form1">
+        <h1>TO NO 1</h1>
+        <button type="button" onclick="switchMeh(form2, form1)" id="pro2" name="pro2">trocar pro 2</button>
+    </form>
+
+    <form id="form2" name="form2" hidden>
+        <h1>TO NO 2</h1>
+        <button type="button" onclick="switchMeh(form1, form2)" id="pro1" name="pro1">trocar pro 1</button>
+    </form>
+    
+</body>
+</html>
