@@ -14,13 +14,29 @@ function getAPIData(artist, music,  limit) {
         mode: 'cors',
         cache: 'default'
     }
+    console.clear()
     console.log(URL)
 
     fetch(URL, options)
         .then(res => { 
             res.json()
-                .then( data => console.log(data))
-                .catch( e => console.log(`i'm broke: ${e.message}`)) 
+                .then( data => {
+                    let beforeTrack = Object.values(data)[0]
+                    let track = Object.values(beforeTrack)[0]
+                    
+                    Object.keys(track).forEach(function(keys) {
+                        let currentSoung = track[keys]
+
+                        let name = currentSoung.name
+                        let artist = currentSoung.artist.name
+
+                        // console.log(currentSoung)
+                        console.log(`Listen to ${name} from ${artist}`)
+                    });
+                    
+                })
+                .catch( e => console.log(`i'm broke: ${e.message}`))
+        
         })
         .catch()
 
