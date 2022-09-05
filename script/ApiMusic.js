@@ -23,15 +23,22 @@ function getAPIData(artist, music,  limit) {
                 .then( data => {
                     let beforeTrack = Object.values(data)[0]
                     let track = Object.values(beforeTrack)[0]
+
+                    
                     
                     Object.keys(track).forEach(function(keys) {
-                        let currentSoung = track[keys]
+                        
+                        console.log(track[keys])
+                        
+                        let currentSoung = {
+                            name: track[keys].name,
+                            artist: track[keys].artist.name
 
-                        let name = currentSoung.name
-                        let artist = currentSoung.artist.name
+                        }
 
-                        // console.log(currentSoung)
-                        console.log(`Listen to ${name} from ${artist}`)
+                        buildMusicSquare(currentSoung)
+
+                        // console.log(`Listen to ${currentSoung.name} from ${currentSoung.artist}`)
                     });
                     
                 })
@@ -40,6 +47,10 @@ function getAPIData(artist, music,  limit) {
         })
         .catch()
 
+}
+
+function buildMusicSquare(music){
+    //code here
 }
 
 function prepareString(someString) {
