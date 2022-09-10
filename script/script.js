@@ -2,6 +2,7 @@ import { onAuthStateChanged, signOut, getAuth, sendEmailVerification  } from "fi
 import { auth } from "../firebase"
 import {addBtnVerifyEmail, addBtnLogOut,appendAnchorTag} from "./functions"
 
+
 onAuthStateChanged(auth, user => {
   if (user) {
     addBtnLogOut()

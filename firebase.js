@@ -2,6 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import {  getAuth, onAuthStateChanged  } from 'firebase/auth';
 
+
 const firebaseApp = initializeApp({
 
     apiKey: "AIzaSyBJU-0mDBzZ_NV42nmYIeM3jkrMLJ4hP94",
