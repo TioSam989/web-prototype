@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sign In</title>
+    <meta charset="UTF-8">
+    
+  <script type="module" crossorigin src="/assets/signIn.1468b0bd.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill.c7c6310f.js">
+  <link rel="modulepreload" crossorigin href="/assets/firebase.437588e5.js">
+  <link rel="modulepreload" crossorigin href="/assets/functions.3e8952cf.js">
+</head>
+<body>
+    <h1>Sign In with an existing account</h1>
+    <form>
+        
+        <label>Email
+            <input type="text" placeholder="email" id="emailIn" name="emailIn" required>
+        </label><br>
+
+        <label>Password
+            <input type="password" placeholder="password" id="passwordIn" name="passwordIn" required>
+        </label><br>
+
+        <button type="button" id="submitDataSignIn" name="submitData">Submit</button>
+
+    </form>    
+    <h2>Or</h2>
+
+    <div> <!---using Social Media-->
+        <button id="loginFacebook">Facebook</button>
+        <button id="loginGoogle">Google</button>
+        <button id="loginGitHub">GitHub</button>
+
+    </div>
+</body>
+</html>
