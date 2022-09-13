@@ -1,0 +1,24 @@
+#musicName {
+    width: 100%
+}
+
+.ct-input {
+    width: 30rem;
+    float: left;
+}
+
+.datalist-wrapper {
+    width: 100%,
+    
+
+}
+
+.datalist-wrapper select {
+    width: 100%;
+    height: auto;
+}
+
+.search_pulldown_txtbox1 {
+    overflow: hidden;
+    background-image: none;
+}

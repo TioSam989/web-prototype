@@ -9,7 +9,9 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         signIn: resolve(__dirname,'pages/signIn.html'),
         signUp: resolve(__dirname,'pages/signUp.html'),
-        music: resolve(__dirname, 'pages/musicResult.html')
+        music: resolve(__dirname, 'pages/musicResult.html'),
+        mainCSS: resolve(__dirname, 'style/main.css'),
+        searchCSS: resolve(__dirname, 'style/search.css')
       }
     }
   }

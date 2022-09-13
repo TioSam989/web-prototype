@@ -5,17 +5,26 @@
     <meta charset="UTF-8">
     <title>Music Result</title>
     
-  <script type="module" crossorigin src="/assets/music.1bd2a8c4.js"></script>
+    
+  <script type="module" crossorigin src="/assets/music.16669641.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill.c7c6310f.js">
+  <link rel="stylesheet" href="/assets/search.c103432a.css">
 </head>
 
 <body>
-        
-        <label>Music Name
-            <input type="text" value="" name="musicName" id="musicName" autofocus>
-        </label>
-       
 
-        <button id="searchBtn" name="searchBtn">look for it</button>
+
+    <div class="hint-wrapper">
+        <div class="ct-input">
+            <input type="text" placeholder="music name" value="" name="musicName" id="musicName" autofocus>
+            <div class="datalist-wrapper">
+                <select hidden id="listResults" class="availableDataSelection search_pulldown_txtbox1" multiple></select>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <button id="searchBtn" name="searchBtn">look for it</button> -->
 </body>
+
 </html>
