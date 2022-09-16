@@ -14,14 +14,14 @@ const listResults = document.querySelector("#listResults")
 function getAPISearchResults(music, limit) {
 
     listResults.value = ""
-
     if (music == "") {
         hiddenElement(listResults)
     } else {
 
 
         const searchURL = `https://ws.audioscrobbler.com/2.0/?method=track.search&track=${music}&api_key=0394adacbab6526b446f377465aae302&format=json&limit=${limit}`
-        // console.log(searchURL)
+
+        console.log(searchURL)
 
         const options = {
             method: 'get',
@@ -44,12 +44,11 @@ function getAPISearchResults(music, limit) {
                         Object.keys(track).forEach(function (keys) {
 
                             let currentSoung = {
-                                name: track[keys].name,
+                                name: prepareMusicName(track[keys].name),
                                 artist: track[keys].artist
                             }
-                            // console.log(currentSoung)
                             musicList.push(currentSoung)
-                            prepareArr(musicList, limit)
+                            prepareArr(musicList, limit).forEach(element => buildMusicSquare(element))
 
                             // getAPISimilarData(prepareString(currentSoung.artist),prepareString(currentSoung.name), '10')
 
@@ -58,6 +57,31 @@ function getAPISearchResults(music, limit) {
 
             })
     }
+}
+
+function prepareMusicName(musicName){
+    let ganbiarraStr = musicName.replace(/\s*\(.*?\)\s*/g, '')
+        // ganbiarraStr.replace(/\s/g, "")
+
+    if(ganbiarraStr != "" || ganbiarraStr != null){
+        return ganbiarraStr
+    }else{
+        return musicName
+    }
+}
+
+function getTrackId(music, artist){
+    const SearchURL = `https://musicovery.com/api/V5/track.php?fct=search&title=${music}`
+    const options = {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'default'
+    }
+
+    //return trackID using fetch here
+    
+
+    
 }
 
 function getAPISimilarData( music, artist, limit) {
@@ -76,6 +100,7 @@ function getAPISimilarData( music, artist, limit) {
                     let beforeTrack = Object.values(data)[0]
                     let track = Object.values(beforeTrack)[0]
 
+                    let suggestionList = []
 
                     Object.keys(track).forEach(function (keys) {
 
@@ -83,8 +108,10 @@ function getAPISimilarData( music, artist, limit) {
                             name: track[keys].name,
                             artist: track[keys].artist.name,
                         }
+                        suggestionList.push(currentSoung)
+                        prepareArr(suggestionList, limit).forEach(element => console.log(element))
 
-                        console.log(currentSoung)
+
 
                     });
 
@@ -94,13 +121,14 @@ function getAPISimilarData( music, artist, limit) {
         .catch(e => musicNotFound(e.message))
 }
 
+
+
 function prepareArr(list, limit) {
     listResults.innerHTML = ""
     for (let i = list.length; i > limit; i--) {
         musicList.shift()
     }
-
-    list.forEach(element => buildMusicSquare(element))
+    return list
 }
 
 function buildMusicSquare(music) {
@@ -114,7 +142,7 @@ function buildMusicSquare(music) {
 function musicNotFound(message) {
     let newOption = document.createElement('option')
     newOption.text = `music not found`
-    console.log(message)
+    console.warn(message)
     listResults.appendChild(newOption)
 
 }
@@ -132,17 +160,15 @@ function hiddenElement(elementMeh) {
 }
 
 function showElement(elementMeh) {
-    if (checkElement(elementMeh.value) == true) {
-    }
-
-    elementMeh.removeAttribute("hidden", "hidden")
+        elementMeh.removeAttribute("hidden", "hidden")
 }
 
 function SelectOpt(music) {
     hiddenElement(listResults)
-    musicName.value = `${music.name}`
 
-    getAPISimilarData(music.name, music.artist, 10)
+    musicName.value = `${music.name}`
+    
+    getAPISimilarData(prepareString(music.name), prepareString(music.artist), 3)
 }
 
 function checkElement(elE) {
@@ -199,14 +225,13 @@ musicName.addEventListener('keypress', (e) => {
 })
 
 musicName.addEventListener('focus', (e) => {
-    getAPISearchResults(prepareString(musicName.value), 10)
+    getAPISearchResults(prepareString(musicName.value), 5)
     if (musicName.value != "") {
         showElement(listResults)
     }
 })
 
 musicName.addEventListener('blur', (e) => {
-    hiddenElement(listResults)
 })
 
 musicName.addEventListener('input', (e) => {
@@ -217,7 +242,7 @@ musicName.addEventListener('input', (e) => {
         if (checkElement(musicName.value) == true) {
 
             showElement(listResults)
-            getAPISearchResults(prepareString(musicName.value), 10)
+            getAPISearchResults(prepareString(musicName.value), 5)
         }
     }
 })
