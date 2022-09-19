@@ -21,6 +21,7 @@ function getAPISearchResults(music, limit) {
 
         const searchURL = `https://ws.audioscrobbler.com/2.0/?method=track.search&track=${music}&api_key=0394adacbab6526b446f377465aae302&format=json&limit=${limit}`
 
+        console.clear()
         console.log(searchURL)
 
         const options = {
@@ -91,7 +92,7 @@ function getAPISimilarData( music, artist, limit) {
         mode: 'cors',
         cache: 'default'
     }
-
+    console.log(URL)
     fetch(URL, options)
         .then(res => {
             res.json()
@@ -99,6 +100,12 @@ function getAPISimilarData( music, artist, limit) {
 
                     let beforeTrack = Object.values(data)[0]
                     let track = Object.values(beforeTrack)[0]
+                    
+                    if(track.length == 0){
+                        console.log("call option b ")
+
+                        
+                    }
 
                     let suggestionList = []
 
@@ -109,9 +116,14 @@ function getAPISimilarData( music, artist, limit) {
                             artist: track[keys].artist.name,
                         }
                         suggestionList.push(currentSoung)
-                        prepareArr(suggestionList, limit).forEach(element => console.log(element))
+                        
+                        let musicArr = prepareArr(suggestionList, limit)
+                        
+                        if(Object.keys(musicArr).length == limit){
+                            console.table(musicArr)
+                        }
 
-
+                        
 
                     });
 
@@ -119,16 +131,18 @@ function getAPISimilarData( music, artist, limit) {
 
         })
         .catch(e => musicNotFound(e.message))
+
 }
-
-
 
 function prepareArr(list, limit) {
     listResults.innerHTML = ""
-    for (let i = list.length; i > limit; i--) {
-        musicList.shift()
+
+    let listUniq = [...new Set(list)]
+
+    for (let i = listUniq.length; i > limit; i--) {
+        listUniq.shift()
     }
-    return list
+    return listUniq
 }
 
 function buildMusicSquare(music) {
@@ -168,7 +182,8 @@ function SelectOpt(music) {
 
     musicName.value = `${music.name}`
     
-    getAPISimilarData(prepareString(music.name), prepareString(music.artist), 3)
+    getAPISimilarData(prepareString(music.name), prepareString(music.artist), 5)
+
 }
 
 function checkElement(elE) {
