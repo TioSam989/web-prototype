@@ -15,6 +15,8 @@ const divResults = dadOf(listResults)
 
 const contentSearchDiv = dadOf(divResults)
 
+const appMusicRecomendations = document.querySelector("#appMusicRec")
+
 const debouncedgetAPISimilarData = debounce(getAPISimilarData, 2000)
 const debouncedgetAPISearchResults = debounce(getAPISearchResults, 0)
 const debouncedSimilarData = debounce(SelectOpt, 0)
@@ -211,22 +213,6 @@ function prepareArrayFromApi(list, limit){
     return listUniqMeh
 }
 
-async function SelectOpt(music) {
-    hiddenElement(divResults)
-
-    musicName.value = `${music.name}`
-
-    try {
-        const obj = await getAPISimilarData(prepareString(music.name), prepareString(music.artist), 5)
-        let meh = prepareArrayFromApi(prepareData(obj, myApis.first, 5), 5)
-        console.log(meh)
-        
-    } catch (err) {
-        console.error(err)
-    }
-
-}
-
 function myFunc(music, artist, limit) {
     const URL = `https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&track=${music}&artist=${artist}&api_key=${API_key}&limit=${limit}&format=json&autocorrect=1`
     const options = {
@@ -281,6 +267,34 @@ function checkElement(elE) {
             return true
         }
     }
+}
+
+function renderMusicRec(music){
+    console.log(music)
+    appMusicRecomendations.innerHTML += `<p>Listen to ${music.name} from ${music.artist} </p>`
+}
+
+async function SelectOpt(music) {
+    hiddenElement(divResults)
+
+    musicName.value = `${music.name}`
+
+    try {
+        const obj = await getAPISimilarData(prepareString(music.name), prepareString(music.artist), 5)
+        let meh = prepareArrayFromApi(prepareData(obj, myApis.first, 5), 5)
+        
+        try{
+            meh.map(element => {
+                renderMusicRec(element)
+            });
+        } catch (e) {
+            console.error(e)
+        }
+        
+    } catch (err) {
+        console.error(err)
+    }
+
 }
 
 listResults.addEventListener("change", function () {
