@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "clickout-event": "^1.1.2",
     "firebase": "^9.9.2",
     "vite": "^3.0.8"
   },

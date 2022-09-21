@@ -1,6 +1,6 @@
 // https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=SystemOfADown&track=BYOB&api_key=0394adacbab6526b446f377465aae302&limit=10
-// getAPISimilarData(prepareString(currentSoung.artist),prepareString(currentSoung.name), '10')
 
+import 'clickout-event';
 
 const API_key = "0394adacbab6526b446f377465aae302"
 
@@ -11,18 +11,44 @@ const searchBtn = document.querySelector("#searchBtn")
 
 const listResults = document.querySelector("#listResults")
 
+const divResults = dadOf(listResults)
+
+const contentSearchDiv = dadOf(divResults)
+
+const debouncedgetAPISimilarData = debounce(getAPISimilarData, 2000)
+const debouncedgetAPISearchResults = debounce(getAPISearchResults, 0)
+const debouncedSimilarData = debounce(SelectOpt, 0)
+
+const myApis = {
+    first: "audioscrobbler"
+}
+
+function dadOf(element) {
+    let el = element.parentNode
+    return el
+}
+
+function debounce(fn, delay = 1) {
+    let previousTimeOut;
+    return function (...params) {
+        clearTimeout(previousTimeOut)
+
+        previousTimeOut = setTimeout(() => {
+            fn(...params)
+        }, delay);
+    }
+}
+
 function getAPISearchResults(music, limit) {
 
     listResults.value = ""
     if (music == "") {
-        hiddenElement(listResults)
+        hiddenElement(divResults)
     } else {
 
 
         const searchURL = `https://ws.audioscrobbler.com/2.0/?method=track.search&track=${music}&api_key=0394adacbab6526b446f377465aae302&format=json&limit=${limit}`
 
-        console.clear()
-        console.log(searchURL)
 
         const options = {
             method: 'get',
@@ -36,42 +62,42 @@ function getAPISearchResults(music, limit) {
                 res.json()
                     .then(data => {
 
+                        // USE DEBOUNCE//LUCIANO DISS
+
                         let beforeTracks = Object.values(data)[0]
                         let stillBeforeTracks = Object.values(beforeTracks)[4]
                         let track = Object.values(stillBeforeTracks)[0]
 
                         let musicList = []
 
-                        Object.keys(track).forEach(function (keys) {
+                        Object.keys(track).map(function (keys) {
 
                             let currentSoung = {
                                 name: prepareMusicName(track[keys].name),
                                 artist: track[keys].artist
                             }
                             musicList.push(currentSoung)
-                            prepareArr(musicList, limit).forEach(element => buildMusicSquare(element))
-
-                            // getAPISimilarData(prepareString(currentSoung.artist),prepareString(currentSoung.name), '10')
+                            prepareArr(musicList, limit).map(element => buildMusicSquare(element))
 
                         })
-                    }).catch(e => console.log(`i'm broke: ${e.message}`))
+                    }).catch(e => console.error(`i'm broke: ${e.message}`))
 
             })
     }
 }
 
-function prepareMusicName(musicName){
+function prepareMusicName(musicName) {
     let ganbiarraStr = musicName.replace(/\s*\(.*?\)\s*/g, '')
-        // ganbiarraStr.replace(/\s/g, "")
+    // ganbiarraStr.replace(/\s/g, "")
 
-    if(ganbiarraStr != "" || ganbiarraStr != null){
+    if (ganbiarraStr != "" || ganbiarraStr != null) {
         return ganbiarraStr
-    }else{
+    } else {
         return musicName
     }
 }
 
-function getTrackId(music, artist){
+function getTrackId(music, artist) {
     const SearchURL = `https://musicovery.com/api/V5/track.php?fct=search&title=${music}`
     const options = {
         method: 'GET',
@@ -80,52 +106,25 @@ function getTrackId(music, artist){
     }
 
     //return trackID using fetch here
-    
 
-    
+
+
 }
 
-function getAPISimilarData( music, artist, limit) {
+function getAPISimilarData(music, artist, limit) {
     const URL = `https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&track=${music}&artist=${artist}&api_key=${API_key}&limit=${limit}&format=json&autocorrect=1`
     const options = {
         method: 'GET',
         mode: 'cors',
         cache: 'default'
     }
-    console.log(URL)
-    fetch(URL, options)
+
+    return fetch(URL, options)
         .then(res => {
-            res.json()
+            return res.json()
                 .then(data => {
 
-                    let beforeTrack = Object.values(data)[0]
-                    let track = Object.values(beforeTrack)[0]
-                    
-                    if(track.length == 0){
-                        console.log("call option b ")
-
-                        
-                    }
-
-                    let suggestionList = []
-
-                    Object.keys(track).forEach(function (keys) {
-
-                        let currentSoung = {
-                            name: track[keys].name,
-                            artist: track[keys].artist.name,
-                        }
-                        suggestionList.push(currentSoung)
-                        
-                        let musicArr = prepareArr(suggestionList, limit)
-                        
-                        if(Object.keys(musicArr).length == limit){
-                            console.table(musicArr)
-                        }
-
-                        
-
-                    });
+                    return data
 
                 })
 
@@ -166,47 +165,123 @@ function prepareString(someString) {
 }
 
 function hiddenElement(elementMeh) {
-    if (!elementMeh.hasAttribute("hidden")) {
-        if (checkElement(elementMeh.value) == false) {
-            elementMeh.setAttribute("hidden", "hidden")
-        }
-    }
+    elementMeh.setAttribute("hidden", "hidden")
 }
 
 function showElement(elementMeh) {
-        elementMeh.removeAttribute("hidden", "hidden")
+    elementMeh.removeAttribute("hidden", "hidden")
 }
 
-function SelectOpt(music) {
-    hiddenElement(listResults)
+function prepareData(data, wichApi) {
+    if (wichApi == myApis.first) {
 
-    musicName.value = `${music.name}`
-    
-    getAPISimilarData(prepareString(music.name), prepareString(music.artist), 5)
+        let beforeTrack = Object.values(data)[0]
+        let track = Object.values(beforeTrack)[0]
 
+
+        let suggestionList = []
+
+        Object.keys(track).map(function (keys) {
+
+            let currentSoung = {
+                name: track[keys].name,
+                artist: track[keys].artist.name,
+            }
+            suggestionList.push(currentSoung)
+
+            
+            
+        });
+        return suggestionList
+
+    }
 }
 
-function checkElement(elE) {
-    let arr = []
+function prepareArrayFromApi(list, limit){
+    let listUniqMeh = [...new Set(list)]
 
-    elE.split('')
-    for (let index = 0; index < elE.length; index++) {
-
-        if (elE[index] != " ") {
-            arr.push(Element)
-        }
+    for (let i = listUniqMeh.length; i > limit; i--) {
+        listUniqMeh.shift()
     }
 
-    if (arr.length == 0) {
+    if(list == undefined || !list){
+        throw "list indefinied"
+    }
+
+    return listUniqMeh
+}
+
+async function SelectOpt(music) {
+    hiddenElement(divResults)
+
+    musicName.value = `${music.name}`
+
+    try {
+        const obj = await getAPISimilarData(prepareString(music.name), prepareString(music.artist), 5)
+        let meh = prepareArrayFromApi(prepareData(obj, myApis.first, 5), 5)
+        console.log(meh)
+        
+    } catch (err) {
+        console.error(err)
+    }
+
+}
+
+function myFunc(music, artist, limit) {
+    const URL = `https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&track=${music}&artist=${artist}&api_key=${API_key}&limit=${limit}&format=json&autocorrect=1`
+    const options = {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'default'
+    }
+
+    return fetch(URL, options)
+        .then(res => {
+            return res.json()
+                .then(data => {
+                    return data
+                })
+        })
+}
+
+function separateStringByLetter(str) {
+    let meh = str.split('')
+    let mehList = []
+
+    for (let index = 0; index < meh.length; index++) {
+
+        if (meh[index] != " ") {
+            mehList.push(meh[index])
+        }
+    }
+    return mehList
+}
+
+function checkIfDoesExists(what) {
+    if (what == undefined || what == null) {
         return false
     } else {
         return true
     }
 }
 
-// searchBtn.addEventListener('click', (e) => {
-//     getAPISearchResults( prepareString(musicName.value))
-// });
+function checkElement(elE) {
+
+    if (checkIfDoesExists(elE) == false) {
+        return false
+    } else {
+
+        let arr = []
+
+        arr = separateStringByLetter(elE)
+
+        if (arr.length == 0) {
+            return false
+        } else {
+            return true
+        }
+    }
+}
 
 listResults.addEventListener("change", function () {
     let string = listResults.value
@@ -221,7 +296,7 @@ listResults.addEventListener("change", function () {
 
 musicName.addEventListener('keypress', (e) => {
     if (e.key === "Enter") {
-        if (musicName.value == "") {
+        if (checkIfDoesExists(musicName.value) == false) {
             let newOption = document.createElement('option')
             newOption.text = `empty`
             listResults.appendChild(newOption)
@@ -240,24 +315,36 @@ musicName.addEventListener('keypress', (e) => {
 })
 
 musicName.addEventListener('focus', (e) => {
-    getAPISearchResults(prepareString(musicName.value), 5)
-    if (musicName.value != "") {
-        showElement(listResults)
+    if (checkElement(musicName.value) == true) {
+
+        if (listResults.childElementCount == 0) {
+            debouncedgetAPISearchResults(prepareString(musicName.value), 5)
+        } else {
+
+            showElement(divResults)
+        }
     }
 })
 
-musicName.addEventListener('blur', (e) => {
+contentSearchDiv.addEventListener('clickout', (e) => {
+    hiddenElement(divResults)
+})
+
+contentSearchDiv.addEventListener('mouseover', (e) => {
+    if (checkElement(musicName.value) == true) {
+        showElement(divResults)
+    }
+})
+
+contentSearchDiv.addEventListener('mouseout', (e) => {
+    hiddenElement(divResults)
 })
 
 musicName.addEventListener('input', (e) => {
-    if (musicName.value == "" || musicName.value == null) {
-        hiddenElement(listResults)
+    if (checkElement(musicName.value) == false) {
+        hiddenElement(divResults)
     } else {
-
-        if (checkElement(musicName.value) == true) {
-
-            showElement(listResults)
-            getAPISearchResults(prepareString(musicName.value), 5)
-        }
+        showElement(divResults)
+        getAPISearchResults(prepareString(musicName.value), 5)
     }
 })
