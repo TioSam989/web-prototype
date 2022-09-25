@@ -1,4 +1,4 @@
-#musicName {
+Z#musicName {
     width: 100%
 }
 
@@ -21,4 +21,9 @@
 .search_pulldown_txtbox1 {
     overflow: hidden;
     background-image: none;
+}
+
+#appMusicRec{
+    position: fixed;
+    margin-top: 3rem;
 }

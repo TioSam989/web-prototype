@@ -22,7 +22,9 @@ const debouncedgetAPISearchResults = debounce(getAPISearchResults, 0)
 const debouncedSimilarData = debounce(SelectOpt, 0)
 
 const myApis = {
-    first: "audioscrobbler"
+    first: "audioscrobbler",
+    second: "musicovery",
+    third: "spotify"
 }
 
 function dadOf(element) {
@@ -99,20 +101,6 @@ function prepareMusicName(musicName) {
     }
 }
 
-function getTrackId(music, artist) {
-    const SearchURL = `https://musicovery.com/api/V5/track.php?fct=search&title=${music}`
-    const options = {
-        method: 'GET',
-        mode: 'cors',
-        cache: 'default'
-    }
-
-    //return trackID using fetch here
-
-
-
-}
-
 function getAPISimilarData(music, artist, limit) {
     const URL = `https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&track=${music}&artist=${artist}&api_key=${API_key}&limit=${limit}&format=json&autocorrect=1`
     const options = {
@@ -167,14 +155,14 @@ function prepareString(someString) {
 }
 
 function hiddenElement(elementMeh) {
-    elementMeh.setAttribute("hidden", "hidden")
+    // elementMeh.setAttribute("hidden", "hidden")
 }
 
 function showElement(elementMeh) {
     elementMeh.removeAttribute("hidden", "hidden")
 }
 
-function prepareData(data, wichApi) {
+function prepareData(data, wichApi, extra) {
     if (wichApi == myApis.first) {
 
         let beforeTrack = Object.values(data)[0]
@@ -191,22 +179,53 @@ function prepareData(data, wichApi) {
             }
             suggestionList.push(currentSoung)
 
-            
-            
+
+
         });
         return suggestionList
 
+    } else if (wichApi == myApis.second) {
+
+        if (extra) {
+            let beforeTrack = Object.values(obj)[2]
+            let track = Object.values(beforeTrack)[0]
+
+            let suggestionList = []
+
+            Object.keys(track).map(function (Keys) {
+
+                let currentSoung = {
+                    name: track[Keys].title,
+                    artist: track[Keys].artist.name,
+                    id: track[Keys].id
+                }
+                suggestionList.push(currentSoung)
+            })
+
+
+        } else {
+
+            let beforeTrack = Object.values(obj)
+            let track = Object.values(beforeTrack[2])
+
+            let currentSoung = {
+                name: track[1],
+                artist: track[4].name,
+                id: track[0]
+            }
+            return currentSoung
+        }
     }
 }
 
-function prepareArrayFromApi(list, limit){
+function prepareArrayFromApi(list, limit) {
     let listUniqMeh = [...new Set(list)]
 
     for (let i = listUniqMeh.length; i > limit; i--) {
         listUniqMeh.shift()
     }
 
-    if(list == undefined || !list){
+    if (list == undefined || !list) {
         throw "list indefinied"
     }
 
@@ -269,9 +288,13 @@ function checkElement(elE) {
     }
 }
 
-function renderMusicRec(music){
+function renderMusicRec(music) {
     console.log(music)
     appMusicRecomendations.innerHTML += `<p>Listen to ${music.name} from ${music.artist} </p>`
+}
+
+function clearMusicList() {
+    appMusicRecomendations.innerHTML = ""
 }
 
 async function SelectOpt(music) {
@@ -282,15 +305,16 @@ async function SelectOpt(music) {
     try {
         const obj = await getAPISimilarData(prepareString(music.name), prepareString(music.artist), 5)
         let meh = prepareArrayFromApi(prepareData(obj, myApis.first, 5), 5)
-        
-        try{
+
+        try {
+            clearMusicList()
             meh.map(element => {
                 renderMusicRec(element)
             });
         } catch (e) {
             console.error(e)
         }
-        
+
     } catch (err) {
         console.error(err)
     }
@@ -362,3 +386,5 @@ musicName.addEventListener('input', (e) => {
         getAPISearchResults(prepareString(musicName.value), 5)
     }
 })
+
+export { debounce, musicNotFound, prepareArrayFromApi, prepareString, prepareData, clearMusicList, renderMusicRec, myApis }
