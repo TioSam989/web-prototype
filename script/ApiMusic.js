@@ -1,9 +1,7 @@
 // https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=SystemOfADown&track=BYOB&api_key=0394adacbab6526b446f377465aae302&limit=10
 
 
-import { getSimilarTrack } from './musicovery';
 import 'clickout-event';
-
 
 const API_key = "0394adacbab6526b446f377465aae302"
 
@@ -146,11 +144,7 @@ function buildMusicSquare(music) {
 }
 
 function musicNotFound(message) {
-    let newOption = document.createElement('option')
-    newOption.text = `music not found`
-    console.warn(message)
-    listResults.appendChild(newOption)
-    console.log("nao achei")
+    console.error(message)
 }
 
 function prepareString(someString) {
@@ -306,12 +300,9 @@ async function SelectOpt(music) {
 
     musicName.value = `${music.name}`
 
-
     try {
         const obj = await getAPISimilarData(prepareString(music.name), prepareString(music.artist), 5)
         let meh = prepareArrayFromApi(prepareData(obj, myApis.first, 5), 5) 
-        
-        meh = []
         
         try {
             if(meh.length == 0){
@@ -323,20 +314,11 @@ async function SelectOpt(music) {
             });
         } catch (e) {
             console.error(e)
-            const newObj = await getSimilarTrack(music.name, music.artist)
-            let mehMeh = prepareArrayFromApi(prepareData(newObj, myApis.second, 5), 5)
-            
-            try{
-                if(mehMeh.length == 0){
-                    throw 'Music Not Found' 
-                }
+            if(e == 'Music Not Found'){
                 clearMusicList()
-                mehMeh.map(element => {
-                    renderMusicRec(element)
-                })
-            } catch(er){
-                console.error(er)
+                musicNotFound()
             }
+            
         }
 
     } catch (err) {
