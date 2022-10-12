@@ -3,10 +3,11 @@ import { sptToken } from './sptToken'
 async function searchTrack(q) {
     try {
 
-        const URL = `https://api.spotify.com/v1/search?q=${q}&type=track`
+        const URL = `https://api.spotify.com/v1/search?q=${q}&type=track&limit=5`
         const options = {
             method: 'GET',
-            mode: 'no-cors'
+            mode: 'no-cors',
+            timeout: 1000
         }
 
         return await fetch(`${URL}`, {
@@ -30,11 +31,14 @@ async function searchTrack(q) {
 }
 
 async function getSptApiSearchResults(musicName) {
+
     var data = await searchTrack(musicName)
 
     let bfrTrk = Object.values(data)
     let bfrtrk2 = Object.values(bfrTrk)[0]
     let crrTrack = Object.values(bfrtrk2)[1]
+
+    let arrMusic = []
 
     Object.keys(crrTrack).forEach(function (keys) {
 
@@ -44,18 +48,21 @@ async function getSptApiSearchResults(musicName) {
             artist: artists(crrTrack[keys].artists, 'name'),
             artistId: artists(crrTrack[keys].artists, 'id'),
             artists: crrTrack[keys].artists,
-            musicData: crrTrack[keys] 
+            market: crrTrack[keys].available_markets,
+            musicData: crrTrack[keys]
         }
 
-        return crrSng
-    });
 
+        arrMusic.push(crrSng)
+        
+    });
+    
+    return arrMusic
 }
 
 function artists(obje, whatIsBeingReceived) {
 
     if (whatIsBeingReceived == 'name') {
-        console.log(obje)
 
         if (obje.length == 1) {
             return obje[0].name

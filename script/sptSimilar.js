@@ -1,12 +1,26 @@
 import { sptToken, tokenData } from "./sptToken"
 
-async function getSimilar(musicObj) {
-    const URL = `https://api.spotify.com/v1/recommendations?limit=10&market=anyES&seed_artists=${musicObj.artistId}&seed_genres=any%2Ccountry&seed_tracks=${musicObj.trackId}`
+function prepareStrToUrl(str){
+    return str.replace(/\s/g, '');
+}
 
+function marketConfig(mrkt){
+    if(mrkt.length > 2){
+
+            return 'ES'
+
+    }else{
+        return mrkt
+    }
+}
+
+async function getSimilar(musicObj) {
+    const URL = `https://api.spotify.com/v1/recommendations?limit=10&market=${marketConfig(prepareStrToUrl(musicObj.market))}&seed_artists=${prepareStrToUrl(musicObj.artistId)}&seed_genres=any%2Ccountry&seed_tracks=${prepareStrToUrl(musicObj.trackId)}`
+    console.log(musicObj)
     return await fetch(`${URL}`, {
         method: 'GET',
         headers: {
-            "authorizarion": `Bearer ${await sptToken()}`
+            "Authorization": `Bearer ${await sptToken()}`
         }
     })
     .then(res => {
@@ -22,7 +36,7 @@ async function getSptApiSimilarResults(obje) {
     let data = await getSimilar(obje)
 
     console.log(data)
-
+    return data
     //browser in obj
 
 }

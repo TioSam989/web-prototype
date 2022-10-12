@@ -6,6 +6,8 @@ var input = document.querySelector("#sptInput")
 var app = document.querySelector('#sptApp')
 input.addEventListener("input", async () => {
     app.innerHTML = ""
-    getSptApiSearchResults(input.value)
+    let searchData = await getSptApiSearchResults(input.value)
 
 });
+
+export {getSptApiSearchResults, getSptApiSimilarResults, sptToken, tokenData}

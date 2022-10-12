@@ -1,9 +1,9 @@
 // https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&artist=SystemOfADown&track=BYOB&api_key=0394adacbab6526b446f377465aae302&limit=10
 
 
+import { getSptApiSearchResults, getSptApiSimilarResults, sptToken, tokenData } from './spt' //spotify
+import { getAPISearchResults, getAPISimilarData } from './audScr'
 import 'clickout-event';
-
-const API_key = "0394adacbab6526b446f377465aae302"
 
 const musicName = document.querySelector("#musicName")
 const artistName = document.querySelector("#artistName")
@@ -21,6 +21,7 @@ const appMusicRecomendations = document.querySelector("#appMusicRec")
 const debouncedgetAPISimilarData = debounce(getAPISimilarData, 2000)
 const debouncedgetAPISearchResults = debounce(getAPISearchResults, 0)
 const debouncedSimilarData = debounce(SelectOpt, 0)
+const debouncedgetSptApiSearchResults = debounce(getSptApiSearchResults(1000))
 
 const myApis = {
     first: "audioscrobbler",
@@ -44,86 +45,6 @@ function debounce(fn, delay = 1) {
     }
 }
 
-function getAPISearchResults(music, limit) {
-
-    listResults.value = ""
-    if (music == "") {
-        hiddenElement(divResults)
-    } else {
-
-
-        const searchURL = `https://ws.audioscrobbler.com/2.0/?method=track.search&track=${music}&api_key=0394adacbab6526b446f377465aae302&format=json&limit=${limit}`
-
-
-        const options = {
-            method: 'get',
-            mode: 'cors',
-            cache: 'no-store',
-            timeout: 1000
-        }
-
-        fetch(searchURL, options)
-            .then(res => {
-                res.json()
-                    .then(data => {
-
-                        // USE DEBOUNCE//LUCIANO DISS
-
-                        let beforeTracks = Object.values(data)[0]
-                        let stillBeforeTracks = Object.values(beforeTracks)[4]
-                        let track = Object.values(stillBeforeTracks)[0]
-
-                        let musicList = []
-
-                        Object.keys(track).map(function (keys) {
-
-                            let currentSoung = {
-                                name: prepareMusicName(track[keys].name),
-                                artist: track[keys].artist
-                            }
-                            musicList.push(currentSoung)
-                            prepareArr(musicList, limit).map(element => buildMusicSquare(element))
-
-                        })
-                    }).catch(e => console.error(`i'm broke: ${e.message}`))
-
-            })
-    }
-}
-
-function prepareMusicName(musicName) {
-    let ganbiarraStr = musicName.replace(/\s*\(.*?\)\s*/g, '')
-    // ganbiarraStr.replace(/\s/g, "")
-
-    if (ganbiarraStr != "" || ganbiarraStr != null) {
-        return ganbiarraStr
-    } else {
-        return musicName
-    }
-}
-
-function getAPISimilarData(music, artist, limit) {
-    const URL = `https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&track=${music}&artist=${artist}&api_key=${API_key}&limit=${limit}&format=json&autocorrect=1`
-    const options = {
-        method: 'GET',
-        mode: 'cors',
-        cache: 'default'
-    }
-
-    return fetch(URL, options)
-        .then(res => {
-            return res.json()
-                .then(data => {
-
-                    return data
-
-                })
-
-        })
-        .catch(e => musicNotFound(e.message))
-
-}
-
 function prepareArr(list, limit) {
     listResults.innerHTML = ""
 
@@ -135,11 +56,23 @@ function prepareArr(list, limit) {
     return listUniq
 }
 
-function buildMusicSquare(music) {
+function buildMusicSquare(music, spt = false) {
+    
     let newOption = document.createElement('option')
-    newOption.value = `${music.name},${music.artist}`
+
     newOption.text = `${music.name} from ${music.artist}`
-    newOption.setAttribute("id", `${music.name}-${music.artist}`)
+
+    if (spt) {
+
+
+        newOption.value = `${music.trackId},${music.artistId}, ${music.market[0]}`
+        newOption.setAttribute("id", `${music.trackId}-${music.market}`)
+    } else {
+        newOption.value = `${music.name},${music.artist}`
+        newOption.setAttribute("id", `${music.name}-${music.artist}`)
+    }
+
+
     listResults.appendChild(newOption)
 }
 
@@ -230,23 +163,6 @@ function prepareArrayFromApi(list, limit) {
     return listUniqMeh
 }
 
-function myFunc(music, artist, limit) {
-    const URL = `https://ws.audioscrobbler.com/2.0/?method=track.getsimilar&track=${music}&artist=${artist}&api_key=${API_key}&limit=${limit}&format=json&autocorrect=1`
-    const options = {
-        method: 'GET',
-        mode: 'cors',
-        cache: 'default'
-    }
-
-    return fetch(URL, options)
-        .then(res => {
-            return res.json()
-                .then(data => {
-                    return data
-                })
-        })
-}
-
 function separateStringByLetter(str) {
     let meh = str.split('')
     let mehList = []
@@ -295,47 +211,83 @@ function clearMusicList() {
     appMusicRecomendations.innerHTML = ""
 }
 
-async function SelectOpt(music) {
+async function SelectOpt(music, spt = false) {
     hiddenElement(divResults)
 
     musicName.value = `${music.name}`
 
-    try {
-        const obj = await getAPISimilarData(prepareString(music.name), prepareString(music.artist), 5)
-        let meh = prepareArrayFromApi(prepareData(obj, myApis.first, 5), 5) 
-        
+    if (spt) {
         try {
-            if(meh.length == 0){
-                throw 'Music Not Found'
-            }   
-            clearMusicList()
-            meh.map(element => {
-                renderMusicRec(element)
-            });
-        } catch (e) {
-            console.error(e)
-            if(e == 'Music Not Found'){
-                clearMusicList()
-                musicNotFound()
-            }
-            
-        }
 
-    } catch (err) {
-        console.error(err)
+            try {
+                let similarData = await getSptApiSimilarResults(music)
+            } catch (error) {
+                console.error(error)
+            }
+
+        } catch (err) {
+            console.error(err)
+        }
+    } else {
+
+        try {
+            const obj = await getAPISimilarData(prepareString(music.name), prepareString(music.artist), 5)
+            let meh = prepareArrayFromApi(prepareData(obj, myApis.first, 5), 5)
+
+            try {
+                if (meh.length == 0) {
+                    throw 'Music Not Found'
+                }
+                clearMusicList()
+                meh.map(element => {
+                    renderMusicRec(element)
+                });
+            } catch (e) {
+                console.error(e)
+                if (e == 'Music Not Found') {
+                    clearMusicList()
+                    musicNotFound()
+                }
+
+            }
+
+        } catch (err) {
+            console.error(err)
+        }
     }
 
 }
 
 listResults.addEventListener("change", function () {
-    let string = listResults.value
-    let musicMeh = string.split(",")
-    let optSelected = {
-        name: musicMeh[0],
-        artist: musicMeh[1]
-    }
+    try {
+        let string = listResults.value
+        let musicMeh = string.split(",")
+        let optSelected = {
+            trackId: musicMeh[0],
+            artistId: musicMeh[1],
+            market: musicMeh[2]
+        }
 
-    SelectOpt(optSelected)
+        SelectOpt(optSelected, true)
+
+    } catch (err) {
+        console.error(err)
+        try {
+
+            console.log('Using option B to select opt on change event')
+
+            let string = listResults.value
+            let musicMeh = string.split(",")
+            let optSelected = {
+                name: musicMeh[0],
+                artist: musicMeh[1]
+            }
+
+            SelectOpt(optSelected)
+        } catch (error) {
+            console.error(error)
+        }
+    }
 })
 
 musicName.addEventListener('keypress', (e) => {
@@ -352,7 +304,18 @@ musicName.addEventListener('keypress', (e) => {
                 artist: musicMeh[1]
             }
 
-            SelectOpt(optSelected)
+            try {
+                SelectOpt(optSelected, true)
+
+            } catch (err) {
+                console.error(err)
+                try {
+                    console.log('using option B to Select Option on keypress')
+                    SelectOpt(optSelected)
+                } catch (error) {
+                    console.error(error)
+                }
+            }
 
         }
     }
@@ -362,7 +325,26 @@ musicName.addEventListener('focus', (e) => {
     if (checkElement(musicName.value) == true) {
 
         if (listResults.childElementCount == 0) {
-            debouncedgetAPISearchResults(prepareString(musicName.value), 5)
+
+            try {
+
+                let sptSearchData = debouncedgetSptApiSearchResults(musicName.value)
+                sptSearchData.map(element => {
+                    buildMusicSquare(element, true)
+                });
+
+            } catch (err) {
+
+                console.error(err)
+
+                try {
+                    console.log('using Option B to search on focus')
+                    debouncedgetAPISearchResults(prepareString(musicName.value), 5)
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+
         } else {
 
             showElement(divResults)
@@ -384,13 +366,36 @@ contentSearchDiv.addEventListener('mouseout', (e) => {
     hiddenElement(divResults)
 })
 
-musicName.addEventListener('input', (e) => {
+musicName.addEventListener('input', async (e) => {
     if (checkElement(musicName.value) == false) {
         hiddenElement(divResults)
     } else {
         showElement(divResults)
-        getAPISearchResults(prepareString(musicName.value), 5)
+        listResults.value = ""
+
+        try {
+            listResults.innerHTML = ""
+            listResults.value = ""
+
+            console.clear()
+
+            let sptSearchData = await getSptApiSearchResults((musicName.value))
+            sptSearchData.map(element => {
+                buildMusicSquare(element, true)
+            });
+
+        } catch (err) {
+            console.error(err)
+            try {
+                console.log('using option B to Search on input')
+                getAPISearchResults(prepareString(musicName.value), 5)
+
+            } catch (error) {
+                console.error(error)
+            }
+
+        }
     }
 })
 
-export { debounce, musicNotFound, prepareArrayFromApi, prepareString, prepareData, clearMusicList, renderMusicRec, myApis }
+export { hiddenElement, prepareArr, buildMusicSquare, musicNotFound }
