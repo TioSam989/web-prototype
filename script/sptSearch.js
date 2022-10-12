@@ -33,10 +33,10 @@ async function searchTrack(q) {
 async function getSptApiSearchResults(musicName) {
 
     var data = await searchTrack(musicName)
-
     let bfrTrk = Object.values(data)
     let bfrtrk2 = Object.values(bfrTrk)[0]
     let crrTrack = Object.values(bfrtrk2)[1]
+    
 
     let arrMusic = []
 
@@ -52,7 +52,7 @@ async function getSptApiSearchResults(musicName) {
             musicData: crrTrack[keys]
         }
 
-        
+
 
         arrMusic.push(crrSng)
         

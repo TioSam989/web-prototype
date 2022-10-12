@@ -51,8 +51,7 @@ function getAPISearchResults(music, limit) {
                                 artist: track[keys].artist
                             }
                             musicList.push(currentSoung)
-                            prepareArr(musicList, limit).map(element => buildMusicSquare(element))
-
+                            return musicList
                         })
                     }).catch(e => console.error(`i'm broke: ${e.message}`))
 

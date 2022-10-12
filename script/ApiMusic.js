@@ -57,7 +57,7 @@ function prepareArr(list, limit) {
 }
 
 function buildMusicSquare(music, spt = false) {
-    
+
     let newOption = document.createElement('option')
 
     newOption.text = `${music.name} from ${music.artist}`
@@ -135,7 +135,6 @@ function prepareData(data, wichApi, extra) {
 
 
         } else {
-            console.log(data)
             let beforeTrack = Object.values(data)
             let track = Object.values(beforeTrack[2])
 
@@ -144,6 +143,7 @@ function prepareData(data, wichApi, extra) {
                 artist: track[4].name,
                 id: track[0]
             }
+
             return currentSoung
         }
     }
@@ -203,7 +203,6 @@ function checkElement(elE) {
 }
 
 function renderMusicRec(music) {
-    console.log(music)
     appMusicRecomendations.innerHTML += `<p>Listen to ${music.name} from ${music.artist} </p>`
 }
 
@@ -261,9 +260,8 @@ async function SelectOpt(music, spt = false) {
 listResults.addEventListener("change", function () {
     try {
         let string = listResults.value
-        
+
         let musicMeh = string.split(" - ")
-        console.log(`musicMeh: ${musicMeh}`)
         let optSelected = {
             trackId: musicMeh[0],
             artistId: musicMeh[1],
@@ -382,15 +380,14 @@ musicName.addEventListener('input', async (e) => {
             console.clear()
 
             let sptSearchData = await getSptApiSearchResults((musicName.value))
-            sptSearchData.map(element => {
-                buildMusicSquare(element, true)
-            });
+            sptSearchData.map(element => buildMusicSquare(element, true));
 
         } catch (err) {
             console.error(err)
             try {
                 console.log('using option B to Search on input')
-                getAPISearchResults(prepareString(musicName.value), 5)
+                let musicList = await getAPISearchResults(prepareString(musicName.value), 5)
+                prepareArr(musicList, limit).map(element => buildMusicSquare(element))
 
             } catch (error) {
                 console.error(error)

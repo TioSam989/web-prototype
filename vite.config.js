@@ -5,13 +5,15 @@ import { Script } from 'vm'
 
 export default defineConfig({
   build: {
+
     rollupOptions: {
+
       input: {
         main: resolve(__dirname, 'index.html'),
         musicResult: resolve(__dirname, 'pages/musicResult.html'),
         musicSug: resolve(__dirname, 'pages/musicSug.html'),
-        signIn: resolve(__dirname,'pages/signIn.html'),
-        signUp: resolve(__dirname,'pages/signUp.html'),
+        signIn: resolve(__dirname, 'pages/signIn.html'),
+        signUp: resolve(__dirname, 'pages/signUp.html'),
         mainCSS: resolve(__dirname, 'style/main.css'),
         searchCSS: resolve(__dirname, 'style/search.css'),
         apiMusicJs: resolve(__dirname, 'script/apiMusic.js'),

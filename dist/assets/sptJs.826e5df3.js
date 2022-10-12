@@ -1,1 +1,0 @@
-import"./sptTokenJs.c9a65f70.js";import{g as e}from"./sptSearchJs.66d1cebf.js";import"./sptSimilarJs.85992db2.js";var t=document.querySelector("#sptInput"),p=document.querySelector("#sptApp");t.addEventListener("input",async()=>{p.innerHTML="",await e(t.value)});
