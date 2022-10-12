@@ -48,10 +48,11 @@ async function getSptApiSearchResults(musicName) {
             artist: artists(crrTrack[keys].artists, 'name'),
             artistId: artists(crrTrack[keys].artists, 'id'),
             artists: crrTrack[keys].artists,
-            market: crrTrack[keys].available_markets,
+            market: crrTrack[keys].available_markets[0],
             musicData: crrTrack[keys]
         }
 
+        
 
         arrMusic.push(crrSng)
         

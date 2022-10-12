@@ -65,7 +65,7 @@ function buildMusicSquare(music, spt = false) {
     if (spt) {
 
 
-        newOption.value = `${music.trackId},${music.artistId}, ${music.market[0]}`
+        newOption.value = `${music.trackId} - ${music.artistId} - ${music.market}`
         newOption.setAttribute("id", `${music.trackId}-${music.market}`)
     } else {
         newOption.value = `${music.name},${music.artist}`
@@ -261,7 +261,9 @@ async function SelectOpt(music, spt = false) {
 listResults.addEventListener("change", function () {
     try {
         let string = listResults.value
-        let musicMeh = string.split(",")
+        
+        let musicMeh = string.split(" - ")
+        console.log(`musicMeh: ${musicMeh}`)
         let optSelected = {
             trackId: musicMeh[0],
             artistId: musicMeh[1],
