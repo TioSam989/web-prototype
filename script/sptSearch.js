@@ -1,9 +1,9 @@
 import { sptToken } from './sptToken'
 
-async function searchTrack(q) {
+async function searchTrack(q, offset=5, limit=5) {
     try {
 
-        const URL = `https://api.spotify.com/v1/search?q=${q}&type=track&limit=5`
+        const URL = `https://api.spotify.com/v1/search?q=${q}&offset=${offset}&type=track&limit=${limit}`
         const options = {
             method: 'GET',
             mode: 'no-cors',
@@ -30,9 +30,9 @@ async function searchTrack(q) {
     }
 }
 
-async function getSptApiSearchResults(musicName) {
+async function getSptApiSearchResults(musicName, offset=5, limit=5) {
 
-    var data = await searchTrack(musicName)
+    var data = await searchTrack(musicName, offset, limit)
     let bfrTrk = Object.values(data)
     let bfrtrk2 = Object.values(bfrTrk)[0]
     let crrTrack = Object.values(bfrtrk2)[1]
@@ -89,4 +89,4 @@ function artists(obje, whatIsBeingReceived) {
     }
 }
 
-export {getSptApiSearchResults}
+export {getSptApiSearchResults, searchTrack}

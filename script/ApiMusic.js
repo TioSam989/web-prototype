@@ -290,36 +290,36 @@ listResults.addEventListener("change", function () {
     }
 })
 
-musicName.addEventListener('keypress', (e) => {
-    if (e.key === "Enter") {
-        if (checkIfDoesExists(musicName.value) == false) {
-            let newOption = document.createElement('option')
-            newOption.text = `empty`
-            listResults.appendChild(newOption)
-        } else {
-            let string = listResults[0].value
-            let musicMeh = string.split(",")
-            let optSelected = {
-                name: musicMeh[0],
-                artist: musicMeh[1]
-            }
+// musicName.addEventListener('keypress', (e) => {
+//     if (e.key === "Enter") {
+//         if (checkIfDoesExists(musicName.value) == false) {
+//             let newOption = document.createElement('option')
+//             newOption.text = `empty`
+//             listResults.appendChild(newOption)
+//         } else {
+//             let string = listResults[0].value
+//             let musicMeh = string.split(",")
+//             let optSelected = {
+//                 name: musicMeh[0],
+//                 artist: musicMeh[1]
+//             }
 
-            try {
-                SelectOpt(optSelected, true)
+//             try {
+//                 SelectOpt(optSelected, true)
 
-            } catch (err) {
-                console.error(err)
-                try {
-                    console.log('using option B to Select Option on keypress')
-                    SelectOpt(optSelected)
-                } catch (error) {
-                    console.error(error)
-                }
-            }
+//             } catch (err) {
+//                 console.error(err)
+//                 try {
+//                     console.log('using option B to Select Option on keypress')
+//                     SelectOpt(optSelected)
+//                 } catch (error) {
+//                     console.error(error)
+//                 }
+//             }
 
-        }
-    }
-})
+//         }
+//     }
+// })
 
 musicName.addEventListener('focus', (e) => {
     if (checkElement(musicName.value) == true) {
@@ -376,8 +376,6 @@ musicName.addEventListener('input', async (e) => {
         try {
             listResults.innerHTML = ""
             listResults.value = ""
-
-            console.clear()
 
             let sptSearchData = await getSptApiSearchResults((musicName.value))
             sptSearchData.map(element => buildMusicSquare(element, true));

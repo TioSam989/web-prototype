@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -8,26 +8,38 @@
     <!-- <script type="module" src="../script/musicovery.js"></script> -->
     <script type="module" src="../script/spt.js"></script>
     <link rel="stylesheet" href="../style/search.css">
+    
+    <link rel="stylesheet" href="../style/output.css">
+
 </head>
 
 <body>
 
-    <input style="background-color: red" type="text" name="sptInput" id="sptInput">
+    <!-- <input style="background-color: red" type="text" name="sptInput" id="sptInput"> -->
     <div  id="sptApp" name="sptApp" >
     </div>
 
-
     <div class="hint-wrapper" >
         <div class="ct-input">
-            <div id="contentSearch">
-                <input type="text" placeholder="music name" value="" name="musicName" id="musicName" autofocus>
+            <div id="contentSearch" > 
+                <input type="text" placeholder="music name" value="" name="musicName" id="musicName" class="input input-bordered input-primary w-full max-w-xs" autofocus>
                 <div hidden class="datalist-wrapper">
-                    <select id="listResults" style="background-color: white" class="availableDataSelection search_pulldown_txtbox1" multiple></select>
+                    <select id="listResults" class="select w-full max-w-xs" multiple></select>
                 </div>
             </div>
         </div>
     </div>
+
     <br><br>
+
+    <div class="dropdown">
+        <input type="text" tabindex="0" class="input input-bordered input-primary w-full max-w-xs"/>
+        <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a>Item 1</a></li>
+          <li><a>Item 2</a></li>
+        </ul>
+      </div>
+
     <div id="appMusicRec">
 
     </div>

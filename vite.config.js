@@ -5,7 +5,6 @@ import { Script } from 'vm'
 
 export default defineConfig({
   build: {
-
     rollupOptions: {
 
       input: {
@@ -15,6 +14,7 @@ export default defineConfig({
         signIn: resolve(__dirname, 'pages/signIn.html'),
         signUp: resolve(__dirname, 'pages/signUp.html'),
         mainCSS: resolve(__dirname, 'style/main.css'),
+        outputCSS: resolve(__dirname, 'style/output.css'),
         searchCSS: resolve(__dirname, 'style/search.css'),
         apiMusicJs: resolve(__dirname, 'script/apiMusic.js'),
         functionsJs: resolve(__dirname, 'script/functions.js'),

@@ -1,6 +1,15 @@
 import { onAuthStateChanged, signOut, getAuth, sendEmailVerification  } from "firebase/auth"
 import { auth } from "../firebase"
 import {addBtnVerifyEmail, addBtnLogOut,appendAnchorTag} from "./functions"
+import '../style/output.css';
+
+function meh(){
+  alert('meh')
+}
+
+document.querySelector('#appMeh').innerHTML = `
+  <button class="btn">Hello daisyUI</button>
+`;
 
 
 onAuthStateChanged(auth, user => {

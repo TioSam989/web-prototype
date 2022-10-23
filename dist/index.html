@@ -1,23 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark" onload="meh()">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Meh</title>
-    <!-- <script type="module" src="./script/script.js"></script> -->
+  <script type="module" crossorigin src="/assets/main.4b23c302.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill.c7c6310f.js">
+  <link rel="modulepreload" crossorigin href="/assets/firebase.e95a7973.js">
+  <link rel="modulepreload" crossorigin href="/assets/functionsJs.6235609f.js">
+  <link rel="stylesheet" href="/assets/output.f9b0dba5.css">
 </head>
 
 <body>
+    <!-- ************************************************** -->
+    <my-nav-bar></my-nav-bar>
 
-    <nav>
-        <div id="nav">
-        </div>
-    </nav>
+    <script src="./script/myElements/myNavBar.js"></script>
+    <!-- ************************************************** -->
 
-    <a href="./pages/musicResult.html">music Finder</a>
-        
+    <div class="navbar bg-base-100">
+        <a class="btn btn-ghost normal-case text-xl">meh</a>
+    </div>
+
+    <div id="appMeh"></div>
+
     <h1 id="App"></h1>
 
     <div style="margin-right:2rem" name="btns">
@@ -27,7 +35,10 @@
         <div id="verif">
         </div>
 
+        <a href="./pages/musicResult.html">music Finder</a>
 
+
+        
     </div>
 
 </body>

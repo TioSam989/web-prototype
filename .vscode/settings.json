@@ -1,3 +1,4 @@
 {
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "livePreview.defaultPreviewPath": "c:\\Users\\Tiosa\\OneDrive\\Ambiente de Trabalho\\programm\\JS\\web-prototype\\index.html"
 }

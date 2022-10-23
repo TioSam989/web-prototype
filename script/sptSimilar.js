@@ -16,7 +16,6 @@ function marketConfig(mrkt){
 
 async function getSimilar(musicObj) {
     const URL = `https://api.spotify.com/v1/recommendations?limit=10&market=${marketConfig(prepareStrToUrl(musicObj.market))}&seed_artists=${prepareStrToUrl(musicObj.artistId)}&seed_genres=any%2Ccountry&seed_tracks=${prepareStrToUrl(musicObj.trackId)}`
-    console.log(musicObj)
     return await fetch(`${URL}`, {
         method: 'GET',
         headers: {
@@ -35,7 +34,6 @@ async function getSimilar(musicObj) {
 async function getSptApiSimilarResults(obje) {
     let data = await getSimilar(obje)
 
-    console.log(data)
     return data
     //browser in obj
 

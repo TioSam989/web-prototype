@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -8,33 +8,46 @@
     <!-- <script type="module" src="../script/musicovery.js"></script> -->
     
     
+    
+    
+
   <script type="module" crossorigin src="/assets/modulepreload-polyfill.c7c6310f.js"></script>
   <script type="module" crossorigin src="/assets/sptTokenJs.c9a65f70.js"></script>
-  <script type="module" crossorigin src="/assets/sptSearchJs.1258029b.js"></script>
-  <script type="module" crossorigin src="/assets/sptSimilarJs.85992db2.js"></script>
-  <script type="module" crossorigin src="/assets/sptJs.79d2e6de.js"></script>
-  <script type="module" crossorigin src="/assets/ApiMusic.a2757cb3.js"></script>
+  <script type="module" crossorigin src="/assets/sptSearchJs.a4b56eb7.js"></script>
+  <script type="module" crossorigin src="/assets/sptSimilarJs.6d635d55.js"></script>
+  <script type="module" crossorigin src="/assets/sptJs.fc669d6c.js"></script>
+  <script type="module" crossorigin src="/assets/ApiMusic.4513811d.js"></script>
+  <link rel="stylesheet" href="/assets/output.f9b0dba5.css">
   <link rel="stylesheet" href="/assets/search.e1710e49.css">
 </head>
 
 <body>
 
-    <input style="background-color: red" type="text" name="sptInput" id="sptInput">
+    <!-- <input style="background-color: red" type="text" name="sptInput" id="sptInput"> -->
     <div  id="sptApp" name="sptApp" >
     </div>
 
-
     <div class="hint-wrapper" >
         <div class="ct-input">
-            <div id="contentSearch">
-                <input type="text" placeholder="music name" value="" name="musicName" id="musicName" autofocus>
+            <div id="contentSearch" > 
+                <input type="text" placeholder="music name" value="" name="musicName" id="musicName" class="input input-bordered input-primary w-full max-w-xs" autofocus>
                 <div hidden class="datalist-wrapper">
-                    <select id="listResults" style="background-color: white" class="availableDataSelection search_pulldown_txtbox1" multiple></select>
+                    <select id="listResults" class="select w-full max-w-xs" multiple></select>
                 </div>
             </div>
         </div>
     </div>
+
     <br><br>
+
+    <div class="dropdown">
+        <input type="text" tabindex="0" class="input input-bordered input-primary w-full max-w-xs"/>
+        <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a>Item 1</a></li>
+          <li><a>Item 2</a></li>
+        </ul>
+      </div>
+
     <div id="appMusicRec">
 
     </div>
