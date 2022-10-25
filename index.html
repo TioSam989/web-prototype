@@ -2,39 +2,40 @@
 <html lang="en" data-theme="dark" onload="meh()">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/output.css">
-    <title>Meh</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style/output.css">
+  <title>Meh</title>
 </head>
 
 <body>
-    <!-- ************************************************** -->
-    <my-nav-bar></my-nav-bar>
+  <div id="indexMeh" hidden></div>
 
-    <script src="./script/myElements/myNavBar.js"></script>
-    <!-- ************************************************** -->
+  
 
-    <div class="navbar bg-base-100">
-        <a class="btn btn-ghost normal-case text-xl">meh</a>
+
+
+
+  <my-nav-bar></my-nav-bar>
+
+  <script type="module" src="./script/myComponents.js"></script>
+
+  <div id="appMeh"></div>
+
+  <h1 id="App"></h1>
+
+  <div style="margin-right:2rem" name="btns">
+
+    <div id="logOutApp">
+    </div>
+    <div id="verif">
     </div>
 
-    <div id="appMeh"></div>
-
-    <h1 id="App"></h1>
-
-    <div style="margin-right:2rem" name="btns">
-
-        <div id="logOutApp">
-        </div>
-        <div id="verif">
-        </div>
-
-        <a href="./pages/musicResult.html">music Finder</a>
+    <a href="./pages/musicResult.html">music Finder</a>
 
 
-        <script type="module" src="./script/script.js"></script>
-    </div>
+    <script type="module" src="./script/script.js"></script>
+  </div>
 
 </body>
 

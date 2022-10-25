@@ -4,10 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.2.0",
+    "@tailwindcss/typography": "^0.5.7",
     "@webcomponents/webcomponentsjs": "^2.7.0",
     "clickout-event": "^1.1.2",
     "daisyui": "^2.31.0",
     "firebase": "^9.9.2",
+    "twind": "^0.16.17",
     "vite": "^3.0.8"
   },
   "scripts": {

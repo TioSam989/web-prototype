@@ -1,3 +1,0 @@
-import"./modulepreload-polyfill.c7c6310f.js";/* empty css                  */import{o as n,a as t}from"./firebase.e95a7973.js";import{a,b as l,c as o}from"./functionsJs.6235609f.js";document.querySelector("#appMeh").innerHTML=`
-  <button class="btn">Hello daisyUI</button>
-`;n(t,e=>{e?(a(),console.log(`logged in ${e.displayName}`),console.log(e),document.querySelector("#App").innerHTML=`Hello ${e.displayName}`,e.emailVerified||l(e)):(o("nav","a","./pages/signUp.html","sign up"),o("nav","a","./pages/signIn.html","sign in"),console.log("Not logged"),document.querySelector("#App").innerHTML="Hello Guest",document.querySelector("#logOutApp").innerHTML="",document.querySelector("#verif").innerHTML="")});

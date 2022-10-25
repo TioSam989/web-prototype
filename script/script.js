@@ -7,10 +7,6 @@ function meh(){
   alert('meh')
 }
 
-document.querySelector('#appMeh').innerHTML = `
-  <button class="btn">Hello daisyUI</button>
-`;
-
 
 onAuthStateChanged(auth, user => {
   if (user) {
