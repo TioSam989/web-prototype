@@ -1,7 +1,6 @@
 import { onAuthStateChanged, signOut, getAuth, sendEmailVerification } from "firebase/auth"
 import { auth } from "../firebase"
 
-
 function addBtnVerifyEmail(user) { //i've to take it off from here
   document.querySelector("#verif").innerHTML += '<button id="verifyEmail" style="background-color:green; color:white">Verify Email</button>'
   verif.addEventListener('click', (e) => {
@@ -39,21 +38,29 @@ function linkMe(hisEmail) {
 
 }
 
-function addBtnLogOut() {
-  document.querySelector("#logOutApp").innerHTML += '<button id="logOut" style="background-color:red; color:white">LogOut</button>'
+function addBtnLogOut(ele=null) {
+  if(!ele){
+    document.querySelector("#logOutApp").innerHTML = '<a class="text-red-500" id="logOut" >Logout UIIUIUI (ICON)</a>'
   logOut.addEventListener('click', (e) => {
+    console.log('clicked')
     signOut(auth).then(() => {
+      localStorage.removeItem('crrUser')
       console.log("Sign-out successful");
     }).catch((error) => {
       alert(errorMessage);
     });
   });
+  }else{
+    ele.addEventListener('click', (e) => {
+      console.log('cliked')
+    })
+  }
 }
 
 const appendAnchorTag = (whereToPlace, whichElement, reference, text) => {
 
-  const anchor = document.createElement(`${whichElement}`);
   const list = document.getElementById(`${whereToPlace}`);
+  const anchor = document.createElement(`${whichElement}`);
   const meh = document.createElement(`${whichElement}`);
 
   anchor.href = `${reference}`;

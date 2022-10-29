@@ -3,11 +3,6 @@ import { auth } from "../firebase"
 import {addBtnVerifyEmail, addBtnLogOut,appendAnchorTag} from "./functions"
 import '../style/output.css';
 
-function meh(){
-  alert('meh')
-}
-
-
 onAuthStateChanged(auth, user => {
   if (user) {
     addBtnLogOut()
@@ -24,8 +19,8 @@ onAuthStateChanged(auth, user => {
 
   } else {
 
-      appendAnchorTag('nav', 'a', './pages/signUp.html', 'sign up')
-      appendAnchorTag('nav', 'a', './pages/signIn.html', 'sign in')
+      appendAnchorTag('appLog', 'a', './pages/signUp.html', 'sign up')
+      appendAnchorTag('appLog', 'a', './pages/signIn.html', 'sign in')
       console.log('Not logged');
       document.querySelector("#App").innerHTML = `Hello Guest`
       document.querySelector("#logOutApp").innerHTML = ""
@@ -33,3 +28,5 @@ onAuthStateChanged(auth, user => {
   }
 
 });
+
+
