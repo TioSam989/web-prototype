@@ -38,21 +38,26 @@ function linkMe(hisEmail) {
 
 }
 
-function addBtnLogOut(ele=null) {
-  if(!ele){
+function addBtnLogOut(ele = null) {
+  if (!ele) {
     document.querySelector("#logOutApp").innerHTML = '<a class="text-red-500" id="logOut" >Logout UIIUIUI (ICON)</a>'
-  logOut.addEventListener('click', (e) => {
-    console.log('clicked')
-    signOut(auth).then(() => {
-      localStorage.removeItem('crrUser')
-      console.log("Sign-out successful");
-    }).catch((error) => {
-      alert(errorMessage);
+    logOut.addEventListener('click', (e) => {
+      signOut(auth).then(() => {
+        localStorage.removeItem('crrUser')
+        console.log("Sign-out successful");
+      }).catch((error) => {
+        alert(errorMessage);
+      });
     });
-  });
-  }else{
+  } else {
+    ele.innerHTML += '<i class="fa-solid fa-right-from-bracket"></i>'
     ele.addEventListener('click', (e) => {
-      console.log('cliked')
+      signOut(auth).then(() => {
+        localStorage.removeItem('crrUser')
+        console.log("Sign-out successful");
+      }).catch((error) => {
+        alert(errorMessage);
+      });
     })
   }
 }

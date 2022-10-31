@@ -5,7 +5,14 @@ import '../style/output.css';
 
 onAuthStateChanged(auth, user => {
   if (user) {
-    addBtnLogOut()
+
+    let nav = document.querySelector('#navbar')
+    let son = nav.firstElementChild
+    let logOutBtn = son.shadowRoot.querySelector("#LogOutBtn")
+    console.log(logOutBtn)
+
+    
+    addBtnLogOut(logOutBtn)
     console.log(`logged in ${user.displayName}`)
     console.log(user)
     document.querySelector("#App").innerHTML = `Hello ${user.displayName}`

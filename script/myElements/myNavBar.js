@@ -38,8 +38,11 @@ function checkifIndex() {
 class myNavBar extends HTMLElement {
   constructor() {
     super();
-    console.log();
-    this.build(JSON.parse(crrUser));
+    if (isLogged()) {
+      this.build(JSON.parse(crrUser));
+    } else {
+      this.build()
+    }
   }
 
   build(userData) {
@@ -51,10 +54,25 @@ class myNavBar extends HTMLElement {
     const subNavPr = this.subNavPrimary();
     const daddyDiv = this.createDivDaddy();
     const inputMeh = this.inputPlace();
-    const profile = this.createDivProfile(
-      userData.displayName,
-      userData.photoURL
-    );
+    const fontawesomeKit = this.fontAw();
+
+    let profile
+    if (isLogged()) {
+      profile = this.createDivProfile(
+        userData.displayName,
+        userData.photoURL
+      );
+    } else {
+      if (checkifIndex()) {
+
+        profile = this.createLogs('./pages/signIn.html', './pages/signUp.html')
+
+      } else {
+        profile = this.createLogs('./signIn.html', './signUp.html')
+
+      }
+    }
+
     const navbarStart = this.navBarStart();
     const navBarMid = this.navbarMIddle();
     const navBarEnd = this.navBarEnd();
@@ -84,7 +102,48 @@ class myNavBar extends HTMLElement {
 
     shadow.appendChild(script);
     shadow.appendChild(link);
+    shadow.appendChild(fontawesomeKit)
     shadow.appendChild(nav);
+  }
+
+  fontAw() {
+    const scrpt = document.createElement('script')
+    scrpt.setAttribute("src", "https://kit.fontawesome.com/6a4613757d.js")
+    scrpt.setAttribute("crossorigin", "anonymous")
+
+    return scrpt
+  }
+
+  createLogs(SignIn, signUp) {
+
+    const divMeh = document.createElement('div')
+    // divMeh.innerHTML = '<a href=`` style="textDecoration: `inherit`, color: `inherit`, cursor: `auto`"><button class="btn btn-ghost">Sign In</button></a>'
+    // divMeh.innerHTML += '<a href=`` style="textDecoration: `inherit`, color: `inherit`, cursor: `auto`"><button class="btn btn-primary">Sign Up</button></a>'
+
+    const anchorF = document.createElement('a')
+    anchorF.setAttribute('style', 'style="textDecoration: "inherit", color: "inherit", cursor: "auto" " ')
+    anchorF.setAttribute('href',`${SignIn} `)
+
+    const anchorS = document.createElement('a')
+    anchorS.setAttribute('style', 'style="textDecoration: "inherit", color: "inherit", cursor: "auto" " ')
+    anchorS.setAttribute('href',`${signUp} `)
+    
+    const btnIn = document.createElement('button')
+    btnIn.classList.add(...separeteClasses('btn btn-ghost').map(element => element))
+    btnIn.innerHTML = 'Sign In'
+
+    const btnUp = document.createElement('button')
+    btnUp.classList.add(...separeteClasses('btn btn-primary').map(element => element)) 
+    btnUp.innerHTML = 'Sign Up'
+
+    anchorF.appendChild(btnIn)
+    anchorS.appendChild(btnUp)
+
+    divMeh.appendChild(anchorF)
+    divMeh.appendChild(anchorS)
+
+    return divMeh
+
   }
 
   navbarMIddle() {
@@ -172,7 +231,7 @@ class myNavBar extends HTMLElement {
     profileAnchor.innerHTML = "Profile";
 
     const settingsAnchor = document.createElement("a");
-    settingsAnchor.innerHTML = "Settings";
+    settingsAnchor.innerHTML = "Theme";
 
     const LogoutAnchor = document.createElement("a");
 
@@ -239,20 +298,14 @@ class myNavBar extends HTMLElement {
     liAnchor.innerHTML = "Profile";
 
     const liSet = document.createElement("li");
-    liSet.innerHTML = "<a>Settings</a>";
+    liSet.innerHTML = "<a>Theme</a>";
 
     const liSetAnchor = document.createElement("a");
-    liSetAnchor.innerHTML = "Settings";
+    liSetAnchor.innerHTML = "Theme";
 
     const liLout = document.createElement("li");
     liLout.setAttribute("id", "logOutApp");
-    liLout.innerHTML = `<a class="text-red-500" id="LogOutBtn" >Logout (ICON)</a>`;
-    liLout.addEventListener("click", (e) => {
-      localStorage.setItem("LogOut", this);
-      let meh = localStorage.getItem("LogOut")
-      console.log(meh)
-
-    });
+    liLout.innerHTML = `<a class="text-red-500" id="LogOutBtn" >Logout </a>`;
 
     const liLoutAnchor = document.createAttribute("a");
     liLoutAnchor.innerHTML = "Logout";
@@ -342,8 +395,9 @@ class myNavBar extends HTMLElement {
 
     return nav;
   }
+
 }
 
-export { myNavBar };
+export { myNavBar }
 
 //in another file, import using impoty {myNavBar} from "./this directory.js"
