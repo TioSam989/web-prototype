@@ -3,47 +3,37 @@
 
 <head>
     <title>Sign In</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <script type="module" src="../script/signIn.js"></script>
-    <link rel="stylesheet" href="../style/output.css">
+    <link rel="stylesheet" href="../style/output.css" />
     <script src="https://kit.fontawesome.com/6a4613757d.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div class="navbar bg-base-500">
         <div class="navbar-start">
-
-            <a href="../index.html"><button class="btn btn-primary btn-xs sm:btn-xs md:btn-sm lg:btn-md"> <i
-                        class="fa-solid fa-caret-left"></i></button></a>
-            <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md"><i
-                    class="fa-solid fa-pause"></i></button>
-            <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md"><i
-                    class="fa-solid fa-caret-right"></i></button>
-
-
+            <a href="../index.html"><button class="btn btn-primary btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                    <i class="fa-solid fa-caret-left"></i></button></a>
+            <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+            <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                <i class="fa-solid fa-caret-right"></i>
+            </button>
         </div>
-        <div class="navbar-center hidden lg:flex">
-
-        </div>
+        <div class="navbar-center hidden lg:flex"></div>
         <div class="navbar-end">
             <theme-chooser></theme-chooser>
         </div>
     </div>
     <div class="gimmeSpace">
-
-
-
-
-
-
-
         <div class="flex flex-col w-full lg:flex-col">
-
             <div class="grid flex-grow h-50 card bg-base-300 rounded-box place-items-center">
                 <form class="myFormMeh">
-                    <h2 class="text-xl text-secondary"><i class="iconMeh fa-solid fa-person-booth text-secondary"></i>Sign in an existing account</h2>
+                    <h2 class="text-xl text-secondary">
+                        <i class="iconMeh fa-solid fa-person-booth text-secondary"></i>Sign in an existing account
+                    </h2>
                     <div class="form-control w-full max-w-xs">
-
                         <label class="label" for="emailIn">
                             <span class="label-text text-primary"><i id="emailIcon"
                                     class="fa-solid fa-at iconMeh text-primary"></i>Email</span>
@@ -52,7 +42,6 @@
                         <input id="emailIn" name="emailIn" type="text" placeholder="example@mail.com"
                             class="input text-secondary input-bordered w-full max-w-xs input-primary"
                             title="Put a valid email in this field" autofocus required />
-
 
                         <label class="label" for="passwordIn">
                             <span class="label-text text-primary"><i class="fa-solid fa-key iconMeh"></i>Pasword</span>
@@ -71,45 +60,33 @@
                         </label>
 
                         <button type="button" id="submitDataSignIn" name="submitData"
-                            class="btn btn-outline btn-primary">Submit</button>
-
-
-
+                            class="btn btn-outline btn-primary">
+                            Submit
+                        </button>
                     </div>
-
                 </form>
-                </div>
+            </div>
 
             <div class="divider lg:divider-vertical text-primary">OR</div>
 
             <div class="grid flex-grow h-50 card bg-base-300 rounded-box place-items-center" style="padding: 1rem">
-
-
-                <div class="btn-group btn-group-vertical lg:btn-group-horizontal">
-
-                    <button id="loginFacebook"
-                        class="btn btn-md sm:btn-sm md:btn-md lg:btn-lg text-[#FFFFFF] bg-blue-700 "><i
-                            class="fa-brands fa-facebook social-media-meh"></i>Sign In using Facebook</button>
-                    <button id="loginGoogle"
-                        class="btn btn-md sm:btn-sm md:btn-md lg:btn-lg text-red-500 bg-[#FFFFFF] "><i
-                            class="fa-brands fa-google social-media-meh"></i>Sign In using Google</button>
-                    <button id="loginGitHub"
-                        class="btn btn-md sm:btn-sm md:btn-md lg:btn-lg text-[#FFFFFF] bg-neutral-focus "><i
-                            class="fa-brands fa-github social-media-meh"></i>Sign In using Github</button>
+                <small class="mb-2">Signin with:</small>
+                <div class="btn-group">
+                    <button id="loginFacebook" class="btn btn-xs text-[#FFFFFF] bg-blue-700 sm:btn-sm">
+                        Facebook
+                    </button>
+                    <button id="loginGoogle" class="btn btn-xs text-red-500 bg-[#FFFFFF] sm:btn-sm">
+                        Google
+                    </button>
+                    <button id="loginGitHub" class="btn btn-xs text-[#FFFFFF] bg-neutral-focus sm:btn-sm">
+                        Github
+                    </button>
                 </div>
-
-
-
             </div>
         </div>
-
     </div>
 
-
-
-
     <script src="../script/myComponents.js"></script>
-
 </body>
 
 </html>
