@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.gimmeSpace{
+    padding: 1rem;
+}
+.social-media-meh{
+    margin: 1rem;
+}
+.btn-meh-social-media{
+    margin: 5px;
+}
+.iconMeh{
+    margin: 5px;
+}
+
+@keyframes rotate360 {
+    to { transform: rotate(360deg); }
+  }
+
+.spinnerMeh { animation: 2s rotate360 infinite linear; }
+
+.myFormMeh{
+    padding: 1rem;
+}

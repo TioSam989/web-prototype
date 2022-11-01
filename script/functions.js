@@ -50,7 +50,8 @@ function addBtnLogOut(ele = null) {
       });
     });
   } else {
-    ele.innerHTML += '<i class="fa-solid fa-right-from-bracket"></i>'
+    // ele.innerHTML += '<i class="fa-solid fa-right-from-bracket"></i>'
+    ele.innerHTML += '<i class="fa-solid fa-person-through-window"></i>'
     ele.addEventListener('click', (e) => {
       signOut(auth).then(() => {
         localStorage.removeItem('crrUser')

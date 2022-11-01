@@ -7,53 +7,108 @@
     <script type="module" src="../script/signIn.js"></script>
     <link rel="stylesheet" href="../style/output.css">
     <script src="https://kit.fontawesome.com/6a4613757d.js" crossorigin="anonymous"></script>
-
-
 </head>
 
 <body>
-    <h1>Sign In with an existing account</h1>
-    <form>
+    <div class="navbar bg-base-500">
+        <div class="navbar-start">
 
-        <label>Email
-            <input type="text" placeholder="email" id="emailIn" name="emailIn" required>
-        </label><br>
+            <a href="../index.html"><button class="btn btn-primary btn-xs sm:btn-xs md:btn-sm lg:btn-md"> <i
+                        class="fa-solid fa-caret-left"></i></button></a>
+            <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md"><i
+                    class="fa-solid fa-pause"></i></button>
+            <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md"><i
+                    class="fa-solid fa-caret-right"></i></button>
 
-        <label>Password
-            <input type="password" placeholder="password" id="passwordIn" name="passwordIn" required>
-        </label><br>
 
-        <button type="button" id="submitDataSignIn" name="submitData">Submit</button>
+        </div>
+        <div class="navbar-center hidden lg:flex">
 
-    </form>
-    <h2>Or</h2>
+        </div>
+        <div class="navbar-end">
+            <theme-chooser></theme-chooser>
+        </div>
+    </div>
+    <div class="gimmeSpace">
 
-    <div>
-        <!---using Social Media-->
-        
+
+
+
+
+
+
+        <div class="flex flex-col w-full lg:flex-col">
+
+            <div class="grid flex-grow h-50 card bg-base-300 rounded-box place-items-center">
+                <form class="myFormMeh">
+                    <h2 class="text-xl text-secondary"><i class="iconMeh fa-solid fa-person-booth text-secondary"></i>Sign in an existing account</h2>
+                    <div class="form-control w-full max-w-xs">
+
+                        <label class="label" for="emailIn">
+                            <span class="label-text text-primary"><i id="emailIcon"
+                                    class="fa-solid fa-at iconMeh text-primary"></i>Email</span>
+                            <i id="emailSpin" class=""></i>
+                        </label>
+                        <input id="emailIn" name="emailIn" type="text" placeholder="example@mail.com"
+                            class="input text-secondary input-bordered w-full max-w-xs input-primary"
+                            title="Put a valid email in this field" autofocus required />
+
+
+                        <label class="label" for="passwordIn">
+                            <span class="label-text text-primary"><i class="fa-solid fa-key iconMeh"></i>Pasword</span>
+                            <div class="tooltip tooltip-left"
+                                data-tip="the only password requirement is a minimum of 6 characters">
+                                <span class="label-text-alt"><i
+                                        class="fa-regular fa-circle-question text-primary"></i></span>
+                            </div>
+                        </label>
+                        <input id="passwordIn" name="passwordIn" type="password"
+                            class="input text-secondary input-bordered w-full max-w-xs input-primary"
+                            title="put with a valid password using the requirements" placeholder="Pass123*" required />
+                        <label class="label">
+                            <span class="label-text-alt"></span>
+                            <span id="passWarn" class="label-text-alt"></span>
+                        </label>
+
+                        <button type="button" id="submitDataSignIn" name="submitData"
+                            class="btn btn-outline btn-primary">Submit</button>
+
+
+
+                    </div>
+
+                </form>
+                </div>
+
+            <div class="divider lg:divider-vertical text-primary">OR</div>
+
+            <div class="grid flex-grow h-50 card bg-base-300 rounded-box place-items-center" style="padding: 1rem">
+
+
+                <div class="btn-group btn-group-vertical lg:btn-group-horizontal">
+
+                    <button id="loginFacebook"
+                        class="btn btn-md sm:btn-sm md:btn-md lg:btn-lg text-[#FFFFFF] bg-blue-700 "><i
+                            class="fa-brands fa-facebook social-media-meh"></i>Sign In using Facebook</button>
+                    <button id="loginGoogle"
+                        class="btn btn-md sm:btn-sm md:btn-md lg:btn-lg text-red-500 bg-[#FFFFFF] "><i
+                            class="fa-brands fa-google social-media-meh"></i>Sign In using Google</button>
+                    <button id="loginGitHub"
+                        class="btn btn-md sm:btn-sm md:btn-md lg:btn-lg text-[#FFFFFF] bg-neutral-focus "><i
+                            class="fa-brands fa-github social-media-meh"></i>Sign In using Github</button>
+                </div>
+
+
+
+            </div>
+        </div>
 
     </div>
 
 
-    <div class="flex flex-col w-full border-opacity-50">
-        <div class="grid h-20 card bg-base-300 rounded-box place-items-center">
 
 
-
-        </div>
-        <div class="divider">OR</div>
-        <div class="grid h-20 card bg-base-300 rounded-box place-items-center">
-            
-
-            <button id="loginFacebook">Facebook</button>
-            <button id="loginGoogle">Google</button>
-            <button id="loginGitHub">GitHub</button>
-
-        </div>
-    </div>
-
-
-
+    <script src="../script/myComponents.js"></script>
 
 </body>
 

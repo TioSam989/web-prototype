@@ -398,6 +398,6 @@ class myNavBar extends HTMLElement {
 
 }
 
-export { myNavBar }
+export { myNavBar , separeteClasses}
 
 //in another file, import using impoty {myNavBar} from "./this directory.js"
