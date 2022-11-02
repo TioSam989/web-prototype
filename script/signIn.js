@@ -1,8 +1,11 @@
 
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, onAuthStateChanged } from 'firebase/auth';
 import { auth } from "../firebase"
-import { redirectTo } from "./functions"
+import { redirectTo, alertCute } from "./functions"
 import { separeteClasses } from "./myElements/myNavBar"
+import 'animate.css';
+
+import 'animate.css';
 
 onAuthStateChanged(auth, user => {
   if (user) {
@@ -53,6 +56,10 @@ const spinningIcon = "fa-solid fa-circle-notch text-primary"
 const passWarn = document.querySelector('#passWarn')
 const errorIcon = "fa-regular fa-circle-xmark"
 const passInput = document.querySelector('#passwordIn')
+
+const alertPlace = document.querySelector('#alerts')
+
+const mehUE = document.querySelector('#mehmehmeh')
 
 emailInut.addEventListener('input', (e) => {
   spinEmail.classList.remove(...separeteClasses(checkedIcon).map(element => element))
@@ -111,7 +118,7 @@ passInput.addEventListener('input', (e) => {
       passInput.classList.remove('input-primary')
 
       if (validatorMeh(passInput.value, "(?=.*[0-9a-zA-Z]).{6,}")) {
-        
+
         passInput.classList.remove('input-primary')
         passInput.classList.remove('input-error')
         passInput.classList.add('input-success')
@@ -159,7 +166,9 @@ loginGitHub.addEventListener('click', (e) => {
       // The AuthCredential type that was used.
       const credential = GithubAuthProvider.credentialFromError(error);
 
-      alert(errorMessage)
+
+      alertCute(mehUE, 'warning', 'Something went wrong!')
+      console.log(errorMessage)
       // ...
     });
 
@@ -194,8 +203,8 @@ loginFacebook.addEventListener('click', (e) => {
       const email = error.customData.email;
       // The AuthCredential type that was used.
       const credential = FacebookAuthProvider.credentialFromError(error);
-
-      alert(errorMessage);
+      alertCute(mehUE, 'warning', 'Something went wrong!')
+      console.log(errorMessage);
 
 
       // ...
@@ -229,6 +238,7 @@ loginGoogle.addEventListener('click', (e) => {
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
       // ...
+      alertCute(mehUE, 'warning', 'Something went wrong!')
       console.log(error);
     });
 

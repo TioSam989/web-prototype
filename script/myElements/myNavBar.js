@@ -56,6 +56,14 @@ class myNavBar extends HTMLElement {
     const inputMeh = this.inputPlace();
     const fontawesomeKit = this.fontAw();
 
+    const styleContent = document.querySelector('#fknStyleToMfNavBar').innerHTML
+    console.log(styleContent);
+
+    console.log(styleContent.innerText)
+
+    this.shadowRoot.innerHTML += styleContent
+
+
     let profile
     if (isLogged()) {
       profile = this.createDivProfile(
@@ -82,6 +90,7 @@ class myNavBar extends HTMLElement {
 
     link.setAttribute("rel", "stylesheet");
     script.setAttribute("type", "module");
+    console.log('to noindex')
     if (checkifIndex()) {
       link.setAttribute("href", "./style/output.css"); //to index
       link.setAttribute("src", "./script/functions.js"); //to index
@@ -101,7 +110,7 @@ class myNavBar extends HTMLElement {
     nav.appendChild(navBarEnd);
 
     shadow.appendChild(script);
-    shadow.appendChild(link);
+    // shadow.appendChild(link);
     shadow.appendChild(fontawesomeKit)
     shadow.appendChild(nav);
   }
@@ -122,18 +131,18 @@ class myNavBar extends HTMLElement {
 
     const anchorF = document.createElement('a')
     anchorF.setAttribute('style', 'style="textDecoration: "inherit", color: "inherit", cursor: "auto" " ')
-    anchorF.setAttribute('href',`${SignIn} `)
+    anchorF.setAttribute('href', `${SignIn} `)
 
     const anchorS = document.createElement('a')
     anchorS.setAttribute('style', 'style="textDecoration: "inherit", color: "inherit", cursor: "auto" " ')
-    anchorS.setAttribute('href',`${signUp} `)
-    
+    anchorS.setAttribute('href', `${signUp} `)
+
     const btnIn = document.createElement('button')
     btnIn.classList.add(...separeteClasses('btn btn-ghost').map(element => element))
     btnIn.innerHTML = 'Sign In'
 
     const btnUp = document.createElement('button')
-    btnUp.classList.add(...separeteClasses('btn btn-primary').map(element => element)) 
+    btnUp.classList.add(...separeteClasses('btn btn-primary').map(element => element))
     btnUp.innerHTML = 'Sign Up'
 
     anchorF.appendChild(btnIn)
@@ -390,7 +399,7 @@ class myNavBar extends HTMLElement {
     //try to put clur effect
     const nav = document.createElement("div");
     nav.classList.add(
-      ...separeteClasses(`navbar bg-base-100`).map((element) => element)
+      ...separeteClasses(`navbar bg-base-500`).map((element) => element)
     );
 
     return nav;
@@ -398,6 +407,6 @@ class myNavBar extends HTMLElement {
 
 }
 
-export { myNavBar , separeteClasses}
+export { myNavBar, separeteClasses }
 
 //in another file, import using impoty {myNavBar} from "./this directory.js"

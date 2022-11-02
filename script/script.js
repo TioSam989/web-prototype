@@ -2,6 +2,7 @@ import { onAuthStateChanged, signOut, getAuth, sendEmailVerification  } from "fi
 import { auth } from "../firebase"
 import {addBtnVerifyEmail, addBtnLogOut,appendAnchorTag} from "./functions"
 import '../style/output.css';
+import 'animate.css';
 
 onAuthStateChanged(auth, user => {
   if (user) {
@@ -35,5 +36,4 @@ onAuthStateChanged(auth, user => {
   }
 
 });
-
 

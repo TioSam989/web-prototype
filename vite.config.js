@@ -14,7 +14,7 @@ export default defineConfig({
         signIn: resolve(__dirname, 'pages/signIn.html'),
         signUp: resolve(__dirname, 'pages/signUp.html'),
         mainCSS: resolve(__dirname, 'style/main.css'),
-        outputCSS: resolve(__dirname, 'style/output.css'),
+        inputCSS: resolve(__dirname, 'style/input.css'),
         searchCSS: resolve(__dirname, 'style/search.css'),
         apiMusicJs: resolve(__dirname, 'script/apiMusic.js'),
         functionsJs: resolve(__dirname, 'script/functions.js'),
@@ -24,7 +24,11 @@ export default defineConfig({
         sptJs: resolve(__dirname, 'script/spt.js'),
         sptSearchJs: resolve(__dirname, 'script/sptSearch.js'),
         sptSimilarJs: resolve(__dirname, 'script/sptSimilar.js'),
-        sptTokenJs: resolve(__dirname, 'script/sptToken.js')
+        sptTokenJs: resolve(__dirname, 'script/sptToken.js'),
+        myComp: resolve(__dirname, 'script/myComponents.js'),
+        navComp: resolve(__dirname, 'script/myElements/myNavBar.js'),
+        themeChooser: resolve(__dirname, 'script/myElements/themeChooser.js'),
+        outputCSS: resolve(__dirname, 'style/output.css')
       }
     }
   }
