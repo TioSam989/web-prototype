@@ -12,8 +12,9 @@
 <body>
     <div class="navbar bg-base-500">
         <div class="navbar-start">
-            <a href="../index.html"><button class="btn btn-primary btn-xs sm:btn-xs md:btn-sm lg:btn-md">
-                    <i class="fa-solid fa-caret-left"></i></button></a>
+            <a href="../index.html" id="backMeh"><button class="btn btn-primary btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                    <i class="fa-solid fa-caret-left"></i><i id="hiddenBack" hidden
+                        style="margin-left: 1rem">back</i></button></a>
             <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md">
                 <i class="fa-solid fa-pause"></i>
             </button>
@@ -23,83 +24,87 @@
         </div>
         <div class="navbar-center hidden lg:flex"></div>
         <div class="navbar-end">
-            <theme-chooser></theme-chooser>
         </div>
     </div>
-
-        
-        
     
-    <div id="mehmehmeh" class="animate__animated absolute w-full z-20 p-12"  ></div>
-    <div class="gimmeSpace">
+    <div class="gimmeSpace z-0">
+        <div id="mehmehmeh" class="animate__animated w-50 z-20 p-12"></div>
         
-        <div class="flex flex-col w-full lg:flex-col z-0">  
-                <div class="grid flex-grow h-50 card bg-base-300 rounded-box place-items-center">
+        <div class="absolute top-1/2 left-1/2 z-0 transform -translate-x-1/2 -translate-y-1/2">
+            <div class="flex flex-col w-full lg:flex-col z-0">
+                <div class="grid content-center flex-grow h-50 card bg-base-300 rounded-box place-items-center">
                     <form class="myFormMeh">
-                    <h2 class="text-xl text-secondary">
-                        <i class="iconMeh fa-solid fa-person-booth text-secondary"></i>Sign in an existing account
-                    </h2>
-                    <div class="form-control w-full max-w-xs">
-                        <label class="label" for="emailIn">
-                            <span class="label-text text-primary"><i id="emailIcon"
-                                    class="fa-solid fa-at iconMeh text-primary"></i>Email</span>
-                            <i id="emailSpin" class=""></i>
-                        </label>
-                        <input id="emailIn" name="emailIn" type="text" placeholder="example@mail.com"
-                        class="input text-secondary input-bordered w-full max-w-xs input-primary"
-                        title="Put a valid email in this field" autofocus required />
-                        
-                        <label class="label" for="passwordIn">
-                            <span class="label-text text-primary"><i class="fa-solid fa-key iconMeh"></i>Pasword</span>
-                            <div class="tooltip tooltip-left"
-                                data-tip="the only password requirement is a minimum of 6 characters">
-                                <span class="label-text-alt"><i
-                                    class="fa-regular fa-circle-question text-primary"></i></span>
+                        <h2 class="text-xl text-secondary text-center m-4 ">
+                            <span
+                                    class="text-primary">M</span>usic <span class="text-primary">F</span>inder
+                        </h2>
+                        <div class="form-control w-full max-w-xs">
+                            <label class="label" for="emailIn">
+                                <span class="label-text text-primary"><i id="emailIcon"
+                                        class="fa-solid fa-at iconMeh text-primary"></i>Email</span>
+                                <i id="emailSpin"></i>
+                            </label>
+                            <input id="emailIn" name="emailIn" type="text" 
+                                class="input text-secondary input-bordered w-full max-w-xs input-primary"
+                                title="This field is required" autofocus required />
+
+                            <label class="label" for="passwordIn">
+                                <span class="label-text text-primary"><i
+                                        class="fa-solid fa-key iconMeh"></i>Pasword</span>
+                                <div class="tooltip tooltip-left"
+                                    data-tip="This field is required">
+                                    <span class="label-text-alt"><i
+                                            class="fa-regular fa-circle-question text-primary"></i></span>
                                 </div>
                             </label>
-                        <input id="passwordIn" name="passwordIn" type="password"
-                        class="input text-secondary input-bordered w-full max-w-xs input-primary"
-                            title="put with a valid password using the requirements" placeholder="Pass123*" required />
+                            <input id="passwordIn" name="passwordIn" type="password"
+                                class="input text-secondary input-bordered w-full max-w-xs input-primary"
+                                title="put with a valid password using the requirements" 
+                                required />
                             <label class="label">
                                 <span class="label-text-alt"></span>
                                 <span id="passWarn" class="label-text-alt"></span>
                             </label>
-                            
+
                             <button type="button" id="submitDataSignIn" name="submitData"
-                            class="btn btn-outline btn-primary">
-                            Submit
+                                class="btn btn-outline btn-primary">
+                                Sign In
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="divider lg:divider-vertical text-primary">OR</div>
+
+                <div class="grid flex-grow h-50 card bg-base-300 rounded-box place-items-center" style="padding: 1rem">
+                    <h2 class="text-xl text-secondary">
+                        <i class="iconMeh fa-solid fa-globe text-secondary"></i>
+                        <small class="mb-2">Signin with</small>
+                    </h2>
+
+                    <div class="btn-group">
+                        <button id="loginFacebook" class="btn btn-xs text-[#FFFFFF] bg-blue-700 sm:btn-sm">
+                            <i class="fa-brands fa-facebook fa-sx iconMeh"></i>
+                            Facebook
+                        </button>
+                        <button id="loginGoogle" class="btn btn-xs text-red-500 bg-[#FFFFFF] sm:btn-sm">
+                            <i class="fa-brands fa-google fa-xs iconMeh"></i>
+                            Google
+                        </button>
+                        <button id="loginGitHub" class="btn btn-xs text-[#FFFFFF] bg-neutral-focus sm:btn-sm">
+                            <i class="fa-brands fa-github fa-xs iconMeh"></i>
+                            Github
                         </button>
                     </div>
-                </form>
-            </div>
 
-            <div class="divider lg:divider-vertical text-primary">OR</div>
-            
-            <div class="grid flex-grow h-50 card bg-base-300 rounded-box place-items-center" style="padding: 1rem">
-                <h2 class="text-xl text-secondary">
-                    <i class="iconMeh fa-solid fa-globe text-secondary"></i>
-                    <small class="mb-2">Signin with</small>
-                </h2>
-                
-                <div class="btn-group">
-                    <button id="loginFacebook" class="btn btn-xs text-[#FFFFFF] bg-blue-700 sm:btn-sm">
-                        <i class="fa-brands fa-facebook fa-sx iconMeh"></i>
-                        Facebook
-                    </button>
-                    <button id="loginGoogle" class="btn btn-xs text-red-500 bg-[#FFFFFF] sm:btn-sm">
-                        <i class="fa-brands fa-google fa-xs iconMeh"></i>
-                        Google
-                    </button>
-                    <button id="loginGitHub" class="btn btn-xs text-[#FFFFFF] bg-neutral-focus sm:btn-sm">
-                        <i class="fa-brands fa-github fa-xs iconMeh"></i>
-                        Github
-                    </button>
                 </div>
             </div>
+            <div class="text-center p-4">
+                Don't have an account yet? <a class="link link-secondary" href="./signIn.html">Register now</a>
+            </div>
         </div>
-    
-</div>
-    <script type="module" src="../script/myComponents.js"></script>
+
+    </div>
 </body>
 
 </html>

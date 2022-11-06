@@ -1,17 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Sign Up</title>
     <meta charset="UTF-8">
     <script type="module" src="../firebase.js"></script>
     <link rel="stylesheet" href="../style/output.css">
-
+    <script type="module" src="../script/signUp.js"></script>
+    <script src="https://kit.fontawesome.com/6a4613757d.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <form>
+
+    <div class="navbar bg-base-500">
+        <div class="navbar-start">
+            <a href="../index.html" id="backMeh"><button class="btn btn-primary btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                    <i class="fa-solid fa-caret-left"></i><i id="hiddenBack" hidden
+                        style="margin-left: 1rem">back</i></button></a>
+            <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+            <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                <i class="fa-solid fa-caret-right"></i>
+            </button>
+        </div>
+        <div class="navbar-center hidden lg:flex"></div>
+        <div class="navbar-end">
+        </div>
+    </div>
+
+
+    <div class="gimmeSpace">
+        <div id="mehmehmeh" class="animate__animated w-50 z-20 p-12 mb-4"></div>
+
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div class="flex flex-col w-full lg:flex-col z-0">
+                <div class="grid flex-grow h-50 card bg-base-300 rounded-box place-items-center">
+                    <form class="myFormMeh">
+
+                        <h2 class="text-xl text-secondary text-center m-4 ">
+                            <span
+                                    class="text-primary">M</span>usic <span class="text-primary">F</span>inder
+                        </h2>
+                        
+                        <div class="form-control w-full max-w-xs">
+
+                            <div class="flex flex-row">
+
+                                <div class="flex flex-col mr-4">
+                                    <label class="label" for="name1">
+                                        <span class="label-text text-primary">First Name</span>
+                                    </label>
+
+                                    <input id="name1" name="name1" type="text" 
+                                        class="input text-secondary input-bordered w-full max-w-xs input-primary"
+                                        title="be creative and create a cool name1" autofocus required />
+                                </div>
+
+                                <div class="flex flex-col">
+
+                                    <label class="label" for="name2">
+                                        <span class="label-text text-primary">Last Name</span>
+                                    </label>
+
+                                    <input id="name2" name="name2" type="text" 
+                                        class="input text-secondary input-bordered w-full max-w-xs input-primary"
+                                        title="be creative and create a cool name2"  required />
+                                </div>
+
+                            </div>
+
+                            <label class="label" for="emailUp">
+                                <span class="label-text text-primary"><i id="emailIcon"
+                                        class="fa-solid fa-at iconMeh text-primary"></i>Email</span>
+                                <i id="emailSpin"></i>
+                            </label>
+                            <input id="emailUp" name="emailUp" type="text" 
+                                class="input text-secondary input-bordered w-full max-w-xs input-primary"
+                                title="Please provide a valid mail address" required />
+
+                            <label class="label" for="passwordUp">
+                                <span class="label-text text-primary"><i
+                                        class="fa-solid fa-key iconMeh"></i>Pasword</span>
+                                <div class="tooltip tooltip-left"
+                                    data-tip="the only password requirement is a minimum of 6 characters">
+                                    <span class="label-text-alt"><i
+                                            class="fa-regular fa-circle-question text-primary"></i></span>
+                                </div>
+                            </label>
+                            <input id="passwordUp" name="passwordUp" type="password"
+                                class="input text-secondary input-bordered w-full max-w-xs input-primary"
+                                title="Minimum length is 6 characters." 
+                                required />
+                            <label class="label">
+                                <span class="label-text-alt"></span>
+                                <span id="passWarn" class="label-text-alt"></span>
+                            </label>
+
+                           
+
+                            <button type="button" id="submitDataSignUp" name="submitData"
+                                class="btn btn-outline btn-primary">
+                                Register
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="divider lg:divider-vertical text-primary">OR</div>
+
+                <div class="grid flex-grow h-50 card bg-base-300 rounded-box place-items-center" style="padding: 1rem">
+                    <h2 class="text-xl text-secondary">
+                        <i class="iconMeh fa-solid fa-globe text-secondary"></i>
+                        <small class="mb-2">Register with</small>
+                    </h2>
+
+                    <div class="btn-group">
+                        <button id="loginFacebook" class="btn btn-xs text-[#FFFFFF] bg-blue-700 sm:btn-sm">
+                            <i class="fa-brands fa-facebook fa-sx iconMeh"></i>
+                            Facebook
+                        </button>
+                        <button id="loginGoogle" class="btn btn-xs text-red-500 bg-[#FFFFFF] sm:btn-sm">
+                            <i class="fa-brands fa-google fa-xs iconMeh"></i>
+                            Google
+                        </button>
+                        <button id="loginGitHub" class="btn btn-xs text-[#FFFFFF] bg-neutral-focus sm:btn-sm">
+                            <i class="fa-brands fa-github fa-xs iconMeh"></i>
+                            Github
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center p-4">
+                Already have login and password? <a class="link link-secondary" href="./signIn.html">Sign In</a>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- <form>
 
         <h1>Register</h1>
-        
+
         <label>Email
             <input type="text" placeholder="email" id="email" name="email" required>
         </label><br>
@@ -23,9 +155,23 @@
         <label>Password
             <input type="password" placeholder="password" id="password" name="password" required>
         </label><br>
-       
+
         <button type="button" id="submitDataSignUp" name="submitData">Submit</button>
 
-    </form>
+    </form> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
+
 </html>

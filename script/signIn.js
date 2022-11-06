@@ -1,7 +1,7 @@
 
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, onAuthStateChanged } from 'firebase/auth';
 import { auth } from "../firebase"
-import { redirectTo, alertCute } from "./functions"
+import { redirectTo, alertCute, debouncedalertCute } from "./functions"
 import { separeteClasses } from "./myElements/myNavBar"
 import 'animate.css';
 
@@ -60,6 +60,17 @@ const passInput = document.querySelector('#passwordIn')
 const alertPlace = document.querySelector('#alerts')
 
 const mehUE = document.querySelector('#mehmehmeh')
+
+const backText = document.querySelector('#hiddenBack')
+const backBtn = document.querySelector('#backMeh')
+backBtn.addEventListener('mouseover', (e) => {
+  backText.removeAttribute('hidden')
+})
+
+backBtn.addEventListener('mouseout', (e) => {
+  backText.removeAttribute('hidden')
+  backText.setAttribute('hidden','hidden')
+})
 
 emailInut.addEventListener('input', (e) => {
   spinEmail.classList.remove(...separeteClasses(checkedIcon).map(element => element))
@@ -167,7 +178,7 @@ loginGitHub.addEventListener('click', (e) => {
       const credential = GithubAuthProvider.credentialFromError(error);
 
 
-      alertCute(mehUE, 'warning', 'Something went wrong!')
+      debouncedalertCute(mehUE, 'warning', 'Something went wrong!')
       console.log(errorMessage)
       // ...
     });
@@ -203,7 +214,7 @@ loginFacebook.addEventListener('click', (e) => {
       const email = error.customData.email;
       // The AuthCredential type that was used.
       const credential = FacebookAuthProvider.credentialFromError(error);
-      alertCute(mehUE, 'warning', 'Something went wrong!')
+      debouncedalertCute(mehUE, 'warning', 'Something went wrong!')
       console.log(errorMessage);
 
 
@@ -238,7 +249,7 @@ loginGoogle.addEventListener('click', (e) => {
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
       // ...
-      alertCute(mehUE, 'warning', 'Something went wrong!')
+      debouncedalertCute(mehUE, 'warning', 'Something went wrong!')
       console.log(error);
     });
 

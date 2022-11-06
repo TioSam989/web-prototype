@@ -1,21 +1,44 @@
 import { onAuthStateChanged, signOut, getAuth, sendEmailVerification } from "firebase/auth"
 import { auth } from "../firebase"
 
-function alertCute(placeMeh=null, alertType = 'warning', message = 'something went wrong') {
-  if(!placeMeh){
+function setLoading(cond=true, msg='Done'){
+  console.log(cond)
+  console.log(msg)
+}
+
+function alertCute(placeMeh = null, alertType = 'warning', message = 'something went wrong') {
+  
+  if (!placeMeh) {
     placeMeh = docuemnt.querySelector('#mehmehmeh')
   }
 
-  let closeMeh = document.querySelector('#btnCloseAlert')
-  
-  placeMeh.innerHTML = `<div class="alert alert-${alertType} shadow-lg"> <div> <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> <span>${alertType}: ${message}!</span> </div> <div class="flex-none"><button id="btnCloseAlert" class="btn btn-sm btn-primary"><i class="fa-solid fa-xmark"></i></button></div> </div>`
+
+  placeMeh.innerHTML = `<div class="alert alert-${alertType} shadow-lg"> <div> <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> <span>${alertType}: ${message}!</span> </div> <div class="flex-none"></div> </div>`
   placeMeh.classList.add('animate__backInDown')
+  
   setTimeout(() => {
     placeMeh.classList.add('animate__backOutDown')
     setTimeout(() => {
       placeMeh.setAttribute('hidden', 'hidden')
+      placeMeh.classList.remove('animate__backInDown')
+      placeMeh.classList.remove('animate__backOutDown')
+      placeMeh.innerHTML = ''
+      placeMeh.removeAttribute('hidden')
     }, 400)
   }, 5000);
+}
+
+const debouncedalertCute = debounce(alertCute, 2000)
+
+function debounce(fn, delay = 1) {
+  let previousTimeOut;
+  return function (...params) {
+      clearTimeout(previousTimeOut)
+
+      previousTimeOut = setTimeout(() => {
+          fn(...params)
+      }, delay);
+  }
 }
 
 function addBtnVerifyEmail(user) { //i've to take it off from here
@@ -114,4 +137,4 @@ function redirectTo(where) {
   window.location = `${where}`
 }
 
-export { addBtnVerifyEmail, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
+export { setLoading, debouncedalertCute, addBtnVerifyEmail, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
