@@ -96,6 +96,8 @@ function addBtnLogOut(ele = null) {
       signOut(auth).then(() => {
         localStorage.removeItem('crrUser')
         console.log("Sign-out successful");
+        location.reload();
+
       }).catch((error) => {
         alert(errorMessage);
       });
