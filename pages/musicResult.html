@@ -5,24 +5,40 @@
     <meta charset="UTF-8">
     <title>Music Result</title>
     <script type="module" src="../script/ApiMusic.js"></script>
-    <!-- <script type="module" src="../script/musicovery.js"></script> -->
     <script type="module" src="../script/spt.js"></script>
     <link rel="stylesheet" href="../style/search.css">
-    
     <link rel="stylesheet" href="../style/output.css">
-
+    <script src="https://kit.fontawesome.com/6a4613757d.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
-    <!-- <input style="background-color: red" type="text" name="sptInput" id="sptInput"> -->
-    <div  id="sptApp" name="sptApp" >
+    <div class="navbar bg-base-500">
+        <div class="navbar-start">
+            <a href="../index.html" id="backMeh"><button class="btn btn-primary btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                    <i class="fa-solid fa-caret-left"></i><i id="hiddenBack" hidden
+                        style="margin-left: 1rem">back</i></button></a>
+            <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+            <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                <i class="fa-solid fa-caret-right"></i>
+            </button>
+        </div>
+        <div class="navbar-center hidden lg:flex"></div>
+        <div class="navbar-end">
+        </div>
     </div>
+    <div class="gimmeSpace">
 
-    <div class="hint-wrapper" >
+        <div id="sptApp" name="sptApp">
+        </div>
+        
+        <div class="hint-wrapper">
         <div class="ct-input">
-            <div id="contentSearch" > 
-                <input type="text" placeholder="music name" value="" name="musicName" id="musicName" class="input input-bordered input-primary w-full max-w-xs" autofocus>
+            <div id="contentSearch">
+                <input type="text" placeholder="music name" value="" name="musicName" id="musicName"
+                    class="input input-bordered input-primary w-full max-w-xs" autofocus>
                 <div hidden class="datalist-wrapper">
                     <select id="listResults" class="select w-full max-w-xs" multiple></select>
                 </div>
@@ -30,22 +46,10 @@
         </div>
     </div>
 
-    <br><br>
-
-    <div class="dropdown">
-        <input type="text" tabindex="0" class="input input-bordered input-primary w-full max-w-xs"/>
-        <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-          <li><a>Item 1</a></li>
-          <li><a>Item 2</a></li>
-        </ul>
-      </div>
-
     <div id="appMusicRec">
 
     </div>
-
-
-    <!-- <button id="searchBtn" name="searchBtn">look for it</button> -->
+</div>
 
 </body>
 
