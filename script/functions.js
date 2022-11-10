@@ -41,30 +41,6 @@ function debounce(fn, delay = 1) {
   }
 }
 
-function addBtnVerifyEmail(user) { //i've to take it off from here
-  document.querySelector("#verif").innerHTML += '<button id="verifyEmail" style="background-color:green; color:white">Verify Email</button>'
-  verif.addEventListener('click', (e) => {
-
-    if (user.email != "") {
-
-      console.log(user.email)
-      linkMe(user.email)
-
-    } else {
-
-      let email = prompt("Please enter your email:", "example@email.com");
-      if (email == null || email == "") {
-        alert(`c'mon, give us ur mail ${user.displayName}`)
-        console.log(`he canceled my PopUp`)
-      } else {
-        console.log(email)
-        user.email = email
-        console.log(user)
-        linkMe(email)
-      }
-    }
-  });
-}
 
 function linkMe(hisEmail) {
   const auth = getAuth()
@@ -139,4 +115,4 @@ function redirectTo(where) {
   window.location = `${where}`
 }
 
-export { setLoading, debouncedalertCute, addBtnVerifyEmail, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
+export { setLoading, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
