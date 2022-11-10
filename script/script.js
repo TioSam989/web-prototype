@@ -16,18 +16,32 @@ if (true) {
 async function putWallpaper(where) {
 
 
-
+try {
+  
   async function yourFunction() {
-
+    
     let randomSong = await getSptApiRandomResults()
-
+    
     where.removeAttribute('style')
     where.setAttribute('style', `background-image: url(${randomSong[0].musicData.album.images[0].url});`)
     setTimeout(yourFunction, 5000);
   }
-
+  
   yourFunction();
-
+  
+} catch (error) {
+  console.error(error)
+  async function yourFunction() {
+    
+    let randomSong = await getSptApiRandomResults()
+    
+    where.removeAttribute('style')
+    where.setAttribute('style', `background-image: url(${randomSong[0].musicData.album.images[0].url});`)
+    setTimeout(yourFunction, 5000);
+  }
+  
+  yourFunction();
+}
 
 
 
@@ -59,23 +73,11 @@ onAuthStateChanged(auth, user => {
 
 
     addBtnLogOut(logOutBtn)
-    console.log(`logged in ${user.displayName}`)
-    console.log(user)
-    document.querySelector("#App").innerHTML = `Hello ${user.displayName}`
 
-    // <a href="./pages/signIn.html">sign In</a>
-    // <a href="./pages/signUp.html">sign Up</a>
-
-    if (!user.emailVerified) {
-      addBtnVerifyEmail(user)
-    }
 
   } else {
 
-    appendAnchorTag('appLog', 'a', './pages/signUp.html', 'sign up')
-    appendAnchorTag('appLog', 'a', './pages/signIn.html', 'sign in')
     console.log('Not logged');
-    document.querySelector("#App").innerHTML = `Hello Guest`
     document.querySelector("#logOutApp").innerHTML = ""
     document.querySelector("#verif").innerHTML = ""
   }
