@@ -88,7 +88,6 @@ class myNavBar extends HTMLElement {
 
     link.setAttribute("rel", "stylesheet");
     script.setAttribute("type", "module");
-    console.log('to noindex')
     if (checkifIndex()) {
       link.setAttribute("href", "./style/output.css"); //to index
       link.setAttribute("src", "./script/functions.js"); //to index
@@ -302,7 +301,8 @@ class myNavBar extends HTMLElement {
 
     const liAnchor = document.createElement("a");
     liAnchor.classList.add("justify-between");
-    liAnchor.innerHTML = "Profile";
+    
+    liAnchor.innerHTML = "Profile" ;
 
     const liSet = document.createElement("li");
     liSet.innerHTML = "<a>Theme</a>";

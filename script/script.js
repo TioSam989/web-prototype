@@ -1,6 +1,6 @@
 import { onAuthStateChanged, signOut, getAuth, sendEmailVerification } from "firebase/auth"
 import { auth } from "../firebase"
-import { addBtnVerifyEmail, addBtnLogOut, appendAnchorTag } from "./functions"
+import {  addBtnLogOut } from "./functions"
 import '../style/output.css';
 import 'animate.css';
 import { getSptApiRandomResults } from './sptRandom'
@@ -22,8 +22,10 @@ async function putWallpaper(where) {
     async function yourFunction() {
 
       let randomSong = await getSptApiRandomResults()
-      for (let index = 0; index < randomSong.length; index++) {
+      if(randomSong){
 
+        for (let index = 0; index < randomSong.length; index++) {
+          
         where.removeAttribute('style')
         where.setAttribute('style', `background-image: url(${randomSong[index].musicData.album.images[0].url});`)
         await delay(5000)
@@ -31,10 +33,10 @@ async function putWallpaper(where) {
       }
 
       
-      console.log(randomSong)
       setTimeout(yourFunction, 0);
     }
 
+  }
     yourFunction();
 
   } catch (error) {
@@ -51,7 +53,7 @@ async function putWallpaper(where) {
     yourFunction();
   }
 
-
+  
 
 
 
@@ -77,18 +79,12 @@ onAuthStateChanged(auth, user => {
     let nav = document.querySelector('#navbar')
     let son = nav.firstElementChild
     let logOutBtn = son.shadowRoot.querySelector("#LogOutBtn")
-    console.log(logOutBtn)
-
 
     addBtnLogOut(logOutBtn)
 
 
   } else {
 
-    console.log('Not logged');
-    document.querySelector("#logOutApp").innerHTML = ""
-    document.querySelector("#verif").innerHTML = ""
   }
 
 });
-
