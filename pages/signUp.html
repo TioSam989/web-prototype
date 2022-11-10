@@ -36,14 +36,14 @@
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <div class="flex flex-col w-full lg:flex-col z-0">
                 <div class="grid flex-grow h-50 card bg-base-300 rounded-box place-items-center">
-                    <form class="myFormMeh">
+                    <form class="myFormMeh" autocomplete="off">
 
                         <h2 class="text-xl text-secondary text-center m-4 ">
                             <span
                                     class="text-primary">M</span>usic <span class="text-primary">F</span>inder
                         </h2>
                         
-                        <div class="form-control w-full max-w-xs">
+                        <div class="form-control w-full max-w-md">
 
                             <div class="flex flex-row">
 
@@ -53,7 +53,7 @@
                                     </label>
 
                                     <input id="name1" name="name1" type="text" 
-                                        class="input text-secondary input-bordered w-full max-w-xs input-primary"
+                                        class="input text-secondary input-bordered w-full input-primary"
                                         title="be creative and create a cool name1" autofocus required />
                                 </div>
 
@@ -64,7 +64,7 @@
                                     </label>
 
                                     <input id="name2" name="name2" type="text" 
-                                        class="input text-secondary input-bordered w-full max-w-xs input-primary"
+                                        class="input text-secondary input-bordered w-full input-primary"
                                         title="be creative and create a cool name2"  required />
                                 </div>
 
@@ -76,8 +76,8 @@
                                 <i id="emailSpin"></i>
                             </label>
                             <input id="emailUp" name="emailUp" type="text" 
-                                class="input text-secondary input-bordered w-full max-w-xs input-primary"
-                                title="Please provide a valid mail address" required />
+                                class="input text-secondary input-bordered w-full input-primary"
+                                title="Please provide a valid mail address" autocomplete="off" required />
 
                             <label class="label" for="passwordUp">
                                 <span class="label-text text-primary"><i
@@ -89,9 +89,9 @@
                                 </div>
                             </label>
                             <input id="passwordUp" name="passwordUp" type="password"
-                                class="input text-secondary input-bordered w-full max-w-xs input-primary"
+                                class="input text-secondary input-bordered w-full input-primary"
                                 title="Minimum length is 6 characters." 
-                                required />
+                                autocomplete="off" required />
                             <label class="label">
                                 <span class="label-text-alt"></span>
                                 <span id="passWarn" class="label-text-alt"></span>
