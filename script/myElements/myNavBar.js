@@ -57,9 +57,6 @@ class myNavBar extends HTMLElement {
     const fontawesomeKit = this.fontAw();
 
     const styleContent = document.querySelector('#fknStyleToMfNavBar').innerHTML
-    console.log(styleContent);
-
-    console.log(styleContent.innerText)
 
     this.shadowRoot.innerHTML += styleContent
 
@@ -70,6 +67,7 @@ class myNavBar extends HTMLElement {
         userData.displayName,
         userData.photoURL
       );
+
     } else {
       if (checkifIndex()) {
 
