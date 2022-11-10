@@ -11,4 +11,6 @@ async function getSptApiRandomResults() {
     let arrMusic = await getSptApiSearchResults(`${getRandomSongs()}`, `${getRandomOffset()}`)
 
     return arrMusic
-} 
+}
+
+export {getSptApiRandomResults}

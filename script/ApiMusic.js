@@ -16,6 +16,8 @@ const divResults = dadOf(listResults)
 
 const contentSearchDiv = dadOf(divResults)
 
+const trackDivMeh = document.querySelector('#mehMusicData')
+
 const appMusicRecomendations = document.querySelector("#appMusicRec")
 
 const debouncedgetAPISimilarData = debounce(getAPISimilarData, 2000)
@@ -217,9 +219,12 @@ async function SelectOpt(music, spt = false) {
 
     if (spt) {
         try {
+            console.log(music)
 
             try {
                 let similarData = await getSptApiSimilarResults(music)
+                console.log(similarData)
+                window.location.href = `../pages/musicSug.html?track=${music.trackId}&artist=${music.artistId}`;
             } catch (error) {
                 console.error(error)
             }
