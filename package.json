@@ -10,7 +10,7 @@
     "tw:watch": "npm run tw -- --watch",
     "prebuild": "npm run tw",
     "build": "vite build",
-    "postbuild": "npm run firebase deploy",
+    "postbuild": "firebase deploy",
     "meh": "firebase deploy"
   },
   "dependencies": {
