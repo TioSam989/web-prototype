@@ -27,12 +27,10 @@ submitDataSignUp.addEventListener('click', (e) => {
 
         try {
           if (!user.photoURL || user.photoURL == null || user.photoURL == undefined) {
-            console.log(user)
 
             updateProfile(auth.currentUser, {
               photoURL: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'
             }).then(() => {
-              console.log('User photo Updated')
             }).catch((error) => {
               console.error('something went wrong when tryin to change profile')
             });
@@ -47,7 +45,6 @@ submitDataSignUp.addEventListener('click', (e) => {
             updateProfile(auth.currentUser, {
               displayName: `${name}`
             }).then(() => {
-              console.log('user name updated')
               signOut(auth).then(() => {
                 redirectTo('../index.html')
               }).catch((error) => {
@@ -66,7 +63,6 @@ submitDataSignUp.addEventListener('click', (e) => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode)
 
         if (errorCode == 'auth/email-already-in-use') {
           debouncedalertCute(mehUE, 'info', 'email already in use')
@@ -77,7 +73,6 @@ submitDataSignUp.addEventListener('click', (e) => {
         // ..
       });
   } else {
-    console.log(!firstName || !lastName || !email || !password)
     debouncedalertCute(mehUE, 'success', 'please fill in all fields')
   }
 
@@ -94,8 +89,6 @@ loginGitHub.addEventListener('click', (e) => {
 
       // The signed-in user info.
       const user = result.user;
-      console.log(user)
-      console.log(provider.providerId)
 
       redirectTo("../index.html")
       // ...
@@ -110,7 +103,6 @@ loginGitHub.addEventListener('click', (e) => {
 
 
       debouncedalertCute(mehUE, 'warning', 'Something went wrong!')
-      console.log(errorMessage)
       // ...
     });
 
@@ -125,7 +117,6 @@ loginFacebook.addEventListener('click', (e) => {
     .then((result) => {
       // The signed-in user info.
       const user = result.user;
-      console.log(user);
 
       // This gives you a Facebook Access Token. You can use it to access the Facebook API.
       const credential = FacebookAuthProvider.credentialFromResult(result);
@@ -146,7 +137,6 @@ loginFacebook.addEventListener('click', (e) => {
       // The AuthCredential type that was used.
       const credential = FacebookAuthProvider.credentialFromError(error);
       debouncedalertCute(mehUE, 'warning', 'Something went wrong!')
-      console.log(errorMessage);
 
 
       // ...
@@ -167,9 +157,7 @@ loginGoogle.addEventListener('click', (e) => {
 
       redirectTo("../index.html")
 
-      console.log(user);
       // window.location = 'index.html';
-      // console.log(user);
       // ...
     }).catch((error) => {
       // Handle Errors here.
@@ -181,7 +169,6 @@ loginGoogle.addEventListener('click', (e) => {
       const credential = GoogleAuthProvider.credentialFromError(error);
       // ...
       debouncedalertCute(mehUE, 'warning', 'Something went wrong!')
-      console.log(error);
     });
 
 });
