@@ -56,15 +56,17 @@ function linkMe(hisEmail) {
 
 function addBtnLogOut(ele = null) {
   if (!ele) {
-    document.querySelector("#logOutApp").innerHTML = '<a class="text-red-500" id="logOut" >Logout UIIUIUI (ICON)</a>'
-    logOut.addEventListener('click', (e) => {
-      signOut(auth).then(() => {
-        localStorage.removeItem('crrUser')
-        console.log("Sign-out successful");
-      }).catch((error) => {
-        alert(errorMessage);
-      });
-    });
+    // document.querySelector("#logOutApp").innerHTML = '<a class="text-red-500" id="logOut" >Logout UIIUIUI (ICON)</a>'
+    // logOut.addEventListener('click', (e) => {
+    //   signOut(auth).then(() => {
+    //     localStorage.removeItem('crrUser')
+    //     console.log("Sign-out successful");
+    //   }).catch((error) => {
+    //     alert(errorMessage);
+    //   });
+    // });
+
+    console.log('logout but any user here')
   } else {
     // ele.innerHTML += '<i class="fa-solid fa-right-from-bracket"></i>'
     ele.innerHTML += '<i class="fa-solid fa-person-through-window"></i>'
