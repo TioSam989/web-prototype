@@ -1,18 +1,9 @@
 
-import { onAuthStateChanged, createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider } from 'firebase/auth';
+import { onAuthStateChanged, createUserWithEmailAndPassword, signOut,  updateProfile, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider } from 'firebase/auth';
 import { auth } from "../firebase"
 import { writeUserData, setLoading, alertCute, debouncedalertCute, redirectTo } from "./functions"
+
 import 'animate.css';
-
-
-onAuthStateChanged(auth, user => {
-  if (user) {
-    redirectTo("../index.html")
-  } else {
-    console.log(user)
-  }
-
-});
 
 submitDataSignUp.addEventListener('click', (e) => {
 
@@ -26,52 +17,50 @@ submitDataSignUp.addEventListener('click', (e) => {
   var email = document.querySelector('#emailUp').value
   var password = document.querySelector('#passwordUp').value
 
-  if (firstName || lastName || email || password) {
+  if (firstName && lastName && email && password) {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
 
         setLoading(true)
 
         var user = userCredential.user;
+
         try {
-          if (!user.photoURL) {
-            auth.currentUser.updateProfile({
-              photoURL: 'https://www.unigreet.com/wp-content/uploads/2021/01/smile-dp.jpg'
-            })
+          if (!user.photoURL || user.photoURL == null || user.photoURL == undefined) {
+            console.log(user)
+
+            updateProfile(auth.currentUser, {
+              photoURL: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'
+            }).then(() => {
+              console.log('User photo Updated')
+            }).catch((error) => {
+              console.error('something went wrong when tryin to change profile')
+            });
           }
+
         } catch (error) {
           console.error(error)
         } finally {
-          auth.currentUser.updateProfile({
-            displayName: name
 
-          }).then(() => {
-            console.log('Username is: ' + auth.currentUser.displayName)
-          }).catch((error) => {
-            console.log('An error was occured while updating the profile.')
-          })
+          try {
+
+            updateProfile(auth.currentUser, {
+              displayName: `${name}`
+            }).then(() => {
+              console.log('user name updated')
+              signOut(auth).then(() => {
+                redirectTo('../index.html')
+              }).catch((error) => {
+                // An error happened.
+              });
+
+            })
+
+          } catch (error) {
+            console.error(error.code)
+          }
+
         }
-
-
-
-
-
-
-        updateProfile(auth.currentUser, {
-          displayName: `${name}`
-        }).then(() => {
-          // Profile updated!
-          // ...
-        }).catch((error) => {
-          // An error occurred
-          // ...
-        });
-
-
-        setLoading(false, 'User created')
-        setTimeout(() => {
-          redirectTo("../index.html")
-        }, 1000);
 
       })
       .catch((error) => {
@@ -80,7 +69,9 @@ submitDataSignUp.addEventListener('click', (e) => {
         console.log(errorCode)
 
         if (errorCode == 'auth/email-already-in-use') {
-          debouncedalertCute(mehUE, 'success', 'email already in use')
+          debouncedalertCute(mehUE, 'info', 'email already in use')
+        }else{
+          debouncedalertCute(mehUE, 'waning', error.message)
         }
 
         // ..
