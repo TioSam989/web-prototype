@@ -3,9 +3,19 @@ import { auth } from "../firebase"
 
 function setLoading(cond=true, msg='Done'){
   console.log(cond)
+  alert(cond)
   console.log(msg)
 }
 
+function validatorMeh(dataMeh, pattern) {
+
+  if (dataMeh.match(pattern)) {
+    return true
+  } else {
+    return false
+  }
+
+}
 function alertCute(placeMeh = null, alertType = 'warning', message = 'something went wrong') {
   
   if (!placeMeh) {
@@ -52,6 +62,19 @@ function linkMe(hisEmail) {
       // ...
     });
 
+}
+
+function checkValue(valueMeh){
+  if(valueMeh){
+    let meh = valueMeh.replaceAll(/\s/g,'')
+    if(meh && meh!="" && meh!=null && meh!=undefined){
+      return true
+    }else{
+      return false
+    }
+  }else{
+    return false
+  }
 }
 
 function addBtnLogOut(ele = null) {
@@ -117,4 +140,4 @@ function redirectTo(where) {
   window.location = `${where}`
 }
 
-export { setLoading, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
+export { setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }

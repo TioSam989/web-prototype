@@ -1,7 +1,7 @@
 
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, onAuthStateChanged } from 'firebase/auth';
 import { auth } from "../firebase"
-import { redirectTo, alertCute, debouncedalertCute } from "./functions"
+import { redirectTo, alertCute, debouncedalertCute, validatorMeh } from "./functions"
 import { separeteClasses } from "./myElements/myNavBar"
 import 'animate.css';
 
@@ -38,15 +38,7 @@ submitDataSignIn.addEventListener('click', (e) => {
 
 });
 
-function validatorMeh(dataMeh, pattern) {
 
-  if (dataMeh.match(pattern)) {
-    return true
-  } else {
-    return false
-  }
-
-}
 
 const emailInut = document.querySelector('#emailIn')
 const spinEmail = document.querySelector('#emailSpin')
@@ -255,3 +247,5 @@ loginGoogle.addEventListener('click', (e) => {
     });
 
 });
+
+export {validatorMeh}
