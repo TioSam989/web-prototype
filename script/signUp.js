@@ -46,7 +46,7 @@ submitDataSignUp.addEventListener('click', (e) => {
               displayName: `${name}`
             }).then(() => {
               signOut(auth).then(() => {
-                redirectTo('../index.html')
+                redirectTo('./signIn.html')
               }).catch((error) => {
                 // An error happened.
               });
@@ -90,7 +90,11 @@ loginGitHub.addEventListener('click', (e) => {
       // The signed-in user info.
       const user = result.user;
 
-      redirectTo("../index.html")
+      signOut(auth).then(() => {
+        redirectTo('./signIn.html')
+      }).catch((error) => {
+        console.error(error)
+      });
       // ...
     }).catch((error) => {
       // Handle Errors here.
@@ -122,7 +126,11 @@ loginFacebook.addEventListener('click', (e) => {
       const credential = FacebookAuthProvider.credentialFromResult(result);
       const accessToken = credential.accessToken;
 
-      redirectTo("../index.html")
+      signOut(auth).then(() => {
+        redirectTo('./signIn.html')
+      }).catch((error) => {
+        console.error(error)
+      });
 
 
 
@@ -155,7 +163,11 @@ loginGoogle.addEventListener('click', (e) => {
       // The signed-in user info.
       const user = result.user;
 
-      redirectTo("../index.html")
+      signOut(auth).then(() => {
+        redirectTo('./signIn.html')
+      }).catch((error) => {
+        console.error(error)
+      });
 
       // window.location = 'index.html';
       // ...
