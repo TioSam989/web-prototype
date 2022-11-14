@@ -1,6 +1,6 @@
 import { onAuthStateChanged, signOut, getAuth, sendEmailVerification } from "firebase/auth"
 import { auth } from "../firebase"
-import {  addBtnLogOut } from "./functions"
+import { addBtnLogOut } from "./functions"
 import '../style/output.css';
 import 'animate.css';
 import { getSptApiRandomResults } from './sptRandom'
@@ -12,31 +12,34 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 if (true) {
 
   putWallpaper(placeImg)
+  let meh = document.querySelector('HTML')
+  if (!meh.hasAttribute('data-theme')) {
+    meh.setAttribute('data-theme', 'dark')
+  }
 }
 
 async function putWallpaper(where) {
-
 
   try {
 
     async function yourFunction() {
 
       let randomSong = await getSptApiRandomResults()
-      if(randomSong){
+      if (randomSong) {
 
         for (let index = 0; index < randomSong.length; index++) {
-          
-        where.removeAttribute('style')
-        where.setAttribute('style', `background-image: url(${randomSong[index].musicData.album.images[0].url});`)
-        await delay(5000)
 
+          where.removeAttribute('style')
+          where.setAttribute('style', `background-image: url(${randomSong[index].musicData.album.images[0].url});`)
+          await delay(5000)
+
+        }
+
+
+        setTimeout(yourFunction, 0);
       }
 
-      
-      setTimeout(yourFunction, 0);
     }
-
-  }
     yourFunction();
 
   } catch (error) {
@@ -53,7 +56,7 @@ async function putWallpaper(where) {
     yourFunction();
   }
 
-  
+
 
 
 
@@ -73,6 +76,62 @@ async function putWallpaper(where) {
 
 }
 
+const navBarMeh = document.querySelector('#navbar')
+const meh2 = navBarMeh.firstElementChild;
+
+let changerMeh
+
+setTimeout(() => {
+   changerMeh = meh2.shadowRoot.querySelector('#themeChanger')
+  
+}, 100);
+
+
+function getCrrTheme() {
+  let elBroMeh = document.querySelector('HTML')
+  let meh = elBroMeh.getAttribute('data-theme')
+  return `${meh}`
+}
+
+function changeTheme(themeToPut) {
+  let meh = document.querySelector('HTML')
+
+  if (themeToPut == 'dark') {
+    meh.removeAttribute('data-theme')
+    meh.setAttribute('data-theme', 'aqua')
+  } else {
+    meh.removeAttribute('data-theme')
+    meh.setAttribute('data-theme', 'dark')
+  }
+}
+
+function putRightIconMeh() {
+  const mehEl = document.querySelector('HTML')
+  if (mehEl.getAttribute('data-theme') == 'dark') {
+    changerMeh.cheked = false
+
+  } else {
+    changerMeh.cheked = true
+
+  }
+}
+
+function themeAddEvent() {
+
+  changerMeh.addEventListener('click', () => {
+    if (changerMeh.checked) {
+      changerMeh.cheked = false
+      changeTheme('dark')
+    } else {
+      changerMeh.cheked = true
+      changeTheme('light')
+    }
+
+  })
+
+
+}
+
 onAuthStateChanged(auth, user => {
   if (user) {
 
@@ -82,8 +141,17 @@ onAuthStateChanged(auth, user => {
 
     addBtnLogOut(logOutBtn)
 
+    putRightIconMeh()
+
+    setTimeout(() => {
+      themeAddEvent()
+    }, 5000);
+
+
 
   } else {
+
+    themeAddEvent()
 
   }
 
