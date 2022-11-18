@@ -28,7 +28,9 @@ export default defineConfig({
         myComp: resolve(__dirname, 'script/myComponents.js'),
         navComp: resolve(__dirname, 'script/myElements/myNavBar.js'),
         themeChooser: resolve(__dirname, 'script/myElements/themeChooser.js'),
-        outputCSS: resolve(__dirname, 'style/output.css')
+        outputCSS: resolve(__dirname, 'style/output.css'),
+        profilePage: resolve(__dirname, 'pages/pages.css')
+
       }
     }
   }
