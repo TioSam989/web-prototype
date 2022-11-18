@@ -19,6 +19,8 @@ let isLogged = () => {
   }
 };
 
+let dir = checkifIndex()==true ? '.' : '..'
+
 function separeteClasses(classesMeh) {
   let list = classesMeh.split(" ");
 
@@ -262,12 +264,10 @@ class myNavBar extends HTMLElement {
     );
 
     const liMehProfile = document.createElement("li");
-    liMehProfile.innerHTML = "<a>Profile</a>";
+    liMehProfile.innerHTML = `<a href="${dir}/pages/profile.html">Profile</a>`;
 
     const liAnchor = document.createElement("a");
     liAnchor.classList.add("justify-between");
-    
-    liAnchor.innerHTML = "Profile" ;
 
     const liSet = document.createElement("li");
     liSet.innerHTML = "<a>Theme</a>";
