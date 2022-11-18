@@ -132,27 +132,43 @@ function themeAddEvent() {
 
 }
 
+function pageMustHaveAll() {
+
+  const damn = document.querySelector("#dontDoAllThatShitHere");
+
+  if (!damn) {
+    return true;
+  } else {
+    false;
+  }
+}
+
 onAuthStateChanged(auth, user => {
   if (user) {
+    if(pageMustHaveAll()){
 
-    let nav = document.querySelector('#navbar')
-    let son = nav.firstElementChild
-    let logOutBtn = son.shadowRoot.querySelector("#LogOutBtn")
-
-    addBtnLogOut(logOutBtn)
-
-    putRightIconMeh()
-
+      
+      let nav = document.querySelector('#navbar')
+      let son = nav.firstElementChild
+      let logOutBtn = son.shadowRoot.querySelector("#LogOutBtn")
+      
+      addBtnLogOut(logOutBtn)
+      
+      putRightIconMeh()
+      
     setTimeout(() => {
       themeAddEvent()
-    }, 5000);
-
-
+    }, 100);
+  }else{
+    
+  }
+    
+    
 
   } else {
 
     themeAddEvent()
-
+    
   }
 
 });
