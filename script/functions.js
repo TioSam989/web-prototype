@@ -1,10 +1,22 @@
 import { onAuthStateChanged, signOut, getAuth, sendEmailVerification } from "firebase/auth"
 import { auth } from "../firebase"
 
+const debouncedalertCute = debounce(alertCute, 2000)
+
 function setLoading(cond=true, msg='Done'){
   console.log(cond)
   alert(cond)
   console.log(msg)
+}
+
+function checkifIndex() {
+  const dawg = document.querySelector("#indexMeh");
+
+  if (dawg) {
+    return true;
+  } else {
+    false;
+  }
 }
 
 function validatorMeh(dataMeh, pattern) {
@@ -16,6 +28,7 @@ function validatorMeh(dataMeh, pattern) {
   }
 
 }
+
 function alertCute(placeMeh = null, alertType = 'warning', message = 'something went wrong') {
   
   if (!placeMeh) {
@@ -38,8 +51,6 @@ function alertCute(placeMeh = null, alertType = 'warning', message = 'something 
   }, 5000);
 }
 
-const debouncedalertCute = debounce(alertCute, 2000)
-
 function debounce(fn, delay = 1) {
   let previousTimeOut;
   return function (...params) {
@@ -50,7 +61,6 @@ function debounce(fn, delay = 1) {
       }, delay);
   }
 }
-
 
 function linkMe(hisEmail) {
   const auth = getAuth()
@@ -140,4 +150,48 @@ function redirectTo(where) {
   window.location = `${where}`
 }
 
-export { setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
+function getCrrTheme() {
+  let elBroMeh = document.querySelector('HTML')
+  let meh = elBroMeh.getAttribute('data-theme')
+  return `${meh}`
+}
+
+function changeTheme(themeToPut) {
+  let meh = document.querySelector('HTML')
+
+  if (themeToPut == 'dark') {
+    meh.removeAttribute('data-theme')
+    meh.setAttribute('data-theme', 'aqua')
+  } else {
+    meh.removeAttribute('data-theme')
+    meh.setAttribute('data-theme', 'dark')
+  }
+
+  storageItemControl('set','theme', getCrrTheme())
+
+}
+
+function pageMustHaveAll() {
+
+  const damn = document.querySelector("#dontDoAllThatShitHere");
+
+  if (!damn) {
+    return true;
+  } else {
+    false;
+  }
+}
+
+function storageItemControl(action, itemName, valueItem) {
+
+  if (action == 'set') {
+    if (localStorage.getItem(itemName)) {
+      localStorage.removeItem(itemName)
+      localStorage.setItem(itemName, valueItem)
+    } else {
+      localStorage.setItem(itemName, valueItem)
+    }
+  }
+}
+
+export {getCrrTheme, changeTheme,storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
