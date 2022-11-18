@@ -32,7 +32,7 @@ function validatorMeh(dataMeh, pattern) {
 function alertCute(placeMeh = null, alertType = 'warning', message = 'something went wrong') {
   
   if (!placeMeh) {
-    placeMeh = docuemnt.querySelector('#mehmehmeh')
+    placeMeh = document.querySelector('#mehmehmeh')
   }
 
 
@@ -161,10 +161,10 @@ function changeTheme(themeToPut) {
 
   if (themeToPut == 'dark') {
     meh.removeAttribute('data-theme')
-    meh.setAttribute('data-theme', 'aqua')
+    meh.setAttribute('data-theme', 'dark')
   } else {
     meh.removeAttribute('data-theme')
-    meh.setAttribute('data-theme', 'dark')
+    meh.setAttribute('data-theme', 'aqua')
   }
 
   storageItemControl('set','theme', getCrrTheme())

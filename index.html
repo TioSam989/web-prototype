@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style/output.css">
   <script src="https://kit.fontawesome.com/6a4613757d.js" crossorigin="anonymous"></script>
+  <script type="module" src="./script/script.js"></script>
   <title>MF - Home Page</title>
 </head>
 
@@ -18,7 +19,7 @@
       <div id="indexMeh" hidden></div>
 
       <span id="navbar">
-        <my-nav-bar>
+        <my-nav-bar >
           <div id="fknStyleToMfNavBar">
             <style>
               @import "./style/output.css";
@@ -31,12 +32,14 @@
         <div class="hero-overlay bg-opacity-60"></div>
         <div
           class="hero-content backdrop-blur-sm shadow-md drop-shadow-xl bg-neutral/30 shadow-2xl shadow-neutral text-center text-neutral-content">
-          <div class="">
+          <div>
 
-            <div class="max-w-md">
-              <h1 class="mb-5 text-5xl font-bold"><span class="text-primary">M</span>usic <span
-                  class="text-primary">F</span>inder</h1>
-              <p class="mb-5">MF is a small place for music listeners, where they can find other musics easier</p>
+            <div class="max-w-md animate__animated animate__pulse">
+              <h1 class="mb-5 text-5xl font-bold text-accent-content">
+                <span><span class="text-primary">M</span>usic</span>
+                <span><span class="text-primary">F</span>inder</span>
+              </h1>
+              <p class="mb-5 text-accent-content">MF is a small place for music listeners, where they can find other musics easier</p>
               <a href="./pages/musicResult.html"><button class="btn btn-primary">Try it out</button></a>
             </div>
           </div>
@@ -63,12 +66,12 @@
               <p> </p>
 
               <div>
-                <div class="card w-96 bg-info shadow-xl image-full">
+                <div class="card w-96 bg-info hover:bg-primary shadow-xl image-full ">
                   <div class="card-body">
-                    <h2 class="card-title">Go to <a href="./pages/musicResult.html"><span
+                    <h2 class="card-title text-accent-content">Go to <a href="./pages/musicResult.html"><span
                           class="text-primary">MF</span></a> Page <i
                         class="fa-solid fa-person-running text-primary pl-4"></i></h2>
-                    <p>if you are logged in your experience may be better</p>
+                    <p class="text-accent-content">if you are logged in your experience may be better</p>
                     <div class="card-actions justify-end">
                       <button class="btn btn-primary">
                         Next
@@ -87,11 +90,11 @@
               </div>
 
               <div>
-                <div class="card w-96 bg-info-content shadow-xl image-full">
+                <div class="card w-96 bg-info-content hover:bg-primary shadow-xl image-full">
                   <div class="card-body">
-                    <h2 class="card-title">Search for a song <i
+                    <h2 class="card-title text-accent-content">Search for a song <i
                         class="fa-solid fa-magnifying-glass text-primary pl-2"></i></h2>
-                    <p>after search click on the song you were looking for</p>
+                    <p class="text-accent-content">after search click on the song you were looking for</p>
                     <div class="card-actions justify-end">
                       <button class="btn btn-primary">
                         Next
@@ -110,10 +113,10 @@
               </div>
 
               <div>
-                <div class="card w-96 bg-success shadow-xl image-full">
+                <div class="card w-96 bg-success hover:bg-primary shadow-xl image-full">
                   <div class="card-body">
-                    <h2 class="card-title">Enjoy <i class="fa-solid fa-thumbs-up text-primary pl-2"></i></h2>
-                    <p>listen to the similar songs results</p>
+                    <h2 class="card-title text-accent-content">Enjoy <i class="fa-solid fa-thumbs-up text-primary pl-2"></i></h2>
+                    <p class="text-accent-content">listen to the similar songs results</p>
                     <p> </p>
                     <div class="card-actions justify-end">
                       <button class="btn btn-primary">done <i class="fa-solid fa-check pl-4"></i></button>
@@ -133,8 +136,6 @@
           <div class="flex justify-center px-4 py-16 bg-base-100">
             <div class="flex flex-row space-x-10 content-center md:space-x-10 sm:space-x-5">
               
-
-             
               <div>
                 <div class="card w-96 bg-base-100 shadow-xl">
 
@@ -143,11 +144,11 @@
 
 
                   <div class="card-body items-center text-center">
-                    <h2 class="card-title">Davi Neves<div class="badge badge-secondary">Developer</div>
+                    <h2 class="card-title text-accent-content">Davi Neves<div class="badge badge-secondary">Developer</div>
                       <div class="badge badge-primary">Designer</div>
                     </h2>
 
-                    <p>Performed the function of developing the project in the code part</p>
+                    <p class="text-accent-content">Performed the function of developing the project in the code part</p>
                     <div class="card-actions">
                       <a href="https://www.instagram.com/dav1_neves/" target="_blank">
                         <button
@@ -165,8 +166,6 @@
                   </div>
                 </div>
               </div>
-
-
 
               <!-- <div>
                 <div class="card w-96 bg-base-100 shadow-xl">
@@ -197,19 +196,15 @@
                 </div>
               </div> -->
 
-
-
             </div>
           </div>
-
         </div>
-
       </div>
 
       <footer class="footer p-10 bg-neutral text-neutral-content">
         <div>
           <h1 class="text-primary title">MF</h1>
-          <p>MF Industries Ltd.<br />Providing help to music listeners since 2022</p>
+          <p class="text-accent-content">MF Industries Ltd.<br />Providing help to music listeners since 2022</p>
         </div>
         <div>
           <span class="footer-title">Social</span>

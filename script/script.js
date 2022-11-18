@@ -1,6 +1,6 @@
-import { onAuthStateChanged, signOut, getAuth, sendEmailVerification } from "firebase/auth"
+import { onAuthStateChanged, signOut, deleteUser, getAuth, sendEmailVerification } from "firebase/auth"
 import { auth } from "../firebase"
-import { addBtnLogOut, checkifIndex, getCrrTheme, changeTheme, pageMustHaveAll } from "./functions"
+import { addBtnLogOut, checkifIndex, getCrrTheme, changeTheme, pageMustHaveAll, redirectTo, storageItemControl } from "./functions"
 import '../style/output.css';
 import 'animate.css';
 import { getSptApiRandomResults } from './sptRandom'
@@ -23,6 +23,7 @@ if (checkifIndex()) {
   if (!meh.hasAttribute('data-theme')) {
     meh.setAttribute('data-theme', 'dark')
   }
+
 }
 
 async function putWallpaper(where) {
@@ -111,16 +112,80 @@ function themeAddEvent() {
     } else {
       changerMeh.cheked = true
       changeTheme('light')
-    } 3
+    }
   })
+}
+
+function checkIfProfile() {
+  let mah = document.querySelector('#profilePage')
+  if (mah) {
+    return true
+  } else {
+    return false
+  }
+}
+
+async function buildProfileDiv() {
+
+  const userMeh = JSON.parse(localStorage.getItem('user'))
+
+  console.log(userMeh)
+
+  const places = {
+    img: document.querySelector('#userImgPlace'),
+    name: document.querySelector('#userNamePlace'),
+    email: document.querySelector('#userEmailPlace'),
+    date: document.querySelector('#userAccountDate')
+  }
+
+  places.img.src = `${userMeh.photoURL}`
+  places.name.innerHTML = `${userMeh.displayName}`
+  places.email.innerHTML = `${userMeh.email}`
+  places.date.innerHTML = `${gimmeDatePls(await userMeh.createdAt)}`
+
+  const deleteAccountBtn = document.querySelector('#deleteUserAccount')
+
+  deleteAccountBtn.addEventListener('click', () => {
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    deleteUser(user).then(() => {
+      localStorage.removeItem('user')
+      signOut(auth).then(() => {
+        alert('User deleted, u are being redirected')
+        redirectTo('../index.html')
+      }).catch((err) => {
+        console.error(err)
+      })
+    }).catch((error) => {
+      if (error.code == 'auth/requires-recent-login') {
+        alert('To delete your account, you must have signed in recently');
+      }
+    });
+
+  })
+
+
+}
+
+function gimmeDatePls(timestampedDate) {
+
+  const date = new Date(+timestampedDate)
+  const dateFormat = date.getHours() + ":" + date.getMinutes() + ", " + date.toDateString()
+
+  return dateFormat
+
 }
 
 onAuthStateChanged(auth, user => {
 
+  controlUserLocation()
   try {
 
-
     if (user) {
+      localStorage.setItem('user', JSON.stringify(user))
+
       if (pageMustHaveAll()) {
         let nav = document.querySelector('#navbar')
         let son = nav.firstElementChild
@@ -133,7 +198,14 @@ onAuthStateChanged(auth, user => {
           themeAddEvent()
         }, 100);
       }
+
+      if (checkIfProfile()) {
+        buildProfileDiv()
+      }
     } else {
+      if (localStorage.getItem('user')) {
+        localStorage.removeItem('user')
+      }
       setTimeout(() => {
         putRightIconMeh()
         themeAddEvent()
@@ -148,8 +220,36 @@ onAuthStateChanged(auth, user => {
 
 });
 
-function putThemeAccordinglyStorage(){
-  
+function putThemeAccordinglyStorage() {
+
   changeTheme(localStorage.getItem("theme"))
 
+}
+
+function isPrivatePage() {
+  let meh = document.querySelector('#mustHaveUser')
+
+  if (meh) {
+    return true
+  } else {
+    return false
+  }
+}
+
+function isOutsidePage() {
+  let moh = document.querySelector('#notUsersHere')
+
+  if (meh) {
+    return true
+  } else {
+    return false
+  }
+}
+
+function controlUserLocation() {
+  if (isPrivatePage()) {
+    if (!localStorage.getItem('user')) {
+      redirectTo('../index.html')
+    }
+  }
 }

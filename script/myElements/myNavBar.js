@@ -325,6 +325,7 @@ class myNavBar extends HTMLElement {
 
   createAnchor() {
     const anchor = document.createElement("a");
+    anchor.classList.add('text-accent-content')
     anchor.innerHTML = `<span class="text-primary">M</span>usic <span class="text-primary">F</span>inder`;
     anchor.setAttribute("href", "./index.html");
     anchor.classList.add(

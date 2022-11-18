@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="../style/output.css">
     <script src="https://kit.fontawesome.com/6a4613757d.js" crossorigin="anonymous"></script>
-
+    <script type="module" src="../script/script.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MF - Profile</title>
 </head>
 
 <body>
     <span id="dontDoAllThatShitHere"></span>
+    <span id="mustHaveUser"></span>
+    <span id="profilePage"></span>
     <div class="navbar bg-base-500">
         <div class="navbar-start">
             <a href="../index.html" id="backMeh"><button class="btn btn-primary btn-xs sm:btn-xs md:btn-sm lg:btn-md">
@@ -29,7 +31,38 @@
         <div class="navbar-end">
         </div>
     </div>
-    imma profile page bruh
+    <div class="gimmeSpace ">
+
+        
+
+        <div class="grid place-items-center h-screen">
+
+            <div class="flex flex-col space-x-10 content-center md:space-y-10 sm:space-y-5">
+
+                <div class="card w-96 bg-accent animate__animated animate__rubberBand">
+                    <figure>
+                    
+                        <div class="avatar pt-4 animate__animated animate__flipInY">
+                            <div class="w-24  mask mask-hexagon hover:mask-circle ">
+                                <img id="userImgPlace" src="https://placeimg.com/400/225/arch" alt="user profile image" />
+                            </div>
+                          </div>
+                    </figure>
+                    <div class="card-body items-center text-cente">
+                        <h2  title="name" class="card-title text-accent-content animate__animated animate__tada"><span id="userNamePlace">Name</span> <div class="badge badge-secondary text-accent-content"> Name </div></h2>
+                        <h2  title="email" class="card-title text-accent-content animate__animated animate__jello"><span id="userEmailPlace">Email</span> <div class="badge badge-primary text-accent-content"> Email </div> </h2>
+                        <h2  title="user since" class="card-title text-accent-content animate__animated animate__wobble"><span id="userAccountDate">date</span> <div class="badge badge-warning text-accent-content"> Created At </div></h2>
+
+                        <div class="card-actions justify-end">
+                            <button id="deleteUserAccount" class="btn btn-error text-error-content mt-4 animate__animated animate__wobble">Delete Account</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </body>
 
 </html>
