@@ -22,6 +22,7 @@ export default defineConfig({
         SignInJs: resolve(__dirname, 'script/SignIn.js'),
         SignUpJs: resolve(__dirname, 'script/SignUp.js'),
         sptJs: resolve(__dirname, 'script/spt.js'),
+        sptRandomJs: resolve(__dirname, 'script/sptRandom.js'),
         sptSearchJs: resolve(__dirname, 'script/sptSearch.js'),
         sptSimilarJs: resolve(__dirname, 'script/sptSimilar.js'),
         sptTokenJs: resolve(__dirname, 'script/sptToken.js'),
@@ -29,8 +30,9 @@ export default defineConfig({
         navComp: resolve(__dirname, 'script/myElements/myNavBar.js'),
         themeChooser: resolve(__dirname, 'script/myElements/themeChooser.js'),
         outputCSS: resolve(__dirname, 'style/output.css'),
-        profilePage: resolve(__dirname, 'pages/pages.css')
-
+        profilePage: resolve(__dirname, 'pages/profile.html'),
+        audScr: resolve(__dirname, './script/audScr.js'),
+        mainScript: resolve(__dirname, './script/script.js')
       }
     }
   }
