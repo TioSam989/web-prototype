@@ -32,7 +32,11 @@ export default defineConfig({
         outputCSS: resolve(__dirname, 'style/output.css'),
         profilePage: resolve(__dirname, 'pages/profile.html'),
         audScr: resolve(__dirname, './script/audScr.js'),
-        mainScript: resolve(__dirname, './script/script.js')
+        mainScript: resolve(__dirname, './script/script.js'),
+        artistImg: resolve(__dirname, './img/artist.jpg'),
+        designerImg: resolve(__dirname, './img/designer.jpg'),
+        developerImg: resolve(__dirname, './img/developer.jpg'),
+        profileImg: resolve(__dirname, './img/profileForNow.jpg')
       }
     }
   }
