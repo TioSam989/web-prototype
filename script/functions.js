@@ -3,7 +3,7 @@ import { auth } from "../firebase"
 
 const debouncedalertCute = debounce(alertCute, 2000)
 
-function setLoading(cond=true, msg='Done'){
+function setLoading(cond = true, msg = 'Done') {
   console.log(cond)
   alert(cond)
   console.log(msg)
@@ -19,6 +19,7 @@ function checkifIndex() {
   }
 }
 
+
 function validatorMeh(dataMeh, pattern) {
 
   if (dataMeh.match(pattern)) {
@@ -30,7 +31,7 @@ function validatorMeh(dataMeh, pattern) {
 }
 
 function alertCute(placeMeh = null, alertType = 'warning', message = 'something went wrong') {
-  
+
   if (!placeMeh) {
     placeMeh = document.querySelector('#mehmehmeh')
   }
@@ -38,7 +39,7 @@ function alertCute(placeMeh = null, alertType = 'warning', message = 'something 
 
   placeMeh.innerHTML = `<div class="alert alert-${alertType} shadow-lg"> <div> <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> <span>${alertType}: ${message}!</span> </div> <div class="flex-none"></div> </div>`
   placeMeh.classList.add('animate__backInDown')
-  
+
   setTimeout(() => {
     placeMeh.classList.add('animate__backOutDown')
     setTimeout(() => {
@@ -54,11 +55,11 @@ function alertCute(placeMeh = null, alertType = 'warning', message = 'something 
 function debounce(fn, delay = 1) {
   let previousTimeOut;
   return function (...params) {
-      clearTimeout(previousTimeOut)
+    clearTimeout(previousTimeOut)
 
-      previousTimeOut = setTimeout(() => {
-          fn(...params)
-      }, delay);
+    previousTimeOut = setTimeout(() => {
+      fn(...params)
+    }, delay);
   }
 }
 
@@ -74,15 +75,15 @@ function linkMe(hisEmail) {
 
 }
 
-function checkValue(valueMeh){
-  if(valueMeh){
-    let meh = valueMeh.replaceAll(/\s/g,'')
-    if(meh && meh!="" && meh!=null && meh!=undefined){
+function checkValue(valueMeh) {
+  if (valueMeh) {
+    let meh = valueMeh.replaceAll(/\s/g, '')
+    if (meh && meh != "" && meh != null && meh != undefined) {
       return true
-    }else{
+    } else {
       return false
     }
-  }else{
+  } else {
     return false
   }
 }
@@ -167,7 +168,7 @@ function changeTheme(themeToPut) {
     meh.setAttribute('data-theme', 'aqua')
   }
 
-  storageItemControl('set','theme', getCrrTheme())
+  storageItemControl('set', 'theme', getCrrTheme())
 
 }
 
@@ -182,6 +183,25 @@ function pageMustHaveAll() {
   }
 }
 
+function buildSimpleMusicCard(image, name, band, song, place) {
+
+  place.innerHTML += `<div class="card card-side bg-base-100 shadow-xl">
+      <div class="avatar">
+          <div class="w-32 rounded">
+              <img src="${image}" />
+          </div>
+      </div>
+      <div class="card-body">
+          <h2 id="namePlace" class="card-title">${name}</h2>
+          <p id="bandPlace">${band}</p>
+          <div class="card-actions justify-end">
+              <button class="btn btn-primary"><i class="fa-solid fa-play"></i></button>
+          </div>
+      </div>
+  </div>`
+  return true
+}
+
 function storageItemControl(action, itemName, valueItem) {
 
   if (action == 'set') {
@@ -194,4 +214,4 @@ function storageItemControl(action, itemName, valueItem) {
   }
 }
 
-export {getCrrTheme, changeTheme,storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
+export { getCrrTheme, buildSimpleMusicCard, changeTheme, storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }

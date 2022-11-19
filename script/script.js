@@ -9,6 +9,8 @@ import styled from "daisyui/dist/styled";
 const placeImg = document.querySelector('#imgPlace')
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
+let dataUserMusic
+
 let navBarMeh
 let meh2
 
@@ -24,6 +26,10 @@ if (checkifIndex()) {
     meh.setAttribute('data-theme', 'dark')
   }
 
+}
+
+if (document.querySelector('#availableDataLonger')) {
+  dataUserMusic = document.querySelector('#availableDataLonger')
 }
 
 async function putWallpaper(where) {
@@ -64,24 +70,6 @@ async function putWallpaper(where) {
     yourFunction();
   }
 
-
-
-
-
-  // for (let index = 0; index < randomSong.length; index++) {
-
-  //   setTimeout(() => {
-  //     console.log(randomSong[index])
-  //     where.removeAttribute('style')
-  //     where.setAttribute('style', `background-image: url(${randomSong[index].musicData.album.images[0].url});`)
-  //   }, 3000)
-  // }
-
-  // setTimeout(() => {
-  //   // where.removeAttribute('style')
-  //   where.setAttribute('style', `background-image: url(${img});`)
-  // }, 2000);
-
 }
 
 let changerMeh
@@ -89,7 +77,6 @@ let changerMeh
 if (pageMustHaveAll()) {
   setTimeout(() => {
     changerMeh = meh2.shadowRoot.querySelector('#themeChanger')
-
   }, 100);
 }
 
@@ -166,7 +153,6 @@ async function buildProfileDiv() {
 
   })
 
-
 }
 
 function gimmeDatePls(timestampedDate) {
@@ -177,6 +163,7 @@ function gimmeDatePls(timestampedDate) {
   return dateFormat
 
 }
+
 
 onAuthStateChanged(auth, user => {
 
@@ -253,3 +240,5 @@ function controlUserLocation() {
     }
   }
 }
+
+
