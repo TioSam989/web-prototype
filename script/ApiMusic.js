@@ -3,7 +3,7 @@
 
 import { getSptApiSearchResults, getSptApiSimilarResults, sptToken, tokenData } from './spt' //spotify
 import { getAPISearchResults, getAPISimilarData } from './audScr'
-import { buildSimpleMusicCard } from './functions'
+import { buildSimpleMusicCard, addMusicControl } from './functions'
 import 'clickout-event';
 import '../style/output.css'
 
@@ -421,6 +421,9 @@ function buildLiMusic(trackId, artistId, name, artist, duration, place) {
                                         <div class="shrink-0 w-48">
                                             ${name} from ${artist}
                                         </div>
+                                         
+
+                                        
 
                                         <div class="flex-1 w-24">
                                             <span class="text-secondary">${duration}</span>
@@ -439,7 +442,6 @@ function convertMsToMin(msValue) {
     return min + ':' + sec
 }
 
-
 searchInput.addEventListener("input", async () => {
     resPlaceForReal.innerHTML = ""
     if (searchInput.value.replace(/\s/g, '') != "") {
@@ -449,7 +451,6 @@ searchInput.addEventListener("input", async () => {
         searchData.map(element => {
             buildLiMusic(element.trackId, element.artistId, element.name, element.artist, convertMsToMin(element.musicData.duration_ms), resPlaceForReal)
         });
-
     }
 });
 
@@ -462,10 +463,12 @@ searchInput.addEventListener("keypress", async (e) => {
         // searchResult.innerHTML += "meh"
 
         if (searchInput.value.replace(/\s/g, '') != "") {
+            searchInput.blur()
+            searchResult.innerHTML = ""
             let searchData = await getSptApiSearchResults(searchInput.value, 5, 10)
             console.log(searchData)
             searchData.map(element => {
-                buildSimpleMusicCard(element.musicData.album.images[0].url, element.name, element.artist, element.musicData.preview_url[0], searchResult)
+                buildSimpleMusicCard(element.musicData.album.images[0].url, element.name, element.artist, element.musicData.preview_url[0], searchResult, element.trackId, element.artistId)
             });
 
 
@@ -476,16 +479,25 @@ searchInput.addEventListener("keypress", async (e) => {
 
 searchBtnForReal.addEventListener('click', async () => {
     if (searchInput.value.replace(/\s/g, '') != "") {
+        searchResult.innerHTML = ""
+        searchInput.blur()
         let searchData = await getSptApiSearchResults(searchInput.value, 5, 10)
         console.log(searchData)
         searchData.map(element => {
-            buildSimpleMusicCard(element.musicData.album.images[0].url, element.name, element.artist, element.musicData.preview_url[0], searchResult)
+            buildSimpleMusicCard(element.musicData.album.images[0].url, element.name, element.artist, element.musicData.preview_url[0], searchResult, element.trackId, element.artistId)
         });
+        addMusicControl()
 
 
     }
 })
 
+function playMySng(el) {
+    let btn = el
+    let sng = el.querySelector('#myAudio')
+
+    console.log(sng)
+}
 
 
 export { hiddenElement, prepareArr, buildMusicSquare, musicNotFound }

@@ -3,11 +3,32 @@ import { auth } from "../firebase"
 import { addBtnLogOut, checkifIndex, getCrrTheme, changeTheme, pageMustHaveAll, redirectTo, storageItemControl } from "./functions"
 import '../style/output.css';
 import 'animate.css';
+import { getSptApiTrack } from './spt'
 import { getSptApiRandomResults } from './sptRandom'
 import styled from "daisyui/dist/styled";
 
 const placeImg = document.querySelector('#imgPlace')
 const delay = ms => new Promise(res => setTimeout(res, ms));
+
+function checkIfLastPage() {
+  if (document.querySelector('#musicSug')) {
+    lastPageFunc()
+  }
+}
+
+async function lastPageFunc() {
+  const crrSong = {
+    trackId: getUrlVar('track'),
+    artistId: getUrlVar('artist')
+  }
+
+  const music = await getSptApiTrack(crrSong.trackId)
+  console.log(music)
+
+  if (!crrSong.trackId || !crrSong.artistId) {
+    redirectTo('../index.html')
+  }
+}
 
 let dataUserMusic
 
@@ -82,12 +103,18 @@ if (pageMustHaveAll()) {
 
 function putRightIconMeh() {
   const mehEl = document.querySelector('HTML')
-  if (mehEl.getAttribute('data-theme') == 'dark') {
-    changerMeh.cheked = false
+  let changerMeh = meh2.shadowRoot.querySelector('#themeChanger')
 
-  } else {
-    changerMeh.cheked = true
+  if (changerMeh) {
 
+
+    if (mehEl.getAttribute('data-theme') == 'dark') {
+      changerMeh.cheked = false
+
+    } else {
+      changerMeh.cheked = true
+
+    }
   }
 }
 
@@ -165,6 +192,16 @@ function gimmeDatePls(timestampedDate) {
 }
 
 
+function getUrlVar(whichOne) {
+  const queryString = window.location.search
+  const urlParams = new URLSearchParams(queryString)
+
+  let elementChose = urlParams.get(whichOne)
+
+  return elementChose
+
+}
+
 onAuthStateChanged(auth, user => {
 
   controlUserLocation()
@@ -203,6 +240,7 @@ onAuthStateChanged(auth, user => {
 
   } finally {
     putThemeAccordinglyStorage()
+    checkIfLastPage()
   }
 
 });

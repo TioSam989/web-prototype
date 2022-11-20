@@ -183,9 +183,11 @@ function pageMustHaveAll() {
   }
 }
 
-function buildSimpleMusicCard(image, name, band, song, place) {
+function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId) {
 
-  place.innerHTML += `<div class="card card-side bg-base-100 shadow-xl">
+  
+
+  place.innerHTML += `<div class=" animate__animated animate__fadeInDown card card-side bg-base-100 shadow-xl hover:border-secondary hover:border-l-8">
       <div class="avatar">
           <div class="w-32 rounded">
               <img src="${image}" />
@@ -195,12 +197,53 @@ function buildSimpleMusicCard(image, name, band, song, place) {
           <h2 id="namePlace" class="card-title">${name}</h2>
           <p id="bandPlace">${band}</p>
           <div class="card-actions justify-end">
-              <button class="btn btn-primary"><i class="fa-solid fa-play"></i></button>
+          <a href="./musicSug.html?track=${trackId}&artist=${artistId}"><button class="btn btn-secondary">Get similar songs <i class="fa-solid fa-music pl-4"></i> </button></a>
+          <button id="musicBtn" onclick="playMySng(this)" class="btn btn-primary"><i class="fa-solid fa-play"></i>
+            <audio id="myAudio">
+              <source src="https://p.scdn.co/mp3-preview/98a1468ec96add9ce7640af619b76e7a0de965fb?cid=f995004f4afe4c18aa5f6a018907d428" type="audio/mpeg">
+            </audio>
+          </button>
+
           </div>
       </div>
   </div>`
+
+
   return true
 }
+
+function playAudio(audioMeh) {
+  audioMeh.play()
+
+}
+
+function pauseAudio(audioMeh) {
+  audioMeh.pause()
+
+}
+
+function musicStatus(audioMeh) {
+  if (audioMeh.paused) {
+    return 'paused'
+  } else {
+    return 'playing'
+  }
+}
+
+
+
+
+function addMusicControl() {
+  let x = document.querySelector('#myAudio')
+  let musicBtn = document.querySelector('#musicBtn')
+
+  musicBtn.addEventListener('click', () => {
+    
+    console.log(musicBtn.querySelector('#myAudio'))
+  })
+
+}
+
 
 function storageItemControl(action, itemName, valueItem) {
 
@@ -214,4 +257,4 @@ function storageItemControl(action, itemName, valueItem) {
   }
 }
 
-export { getCrrTheme, buildSimpleMusicCard, changeTheme, storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
+export { getCrrTheme, addMusicControl, buildSimpleMusicCard, changeTheme, storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
