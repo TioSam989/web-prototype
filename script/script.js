@@ -87,7 +87,7 @@ async function lastPageFunc() {
   console.log(recomendedSongs.tracks)
 
   recomendedSongs.tracks.map(element => {
-    
+
     recomendFunc(element, placeToRecomend)
   });
 
@@ -151,7 +151,7 @@ async function putWallpaper(where) {
 
           where.removeAttribute('style')
           where.setAttribute('style', `background-image: url(${randomSong[index].musicData.album.images[0].url});`)
-          await delay(500)
+          await delay(5000)
 
         }
 
