@@ -2,7 +2,6 @@ import { sptToken } from './sptToken'
 
 async function getSptApiTrack(musicId) {
 
-    console.log('im here')
     const URL = `https://api.spotify.com/v1/tracks/${musicId}`
     return await fetch(`${URL}`, {
         method: 'GET',

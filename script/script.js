@@ -1,10 +1,10 @@
 import { onAuthStateChanged, signOut, deleteUser, getAuth, sendEmailVerification } from "firebase/auth"
 import { auth } from "../firebase"
-import { addBtnLogOut, checkifIndex, getCrrTheme, changeTheme, pageMustHaveAll, redirectTo, storageItemControl } from "./functions"
+import { addBtnLogOut, checkifIndex, getCrrTheme, buildFinalMusicCard, changeTheme, pageMustHaveAll, redirectTo, storageItemControl, convertMsToMin, prepareString } from "./functions"
 import '../style/output.css';
 import 'animate.css';
-import { getSptApiTrack } from './spt'
-import { getSptApiRandomResults } from './sptRandom'
+import { getSptApiTrack, getSptApiSimilarResults, getSptApiRandomResults } from './spt'
+import { artists } from './sptSearch'
 import styled from "daisyui/dist/styled";
 
 const placeImg = document.querySelector('#imgPlace')
@@ -16,6 +16,52 @@ function checkIfLastPage() {
   }
 }
 
+function buildCrrMusicPlaceMeh(music) {
+  const namePlace = document.querySelector('#crrMusicName')
+  const artistPlace = document.querySelector('#crrMusicArtist')
+  const imagePlace = document.querySelector('#crrMusicImg')
+  const popularityPlace = document.querySelector('#crrSongPopularity')
+  const durationPlace = document.querySelector('#crrMusicDuration')
+  const realiseDatePlace = document.querySelector('#crrMusicRealiseDate')
+  const explicitedPlace = document.querySelector('#crrSongExplicited')
+  const spotifyLinkPlace = document.querySelector('#crrMusicSptLink')
+  const youtubeLinkPlace = document.querySelector('#crrMusicYtLink')
+  const soundcloudLinkPlace = document.querySelector('#crrMusicSdclLink')
+
+  const crrMusic = {
+    name: music.name,
+    artist: artists(music.artists, 'name'),
+    image: music.album.images[1].url,
+    bigImage: music.album.images[0].url,
+    popularity: music.popularity,
+    duration: music.duration_ms,
+    realiseDate: music.album.release_date,
+    explicited: music.explicit,
+    sptLink: music.external_urls.spotify,
+    ytLink: `https://www.youtube.com/results?search_query=${music.name}+from+${prepareString(artists(music.artists, 'name'))}`,
+    sdclLink: `https://soundcloud.com/search?q=${music.name}%20from%20${prepareString(artists(music.artists, 'name'))}`
+
+
+
+  }
+
+  namePlace.innerHTML = crrMusic.name
+  artistPlace.innerHTML = crrMusic.artist
+  imagePlace.src = crrMusic.image
+  popularityPlace.innerHTML = crrMusic.popularity
+  durationPlace.innerHTML = convertMsToMin(+crrMusic.duration)
+  realiseDatePlace.innerHTML = crrMusic.realiseDate
+  crrMusic.explicited ? explicitedPlace.classList.remove('hidden') : false
+  spotifyLinkPlace.setAttribute('href', crrMusic.sptLink)
+  youtubeLinkPlace.setAttribute('href', crrMusic.ytLink)
+  soundcloudLinkPlace.setAttribute('href', crrMusic.sdclLink)
+
+
+
+
+
+}
+
 async function lastPageFunc() {
   const crrSong = {
     trackId: getUrlVar('track'),
@@ -23,17 +69,56 @@ async function lastPageFunc() {
   }
 
   const music = await getSptApiTrack(crrSong.trackId)
+  const msc = {
+    trackId: music.id,
+    artistId: music.artists[0].id,
+    market: music.available_markets
+  }
+
+  const recomendedSongs = await getSptApiSimilarResults(msc)
+  const imgartist = document.querySelector('#artistImgPlace')
+  const placeToRecomend = document.querySelector('#recMus') 
+  recMus
+
   console.log(music)
+
+  buildCrrMusicPlaceMeh(music)
+
+  console.log(recomendedSongs.tracks)
+
+  recomendedSongs.tracks.map(element => {
+    
+    recomendFunc(element, placeToRecomend)
+  });
 
   if (!crrSong.trackId || !crrSong.artistId) {
     redirectTo('../index.html')
   }
+
 }
 
-let dataUserMusic
+function recomendFunc(music, placeRec) {
+  const crrMusic = {
+    name: music.name,
+    artist: artists(music.artists, 'name'),
+    trackId: music.id,
+    image: music.album.images[1].url,
+    bigImage: music.album.images[0].url,
+    popularity: music.popularity,
+    duration: music.duration_ms,
+    realiseDate: music.album.release_date,
+    explicited: music.explicit,
+    sptLink: music.external_urls.spotify,
+    ytLink: `https://www.youtube.com/results?search_query=${music.name}+from+${prepareString(artists(music.artists, 'name'))}`,
+    sdclLink: `https://soundcloud.com/search?q=${music.name}%20from%20${prepareString(artists(music.artists, 'name'))}`
 
-let navBarMeh
-let meh2
+  }
+
+  buildFinalMusicCard(crrMusic.name, crrMusic.artist, crrMusic.image, crrMusic.trackId, crrMusic.sptLink, crrMusic.ytLink, crrMusic.sdclLink,  placeRec)
+
+}
+
+let dataUserMusic, navBarMeh, meh2, changerMeh
 
 if (checkifIndex()) {
 
@@ -66,7 +151,7 @@ async function putWallpaper(where) {
 
           where.removeAttribute('style')
           where.setAttribute('style', `background-image: url(${randomSong[index].musicData.album.images[0].url});`)
-          await delay(5000)
+          await delay(500)
 
         }
 
@@ -93,12 +178,8 @@ async function putWallpaper(where) {
 
 }
 
-let changerMeh
-
 if (pageMustHaveAll()) {
-  setTimeout(() => {
-    changerMeh = meh2.shadowRoot.querySelector('#themeChanger')
-  }, 100);
+
 }
 
 function putRightIconMeh() {
@@ -217,10 +298,7 @@ onAuthStateChanged(auth, user => {
 
         addBtnLogOut(logOutBtn)
 
-        setTimeout(() => {
-          putRightIconMeh()
-          themeAddEvent()
-        }, 100);
+
       }
 
       if (checkIfProfile()) {
@@ -230,10 +308,7 @@ onAuthStateChanged(auth, user => {
       if (localStorage.getItem('user')) {
         localStorage.removeItem('user')
       }
-      setTimeout(() => {
-        putRightIconMeh()
-        themeAddEvent()
-      }, 100);
+
     }
 
   } catch (error) {

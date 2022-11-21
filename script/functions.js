@@ -165,11 +165,19 @@ function changeTheme(themeToPut) {
     meh.setAttribute('data-theme', 'dark')
   } else {
     meh.removeAttribute('data-theme')
-    meh.setAttribute('data-theme', 'aqua')
+    meh.setAttribute('data-theme', 'dark')
   }
 
   storageItemControl('set', 'theme', getCrrTheme())
 
+}
+
+function convertMsToMin(msValue) {
+  var ms = +msValue,
+    min = Math.floor((ms / 1000 / 60) << 0),
+    sec = Math.floor((ms / 1000) % 60);
+
+  return min + ':' + sec
 }
 
 function pageMustHaveAll() {
@@ -183,9 +191,55 @@ function pageMustHaveAll() {
   }
 }
 
+function buildFinalMusicCard(name, band, img, trackId,sptLink, ytLink, sldcLink, place) {
+  place.innerHTML += `<div class=" animate__animated animate__fadeInDown card card-side bg-base-100 shadow-xl ">
+  <div class="avatar">
+      <div class="w-32 rounded">
+          <img src="${img}" />
+      </div>
+  </div>
+  <div class="card-body">
+      <h2 id="namePlace" class="card-title">${name}</h2>
+      <p id="bandPlace">${band}</p>
+
+      <div class="flex flex-cow justify-between">
+
+          <div class="card-actions mt-2">
+
+              <a id="" href="${sptLink}" target="_blank">
+                  <button class="btn btn-circle bg-green-500 text-accent-content "><i
+                          class="fa-brands fa-spotify"></i></button>
+              </a>
+              <a id="" href="${ytLink}" target="_blank">
+                  <button class="btn btn-circle bg-red-500 text-accent-content "><i
+                          class="fa-brands fa-youtube"></i></button>
+              </a>
+              <a id="" href="${sldcLink}" target="_blank">
+                  <button class="btn btn-circle bg-orange-500 text-accent-content "><i
+                          class="fa-brands fa-soundcloud"></i></button>
+              </a>
+
+          </div>
+          <div class="">
+
+              <button id="musicBtn" onclick="playMySng(this)" class="btn btn-primary"><i
+                      class="fa-solid fa-play"></i>
+                  <audio id="myAudio">
+                      <source
+                          src="https://p.scdn.co/mp3-preview/98a1468ec96add9ce7640af619b76e7a0de965fb?cid=f995004f4afe4c18aa5f6a018907d428"
+                          type="audio/mpeg">
+                  </audio>
+              </button>
+          </div>
+      </div>
+  </div>
+
+</div>`
+}
+
 function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId) {
 
-  
+
 
   place.innerHTML += `<div class=" animate__animated animate__fadeInDown card card-side bg-base-100 shadow-xl hover:border-secondary hover:border-l-8">
       <div class="avatar">
@@ -217,6 +271,10 @@ function playAudio(audioMeh) {
 
 }
 
+function prepareString(someString) {
+  return someString.replaceAll(" ", "+")
+}
+
 function pauseAudio(audioMeh) {
   audioMeh.pause()
 
@@ -238,7 +296,7 @@ function addMusicControl() {
   let musicBtn = document.querySelector('#musicBtn')
 
   musicBtn.addEventListener('click', () => {
-    
+
     console.log(musicBtn.querySelector('#myAudio'))
   })
 
@@ -257,4 +315,4 @@ function storageItemControl(action, itemName, valueItem) {
   }
 }
 
-export { getCrrTheme, addMusicControl, buildSimpleMusicCard, changeTheme, storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
+export { getCrrTheme, buildFinalMusicCard, convertMsToMin, prepareString, addMusicControl, buildSimpleMusicCard, changeTheme, storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }

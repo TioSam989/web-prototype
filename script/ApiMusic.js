@@ -3,7 +3,7 @@
 
 import { getSptApiSearchResults, getSptApiSimilarResults, sptToken, tokenData } from './spt' //spotify
 import { getAPISearchResults, getAPISimilarData } from './audScr'
-import { buildSimpleMusicCard, addMusicControl } from './functions'
+import { buildSimpleMusicCard, addMusicControl, convertMsToMin, prepareString } from './functions'
 import 'clickout-event';
 import '../style/output.css'
 
@@ -87,10 +87,6 @@ function buildMusicSquare(music, spt = false) {
 
 function musicNotFound(message) {
     console.error(message)
-}
-
-function prepareString(someString) {
-    return someString.replaceAll(" ", "+")
 }
 
 function hiddenElement(elementMeh) {
@@ -302,37 +298,6 @@ listResults.addEventListener("change", function () {
     }
 })
 
-// musicName.addEventListener('keypress', (e) => {
-//     if (e.key === "Enter") {
-//         if (checkIfDoesExists(musicName.value) == false) {
-//             let newOption = document.createElement('option')
-//             newOption.text = `empty`
-//             listResults.appendChild(newOption)
-//         } else {
-//             let string = listResults[0].value
-//             let musicMeh = string.split(",")
-//             let optSelected = {
-//                 name: musicMeh[0],
-//                 artist: musicMeh[1]
-//             }
-
-//             try {
-//                 SelectOpt(optSelected, true)
-
-//             } catch (err) {
-//                 console.error(err)
-//                 try {
-//                     console.log('using option B to Select Option on keypress')
-//                     SelectOpt(optSelected)
-//                 } catch (error) {
-//                     console.error(error)
-//                 }
-//             }
-
-//         }
-//     }
-// })
-
 musicName.addEventListener('focus', (e) => {
     if (checkElement(musicName.value) == true) {
 
@@ -434,13 +399,7 @@ function buildLiMusic(trackId, artistId, name, artist, duration, place) {
 
 }
 
-function convertMsToMin(msValue) {
-    var ms = +msValue,
-        min = Math.floor((ms / 1000 / 60) << 0),
-        sec = Math.floor((ms / 1000) % 60);
 
-    return min + ':' + sec
-}
 
 searchInput.addEventListener("input", async () => {
     resPlaceForReal.innerHTML = ""
@@ -499,5 +458,4 @@ function playMySng(el) {
     console.log(sng)
 }
 
-
-export { hiddenElement, prepareArr, buildMusicSquare, musicNotFound }
+export { hiddenElement, prepareArr, prepareString, buildMusicSquare, musicNotFound }

@@ -89,4 +89,4 @@ function artists(obje, whatIsBeingReceived) {
     }
 }
 
-export {getSptApiSearchResults, searchTrack}
+export {getSptApiSearchResults, searchTrack, artists}

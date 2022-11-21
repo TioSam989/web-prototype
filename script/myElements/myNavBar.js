@@ -102,7 +102,6 @@ class myNavBar extends HTMLElement {
 
     navbarStart.appendChild(subNavPr);
     subNavPr.appendChild(navIndexBtn);
-    navBarEnd.appendChild(themeMeh)
 
     navBarEnd.appendChild(daddyDiv);
     daddyDiv.appendChild(profile);

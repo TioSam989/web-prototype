@@ -1,7 +1,7 @@
 import { sptToken, tokenData } from "./sptToken"
 
 function prepareStrToUrl(str){
-    return str.replace(/\s/g, '');
+    return str.toString().replace(/\s/g, '');
 }
 
 function marketConfig(mrkt){
