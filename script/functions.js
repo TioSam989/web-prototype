@@ -272,7 +272,7 @@ function playAudio(audioMeh) {
 }
 
 function prepareString(someString) {
-  return someString.replaceAll(" ", "+")
+  return someString.toString().replace(/\s/g, '+');
 }
 
 function pauseAudio(audioMeh) {
