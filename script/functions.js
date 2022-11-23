@@ -19,7 +19,6 @@ function checkifIndex() {
   }
 }
 
-
 function validatorMeh(dataMeh, pattern) {
 
   if (dataMeh.match(pattern)) {
@@ -222,9 +221,9 @@ function buildFinalMusicCard(name, band, img, trackId,sptLink, ytLink, sldcLink,
           </div>
           <div class="">
 
-              <button id="musicBtn" onclick="playMySng(this)" class="btn btn-primary"><i
+              <button id="musicBtn" class="btn btn-primary playSong"><i
                       class="fa-solid fa-play"></i>
-                  <audio id="myAudio">
+                  <audio id="myAudio-${trackId}">
                       <source
                           src="https://p.scdn.co/mp3-preview/98a1468ec96add9ce7640af619b76e7a0de965fb?cid=f995004f4afe4c18aa5f6a018907d428"
                           type="audio/mpeg">
@@ -237,9 +236,9 @@ function buildFinalMusicCard(name, band, img, trackId,sptLink, ytLink, sldcLink,
 </div>`
 }
 
-function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId) {
+function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId, explicit=false) {
 
-
+  
 
   place.innerHTML += `<div class=" animate__animated animate__fadeInDown card card-side bg-base-100 shadow-xl hover:border-secondary hover:border-l-8">
       <div class="avatar">
@@ -252,9 +251,9 @@ function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId)
           <p id="bandPlace">${band}</p>
           <div class="card-actions justify-end">
           <a href="./musicSug.html?track=${trackId}&artist=${artistId}"><button class="btn btn-secondary">Get similar songs <i class="fa-solid fa-music pl-4"></i> </button></a>
-          <button id="musicBtn" onclick="playMySng(this)" class="btn btn-primary"><i class="fa-solid fa-play"></i>
-            <audio id="myAudio">
-              <source src="https://p.scdn.co/mp3-preview/98a1468ec96add9ce7640af619b76e7a0de965fb?cid=f995004f4afe4c18aa5f6a018907d428" type="audio/mpeg">
+          <button id="play-${trackId}" class="btn btn-primary playSong"><i class="fa-solid fa-play"></i>
+            <audio id="audio-${trackId}">
+              <source id="${trackId}" src="${song}" type="audio/mpeg">
             </audio>
           </button>
 
@@ -266,30 +265,44 @@ function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId)
   return true
 }
 
-function playAudio(audioMeh) {
-  audioMeh.play()
+function addEvent(ele) {
+  ele.addEventListener('click', () => {
+      playMySng(ele)
+  })
+}
+
+function playMySng(el) {
+  let btn = el
+  const icon = el.querySelector('i')
+  let myAudio = el.querySelector('audio')
+
+  if (myAudio.paused) {
+      myAudio.play()
+      icon.classList.remove('fa-play')
+      icon.classList.add('fa-pause')
+      
+      setInterval(function(){
+          
+          if (myAudio.paused) {
+              icon.classList.remove('fa-pause')
+              icon.classList.add('fa-play')
+          }
+      }, 1000);
+      
+
+  } else {
+      myAudio.pause()
+      icon.classList.remove('fa-pause')
+      icon.classList.add('fa-play')
+  }
+
 
 }
+
 
 function prepareString(someString) {
   return someString.toString().replace(/\s/g, '+');
 }
-
-function pauseAudio(audioMeh) {
-  audioMeh.pause()
-
-}
-
-function musicStatus(audioMeh) {
-  if (audioMeh.paused) {
-    return 'paused'
-  } else {
-    return 'playing'
-  }
-}
-
-
-
 
 function addMusicControl() {
   let x = document.querySelector('#myAudio')
@@ -299,9 +312,7 @@ function addMusicControl() {
 
     console.log(musicBtn.querySelector('#myAudio'))
   })
-
 }
-
 
 function storageItemControl(action, itemName, valueItem) {
 
@@ -315,4 +326,4 @@ function storageItemControl(action, itemName, valueItem) {
   }
 }
 
-export { getCrrTheme, buildFinalMusicCard, convertMsToMin, prepareString, addMusicControl, buildSimpleMusicCard, changeTheme, storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
+export { getCrrTheme, buildFinalMusicCard, addEvent, playMySng, convertMsToMin, prepareString, addMusicControl, buildSimpleMusicCard, changeTheme, storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }

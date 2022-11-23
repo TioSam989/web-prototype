@@ -3,7 +3,7 @@
 
 import { getSptApiSearchResults, getSptApiSimilarResults, sptToken, tokenData } from './spt' //spotify
 import { getAPISearchResults, getAPISimilarData } from './audScr'
-import { buildSimpleMusicCard, addMusicControl, convertMsToMin, prepareString } from './functions'
+import { buildSimpleMusicCard, addMusicControl, convertMsToMin, prepareString, addEvent, playMySng } from './functions'
 import 'clickout-event';
 import '../style/output.css'
 
@@ -399,12 +399,9 @@ function buildLiMusic(trackId, artistId, name, artist, duration, place) {
 
 }
 
-
-
 searchInput.addEventListener("input", async () => {
     resPlaceForReal.innerHTML = ""
     if (searchInput.value.replace(/\s/g, '') != "") {
-        console.log('meh')
         let searchData = await getSptApiSearchResults(searchInput.value)
 
         searchData.map(element => {
@@ -416,25 +413,23 @@ searchInput.addEventListener("input", async () => {
 searchInput.addEventListener("keypress", async (e) => {
 
     if (e.key == 'Enter') {
-        console.log('meh')
-
-        console.log('enter clicked, gimme some bealty results')
-        // searchResult.innerHTML += "meh"
 
         if (searchInput.value.replace(/\s/g, '') != "") {
             searchInput.blur()
             searchResult.innerHTML = ""
             let searchData = await getSptApiSearchResults(searchInput.value, 5, 10)
-            console.log(searchData)
             searchData.map(element => {
-                buildSimpleMusicCard(element.musicData.album.images[0].url, element.name, element.artist, element.musicData.preview_url[0], searchResult, element.trackId, element.artistId)
+                buildSimpleMusicCard(element.musicData.album.images[0].url, element.name, element.artist, element.musicData.preview_url, searchResult, element.trackId, element.artistId)
             });
-
-
         }
     }
-
 });
+
+document.querySelector('#searchContent').addEventListener('DOMNodeInserted', (e) => {
+    console.log(e.target)
+    let meh = e.target.querySelector('.playSong')
+    addEvent(meh)
+})
 
 searchBtnForReal.addEventListener('click', async () => {
     if (searchInput.value.replace(/\s/g, '') != "") {
@@ -450,12 +445,5 @@ searchBtnForReal.addEventListener('click', async () => {
 
     }
 })
-
-function playMySng(el) {
-    let btn = el
-    let sng = el.querySelector('#myAudio')
-
-    console.log(sng)
-}
 
 export { hiddenElement, prepareArr, prepareString, buildMusicSquare, musicNotFound }

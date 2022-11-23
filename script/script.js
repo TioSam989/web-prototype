@@ -1,6 +1,6 @@
 import { onAuthStateChanged, signOut, deleteUser, getAuth, sendEmailVerification } from "firebase/auth"
 import { auth } from "../firebase"
-import { addBtnLogOut, checkifIndex, getCrrTheme, buildFinalMusicCard, changeTheme, pageMustHaveAll, redirectTo, storageItemControl, convertMsToMin, prepareString } from "./functions"
+import { addBtnLogOut, checkifIndex, getCrrTheme, buildFinalMusicCard, changeTheme, pageMustHaveAll, redirectTo, storageItemControl, convertMsToMin, prepareString, addEvent } from "./functions"
 import '../style/output.css';
 import 'animate.css';
 import { getSptApiTrack, getSptApiSimilarResults, getSptApiRandomResults } from './spt'
@@ -77,8 +77,7 @@ async function lastPageFunc() {
 
   const recomendedSongs = await getSptApiSimilarResults(msc)
   const imgartist = document.querySelector('#artistImgPlace')
-  const placeToRecomend = document.querySelector('#recMus') 
-  recMus
+  const placeToRecomend = document.querySelector('#recMus')
 
   console.log(music)
 
@@ -114,9 +113,16 @@ function recomendFunc(music, placeRec) {
 
   }
 
-  buildFinalMusicCard(crrMusic.name, crrMusic.artist, crrMusic.image, crrMusic.trackId, crrMusic.sptLink, crrMusic.ytLink, crrMusic.sdclLink,  placeRec)
+  buildFinalMusicCard(crrMusic.name, crrMusic.artist, crrMusic.image, crrMusic.trackId, crrMusic.sptLink, crrMusic.ytLink, crrMusic.sdclLink, placeRec)
 
 }
+
+document.querySelector('#recMus').addEventListener('DOMNodeInserted', (e) => {
+  let meh = e.target
+  console.log(meh.querySelector('.playSong'))
+  // let meh = e.target.querySelector('.playSong')
+  // addEvent(meh)
+})
 
 let dataUserMusic, navBarMeh, meh2, changerMeh
 
