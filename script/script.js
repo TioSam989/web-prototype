@@ -4,6 +4,7 @@ import { addBtnLogOut, checkifIndex, getCrrTheme, buildFinalMusicCard, changeThe
 import '../style/output.css';
 import 'animate.css';
 import { getSptApiTrack, getSptApiSimilarResults, getSptApiRandomResults } from './spt'
+import { getDatabase, ref, set, push } from "firebase/database";
 import { artists } from './sptSearch'
 import styled from "daisyui/dist/styled";
 
@@ -41,8 +42,6 @@ function buildCrrMusicPlaceMeh(music) {
     ytLink: `https://www.youtube.com/results?search_query=${music.name}+from+${prepareString(artists(music.artists, 'name'))}`,
     sdclLink: `https://soundcloud.com/search?q=${music.name}%20from%20${prepareString(artists(music.artists, 'name'))}`
 
-
-
   }
 
   namePlace.innerHTML = crrMusic.name
@@ -55,40 +54,45 @@ function buildCrrMusicPlaceMeh(music) {
   spotifyLinkPlace.setAttribute('href', crrMusic.sptLink)
   youtubeLinkPlace.setAttribute('href', crrMusic.ytLink)
   soundcloudLinkPlace.setAttribute('href', crrMusic.sdclLink)
-
-
-
-
-
 }
 
 async function lastPageFunc() {
-  const crrSong = {
-    trackId: getUrlVar('track'),
-    artistId: getUrlVar('artist')
+  try {
+    const crrSong = {
+      trackId: getUrlVar('track'),
+      artistId: getUrlVar('artist')
+    }
+
+    const music = await getSptApiTrack(crrSong.trackId)
+    const msc = {
+      trackId: music.id,
+      artistId: music.artists[0].id,
+      market: music.available_markets
+    }
+
+    const recomendedSongs = await getSptApiSimilarResults(msc)
+    const imgartist = document.querySelector('#artistImgPlace')
+    const placeToRecomend = document.querySelector('#recMus')
+
+    console.log(music)
+
+    buildCrrMusicPlaceMeh(music)
+
+    console.log(recomendedSongs.tracks)
+
+    recomendedSongs.tracks.map(element => {
+
+      recomendFunc(element, placeToRecomend)
+    });
+  } catch (error) {
+    console.error(`FinalPage: ${error.code}`)
+  } finally {
+
+
+
   }
 
-  const music = await getSptApiTrack(crrSong.trackId)
-  const msc = {
-    trackId: music.id,
-    artistId: music.artists[0].id,
-    market: music.available_markets
-  }
 
-  const recomendedSongs = await getSptApiSimilarResults(msc)
-  const imgartist = document.querySelector('#artistImgPlace')
-  const placeToRecomend = document.querySelector('#recMus')
-
-  console.log(music)
-
-  buildCrrMusicPlaceMeh(music)
-
-  console.log(recomendedSongs.tracks)
-
-  recomendedSongs.tracks.map(element => {
-
-    recomendFunc(element, placeToRecomend)
-  });
 
   if (!crrSong.trackId || !crrSong.artistId) {
     redirectTo('../index.html')
@@ -116,13 +120,15 @@ function recomendFunc(music, placeRec) {
   buildFinalMusicCard(crrMusic.name, crrMusic.artist, crrMusic.image, crrMusic.trackId, crrMusic.sptLink, crrMusic.ytLink, crrMusic.sdclLink, placeRec)
 
 }
+if (document.querySelector('#recMus')) {
 
-document.querySelector('#recMus').addEventListener('DOMNodeInserted', (e) => {
-  let meh = e.target
-  console.log(meh.querySelector('.playSong'))
-  // let meh = e.target.querySelector('.playSong')
-  // addEvent(meh)
-})
+  document.querySelector('#recMus').addEventListener('DOMNodeInserted', (e) => {
+    let meh = e.target
+    console.log(meh.querySelector('.playSong'))
+    // let meh = e.target.querySelector('.playSong')
+    // addEvent(meh)
+  })
+}
 
 let dataUserMusic, navBarMeh, meh2, changerMeh
 
@@ -145,23 +151,15 @@ if (document.querySelector('#availableDataLonger')) {
 }
 
 async function putWallpaper(where) {
-
   try {
-
     async function yourFunction() {
-
       let randomSong = await getSptApiRandomResults()
       if (randomSong) {
-
         for (let index = 0; index < randomSong.length; index++) {
-
           where.removeAttribute('style')
           where.setAttribute('style', `background-image: url(${randomSong[index].musicData.album.images[0].url});`)
           await delay(5000)
-
         }
-
-
         setTimeout(yourFunction, 0);
       }
 
@@ -278,7 +276,6 @@ function gimmeDatePls(timestampedDate) {
 
 }
 
-
 function getUrlVar(whichOne) {
   const queryString = window.location.search
   const urlParams = new URLSearchParams(queryString)
@@ -322,9 +319,83 @@ onAuthStateChanged(auth, user => {
   } finally {
     putThemeAccordinglyStorage()
     checkIfLastPage()
+    if (checkIfSearchPage()) {
+      const place = document.querySelector('#searchContent')
+      if (user) {
+
+        
+        place.innerHTML = `<div>
+        <div class="bg-base-500 text-center text-primary-content p-8 ">
+          <p><h1>History</h1></p>
+        </div>
+
+        <div>
+        <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+          <!-- head -->
+          <thead>
+            <tr>
+              <th></th>
+              <th class="text-secondary">Music</th>
+              <th class="text-secondary">Artist</th>
+              <th class="text-secondary">SEarch Similar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- row 1 -->
+            <tr>
+              <th class="text-secondary">1</th>
+              <td>Byob</td>
+              <td>System Of A Down</td>
+              <td><a><i class="fa-solid fa-arrow-up-right-from-square"></i></a></td>
+            </tr>
+            <!-- row 2 -->
+            <tr>
+              <th class="text-secondary">2</th>
+              <td>Walk</td>
+              <td>Pantera</td>
+              <td><a><i class="fa-solid fa-arrow-up-right-from-square"></i></a></td>
+            </tr>
+            <!-- row 3 -->
+            <tr>
+              <th class="text-secondary">3</th>
+              <td>Symphony Of Destruction</td>
+              <td>Megadeth</td>
+              <td><a><i class="fa-solid fa-arrow-up-right-from-square"></i></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+        </div>
+
+
+        </div>`
+
+
+
+      } else {
+        place.innerHTML = `<div>
+        <div class="bg-base-500 text-center text-primary-content p-8 ">
+          <p>Log into an account to save your history</p>
+        </div>
+        <div class="bg-base-500 text-center text-primary-content ">
+          <a href="../pages/signIn.html" class="hover:text-secondary">Login <i class="fa-solid fa-link"></i></a> / <a href="../pages/signUp.html" class="hover:text-secondary">Register <i class="fa-solid fa-link"></i></a>
+        </div>
+      </div>`
+      }
+    }
   }
 
 });
+
+
+function checkIfSearchPage() {
+  if (document.querySelector('#contentSearch')) {
+    return true
+  } else {
+    return false
+  }
+}
 
 function putThemeAccordinglyStorage() {
 
@@ -358,6 +429,13 @@ function controlUserLocation() {
       redirectTo('../index.html')
     }
   }
+}
+
+
+if(document.querySelector('#musicSug')){
+  document.querySelector('#retry').addEventListener('click', () => {
+    lastPageFunc()
+  })
 }
 
 

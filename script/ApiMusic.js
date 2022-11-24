@@ -404,9 +404,21 @@ searchInput.addEventListener("input", async () => {
     if (searchInput.value.replace(/\s/g, '') != "") {
         let searchData = await getSptApiSearchResults(searchInput.value)
 
+        if(searchData.length <= 0){
+            const place = document.querySelector('#searchContent')
+
+            place.innerHTML = `<div>
+            <div class="bg-base-500 text-center text-primary-content p-8 ">
+              <p>No Data Longer</p>
+            </div>`
+            return 0
+        }
+
         searchData.map(element => {
             buildLiMusic(element.trackId, element.artistId, element.name, element.artist, convertMsToMin(element.musicData.duration_ms), resPlaceForReal)
         });
+
+
     }
 });
 
@@ -418,6 +430,17 @@ searchInput.addEventListener("keypress", async (e) => {
             searchInput.blur()
             searchResult.innerHTML = ""
             let searchData = await getSptApiSearchResults(searchInput.value, 5, 10)
+
+            if(searchData.length <= 0){
+                const place = document.querySelector('#searchContent')
+    
+                place.innerHTML = `<div>
+                <div class="bg-base-500 text-center text-primary-content p-8 ">
+                  <p>No Data Longer</p>
+                </div>`
+                return 0
+            }
+            
             searchData.map(element => {
                 buildSimpleMusicCard(element.musicData.album.images[0].url, element.name, element.artist, element.musicData.preview_url, searchResult, element.trackId, element.artistId)
             });
