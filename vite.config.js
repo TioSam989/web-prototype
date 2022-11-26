@@ -32,11 +32,13 @@ export default defineConfig({
           outputCSSMeh: resolve(__dirname, 'style/output.css'),
           profilePageMeh: resolve(__dirname, 'pages/profile.html'),
           audScrMeh: resolve(__dirname, './script/audScr.js'),
+          finalPagescrpt: resolve(__dirname, './script/finalPage.js'),
           mainScriptMeh: resolve(__dirname, './script/script.js'),
           artistImgMeh: resolve(__dirname, './img/artist.jpg'),
           designerImgMeh: resolve(__dirname, './img/designer.jpg'),
           developerImgMeh: resolve(__dirname, './img/developer.jpg'),
           profileImgMeh: resolve(__dirname, './img/profileForNow.jpg')
+
         }
     }
 

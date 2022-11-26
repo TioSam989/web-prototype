@@ -93,14 +93,10 @@ async function lastPageFunc() {
   }
 
 
-
-  if (!crrSong.trackId || !crrSong.artistId) {
-    redirectTo('../index.html')
-  }
-
 }
 
 function recomendFunc(music, placeRec) {
+  console.log(music)
   const crrMusic = {
     name: music.name,
     artist: artists(music.artists, 'name'),
@@ -112,22 +108,13 @@ function recomendFunc(music, placeRec) {
     realiseDate: music.album.release_date,
     explicited: music.explicit,
     sptLink: music.external_urls.spotify,
+    song: music.preview_url,
     ytLink: `https://www.youtube.com/results?search_query=${music.name}+from+${prepareString(artists(music.artists, 'name'))}`,
     sdclLink: `https://soundcloud.com/search?q=${music.name}%20from%20${prepareString(artists(music.artists, 'name'))}`
-
   }
 
-  buildFinalMusicCard(crrMusic.name, crrMusic.artist, crrMusic.image, crrMusic.trackId, crrMusic.sptLink, crrMusic.ytLink, crrMusic.sdclLink, placeRec)
+  buildFinalMusicCard(crrMusic.name, crrMusic.artist, crrMusic.image, crrMusic.trackId, crrMusic.sptLink, crrMusic.ytLink, crrMusic.sdclLink, crrMusic.song ,placeRec)
 
-}
-if (document.querySelector('#recMus')) {
-
-  document.querySelector('#recMus').addEventListener('DOMNodeInserted', (e) => {
-    let meh = e.target
-    console.log(meh.querySelector('.playSong'))
-    // let meh = e.target.querySelector('.playSong')
-    // addEvent(meh)
-  })
 }
 
 let dataUserMusic, navBarMeh, meh2, changerMeh

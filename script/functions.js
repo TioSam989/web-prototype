@@ -190,7 +190,7 @@ function pageMustHaveAll() {
   }
 }
 
-function buildFinalMusicCard(name, band, img, trackId,sptLink, ytLink, sldcLink, place) {
+function buildFinalMusicCard(name, band, img, trackId,sptLink, ytLink, sldcLink, song, place) {
   place.innerHTML += `<div class=" animate__animated animate__fadeInDown card card-side bg-base-100 shadow-xl ">
   <div class="avatar">
       <div class="w-32 rounded">
@@ -225,7 +225,7 @@ function buildFinalMusicCard(name, band, img, trackId,sptLink, ytLink, sldcLink,
                       class="fa-solid fa-play"></i>
                   <audio id="myAudio-${trackId}">
                       <source
-                          src="https://p.scdn.co/mp3-preview/98a1468ec96add9ce7640af619b76e7a0de965fb?cid=f995004f4afe4c18aa5f6a018907d428"
+                          src="${song}"
                           type="audio/mpeg">
                   </audio>
               </button>
