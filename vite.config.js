@@ -24,9 +24,11 @@ export default defineConfig({
           sptJsMeh: resolve(__dirname, 'script/spt.js'),
           sptRandomJsMeh: resolve(__dirname, 'script/sptRandom.js'),
           sptSearchJsMeh: resolve(__dirname, 'script/sptSearch.js'),
+          sptGetTrackJsMeh: resolve(__dirname, 'script/sptGetTrack.js'),
           sptSimilarJsMeh: resolve(__dirname, 'script/sptSimilar.js'),
           sptTokenJsMeh: resolve(__dirname, 'script/sptToken.js'),
           myCompMeh: resolve(__dirname, 'script/myComponents.js'),
+          searchPageJS: resolve(__dirname, 'script/searchPage.js'),
           navCompMeh: resolve(__dirname, 'script/myElements/myNavBar.js'),
           themeChooserMeh: resolve(__dirname, 'script/myElements/themeChooser.js'),
           outputCSSMeh: resolve(__dirname, 'style/output.css'),
@@ -37,7 +39,9 @@ export default defineConfig({
           artistImgMeh: resolve(__dirname, './img/artist.jpg'),
           designerImgMeh: resolve(__dirname, './img/designer.jpg'),
           developerImgMeh: resolve(__dirname, './img/developer.jpg'),
-          profileImgMeh: resolve(__dirname, './img/profileForNow.jpg')
+          profileImgMeh: resolve(__dirname, './img/profileForNow.jpg'),
+          donationIMG: resolve(__dirname, './img/DonateQRCode.png')
+
 
         }
     }

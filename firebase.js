@@ -1,6 +1,7 @@
 
 import { initializeApp } from 'firebase/app';
 import {  getAuth, onAuthStateChanged  } from 'firebase/auth';
+import { getDatabase } from 'firebase/database'
 
 
 const firebaseApp = initializeApp({
@@ -17,6 +18,7 @@ const firebaseApp = initializeApp({
 });
 
 const auth = getAuth(firebaseApp);
+const database = getDatabase(firebaseApp);
 
 onAuthStateChanged(auth ,user => {
     if(user){
@@ -27,7 +29,7 @@ onAuthStateChanged(auth ,user => {
 
 });
 
-export { auth, firebaseApp}
+export { auth, database, firebaseApp}
 /**
  * getRedirectResult is unused and should not be included in the code base.
  * In addition, there are many other functions within firebase/auth that are

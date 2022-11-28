@@ -1,5 +1,7 @@
 import { onAuthStateChanged, signOut, getAuth, sendEmailVerification } from "firebase/auth"
-import { auth } from "../firebase"
+import { auth, database } from "../firebase"
+import { getDatabase, ref, set } from "firebase/database"
+
 
 const debouncedalertCute = debounce(alertCute, 2000)
 
@@ -49,6 +51,16 @@ function alertCute(placeMeh = null, alertType = 'warning', message = 'something 
       placeMeh.removeAttribute('hidden')
     }, 400)
   }, 5000);
+}
+
+function getUrlVar(whichOne) {
+  const queryString = window.location.search
+  const urlParams = new URLSearchParams(queryString)
+
+  let elementChose = urlParams.get(whichOne)
+
+  return elementChose
+
 }
 
 function debounce(fn, delay = 1) {
@@ -128,23 +140,20 @@ const appendAnchorTag = (whereToPlace, whichElement, reference, text) => {
   list.appendChild(meh);
 };
 
-function writeUserData(userId, email, username, password, providerName) { //i'm not using but im gonna use "Tomorrow"
-  const database = getDatabase();
-  set(ref(database, 'users/' + userId), {
-    email: email,
-    username: username,
-    password: password,
-    provider: providerName
 
-  })
+  function writeUserData(userId) {
+    set(ref(database, 'users/' + userId), {
+      id: userId,
+    })
     .then(() => {
-      console.log('Data saved successfully!')
+      console.log('data saved successfully')
     })
     .catch((error) => {
       console.log('The write failed...')
     });
+  }
 
-}
+
 
 function redirectTo(where) {
   window.location = `${where}`
@@ -326,4 +335,4 @@ function storageItemControl(action, itemName, valueItem) {
   }
 }
 
-export { getCrrTheme, buildFinalMusicCard, addEvent, playMySng, convertMsToMin, prepareString, addMusicControl, buildSimpleMusicCard, changeTheme, storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
+export { getCrrTheme, getUrlVar, buildFinalMusicCard, addEvent, playMySng, convertMsToMin, prepareString, addMusicControl, buildSimpleMusicCard, changeTheme, storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
