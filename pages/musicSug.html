@@ -7,10 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/output.css">
     <script src="https://kit.fontawesome.com/6a4613757d.js" crossorigin="anonymous"></script>
+    <script type="module" src="../script/finalPage.js"></script>
     <title>MF - Similar Result</title>
 </head>
 <body>
+
+    <div class="navbar bg-base-500">
+        <div class="navbar-start">
+            <a href="./musicResult.html" id="backMeh"><button class="btn btn-primary btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                    <i class="fa-solid fa-caret-left"></i><i id="hiddenBack" hidden
+                        style="margin-left: 1rem">back</i></button></a>
+            <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+            <button disabled class="btn btn-disabled btn-xs sm:btn-xs md:btn-sm lg:btn-md">
+                <i class="fa-solid fa-caret-right"></i>
+            </button>
+        </div>
+        <div class="navbar-center hidden lg:flex"></div>
+        <div class="navbar-end">
+        </div>
+    </div>
+
     <span id="musicSug"></span>
+
+
 
     <div class="gimmeSpace">
 

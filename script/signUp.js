@@ -1,9 +1,12 @@
 
 import { onAuthStateChanged, createUserWithEmailAndPassword, signOut, updateProfile, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider } from 'firebase/auth';
-import { auth } from "../firebase"
+import { auth, database } from "../firebase"
+import { getDatabase, ref, set } from "firebase/database"
 import { writeUserData, setLoading, alertCute, debouncedalertCute, redirectTo } from "./functions"
 import { separeteClasses } from "./myElements/myNavBar"
 import { validatorMeh, checkValue } from './functions';
+
+
 
 import 'animate.css';
 
@@ -335,11 +338,11 @@ loginGoogle.addEventListener('click', (e) => {
       // The signed-in user info.
       const user = result.user;
 
-      signOut(auth).then(() => {
-        redirectTo('./signIn.html')
-      }).catch((error) => {
-        console.error(error)
-      });
+
+      writeUserData(user.uid, user.email, user.displayName, "NONE", user.providerData )
+
+      console.log(user)
+      alert(user.uid)
 
       // window.location = 'index.html';
       // ...
@@ -348,9 +351,9 @@ loginGoogle.addEventListener('click', (e) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       // The email of the user's account used.
-      const email = error.customData.email;
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
+      console.error(error)
       // ...
       debouncedalertCute(mehUE, 'warning', 'Something went wrong!')
     });

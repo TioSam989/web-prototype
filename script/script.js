@@ -1,15 +1,22 @@
 import { onAuthStateChanged, signOut, deleteUser, getAuth, sendEmailVerification } from "firebase/auth"
-import { auth } from "../firebase"
-import { addBtnLogOut, checkifIndex, getCrrTheme, buildFinalMusicCard, changeTheme, pageMustHaveAll, redirectTo, storageItemControl, convertMsToMin, prepareString, addEvent } from "./functions"
+import { auth, database } from "../firebase"
+import { getDatabase, ref, child, push, update, set } from "firebase/database";
+import { addBtnLogOut, gimmeDatePls, checkifIndex, writeData, getCrrTheme, getUrlVar, buildFinalMusicCard, changeTheme, pageMustHaveAll, redirectTo, storageItemControl, convertMsToMin, prepareString, addEvent } from "./functions"
 import '../style/output.css';
 import 'animate.css';
 import { getSptApiTrack, getSptApiSimilarResults, getSptApiRandomResults } from './spt'
-import { getDatabase, ref, set, push } from "firebase/database";
 import { artists } from './sptSearch'
 import styled from "daisyui/dist/styled";
 
 const placeImg = document.querySelector('#imgPlace')
 const delay = ms => new Promise(res => setTimeout(res, ms));
+
+function randomNumber(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+
+
 
 function checkIfLastPage() {
   if (document.querySelector('#musicSug')) {
@@ -74,29 +81,22 @@ async function lastPageFunc() {
     const imgartist = document.querySelector('#artistImgPlace')
     const placeToRecomend = document.querySelector('#recMus')
 
-    console.log(music)
 
     buildCrrMusicPlaceMeh(music)
 
-    console.log(recomendedSongs.tracks)
 
     recomendedSongs.tracks.map(element => {
 
       recomendFunc(element, placeToRecomend)
     });
   } catch (error) {
-    console.error(`FinalPage: ${error.code}`)
+    console.error(`FinalPage: ${error}`)
   } finally {
 
 
 
   }
 
-
-
-  if (!crrSong.trackId || !crrSong.artistId) {
-    redirectTo('../index.html')
-  }
 
 }
 
@@ -112,33 +112,32 @@ function recomendFunc(music, placeRec) {
     realiseDate: music.album.release_date,
     explicited: music.explicit,
     sptLink: music.external_urls.spotify,
+    song: music.preview_url,
     ytLink: `https://www.youtube.com/results?search_query=${music.name}+from+${prepareString(artists(music.artists, 'name'))}`,
     sdclLink: `https://soundcloud.com/search?q=${music.name}%20from%20${prepareString(artists(music.artists, 'name'))}`
-
   }
 
-  buildFinalMusicCard(crrMusic.name, crrMusic.artist, crrMusic.image, crrMusic.trackId, crrMusic.sptLink, crrMusic.ytLink, crrMusic.sdclLink, placeRec)
-
-}
-if (document.querySelector('#recMus')) {
-
-  document.querySelector('#recMus').addEventListener('DOMNodeInserted', (e) => {
-    let meh = e.target
-    console.log(meh.querySelector('.playSong'))
-    // let meh = e.target.querySelector('.playSong')
-    // addEvent(meh)
-  })
+  buildFinalMusicCard(crrMusic.name, crrMusic.artist, crrMusic.image, crrMusic.trackId, crrMusic.sptLink, crrMusic.ytLink, crrMusic.sdclLink, crrMusic.song, placeRec)
+  
 }
 
 let dataUserMusic, navBarMeh, meh2, changerMeh
 
 if (checkifIndex()) {
 
+  writeData('user123', randomNumber(1111, 9999))
+
   putWallpaper(placeImg)
+
   let meh = document.querySelector('HTML')
 
   navBarMeh = document.querySelector('#navbar')
   meh2 = navBarMeh.firstElementChild;
+
+
+
+
+
 
   if (!meh.hasAttribute('data-theme')) {
     meh.setAttribute('data-theme', 'dark')
@@ -228,7 +227,6 @@ async function buildProfileDiv() {
 
   const userMeh = JSON.parse(localStorage.getItem('user'))
 
-  console.log(userMeh)
 
   const places = {
     img: document.querySelector('#userImgPlace'),
@@ -267,24 +265,6 @@ async function buildProfileDiv() {
 
 }
 
-function gimmeDatePls(timestampedDate) {
-
-  const date = new Date(+timestampedDate)
-  const dateFormat = date.getHours() + ":" + date.getMinutes() + ", " + date.toDateString()
-
-  return dateFormat
-
-}
-
-function getUrlVar(whichOne) {
-  const queryString = window.location.search
-  const urlParams = new URLSearchParams(queryString)
-
-  let elementChose = urlParams.get(whichOne)
-
-  return elementChose
-
-}
 
 onAuthStateChanged(auth, user => {
 
@@ -319,71 +299,7 @@ onAuthStateChanged(auth, user => {
   } finally {
     putThemeAccordinglyStorage()
     checkIfLastPage()
-    if (checkIfSearchPage()) {
-      const place = document.querySelector('#searchContent')
-      if (user) {
 
-        
-        place.innerHTML = `<div>
-        <div class="bg-base-500 text-center text-primary-content p-8 ">
-          <p><h1>History</h1></p>
-        </div>
-
-        <div>
-        <div class="overflow-x-auto">
-        <table class="table table-zebra w-full">
-          <!-- head -->
-          <thead>
-            <tr>
-              <th></th>
-              <th class="text-secondary">Music</th>
-              <th class="text-secondary">Artist</th>
-              <th class="text-secondary">SEarch Similar</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- row 1 -->
-            <tr>
-              <th class="text-secondary">1</th>
-              <td>Byob</td>
-              <td>System Of A Down</td>
-              <td><a><i class="fa-solid fa-arrow-up-right-from-square"></i></a></td>
-            </tr>
-            <!-- row 2 -->
-            <tr>
-              <th class="text-secondary">2</th>
-              <td>Walk</td>
-              <td>Pantera</td>
-              <td><a><i class="fa-solid fa-arrow-up-right-from-square"></i></a></td>
-            </tr>
-            <!-- row 3 -->
-            <tr>
-              <th class="text-secondary">3</th>
-              <td>Symphony Of Destruction</td>
-              <td>Megadeth</td>
-              <td><a><i class="fa-solid fa-arrow-up-right-from-square"></i></a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-        </div>
-
-
-        </div>`
-
-
-
-      } else {
-        place.innerHTML = `<div>
-        <div class="bg-base-500 text-center text-primary-content p-8 ">
-          <p>Log into an account to save your history</p>
-        </div>
-        <div class="bg-base-500 text-center text-primary-content ">
-          <a href="../pages/signIn.html" class="hover:text-secondary">Login <i class="fa-solid fa-link"></i></a> / <a href="../pages/signUp.html" class="hover:text-secondary">Register <i class="fa-solid fa-link"></i></a>
-        </div>
-      </div>`
-      }
-    }
   }
 
 });
@@ -432,7 +348,7 @@ function controlUserLocation() {
 }
 
 
-if(document.querySelector('#musicSug')){
+if (document.querySelector('#musicSug')) {
   document.querySelector('#retry').addEventListener('click', () => {
     lastPageFunc()
   })

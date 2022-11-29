@@ -19,7 +19,7 @@
       <div id="indexMeh" hidden></div>
 
       <span id="navbar">
-        <my-nav-bar >
+        <my-nav-bar>
           <div id="fknStyleToMfNavBar">
             <style>
               @import "./style/output.css";
@@ -39,7 +39,8 @@
                 <span><span class="text-primary">M</span>usic</span>
                 <span><span class="text-primary">F</span>inder</span>
               </h1>
-              <p class="mb-5 text-accent-content">MF is a small place for music listeners, where they can find other musics easier</p>
+              <p class="mb-5 text-accent-content">MF is a small place for music listeners, where they can find other
+                musics easier</p>
               <a href="./pages/musicResult.html"><button class="btn btn-primary">Try it out</button></a>
             </div>
           </div>
@@ -59,7 +60,7 @@
         <div class="mockup-window border border-primary bg-base-300">
           <h1 class="text-primary text-lg font-bold gimmeSpace"> <i class="fa-solid fa-circle-question"></i> How to use
           </h1>
-          
+
           <div class="flex flex-row justify-center px-4 py-16 bg-base-100">
             <div class="flex flex-row space-x-10 content-center">
 
@@ -115,7 +116,8 @@
               <div>
                 <div class="card w-96 bg-success hover:bg-primary shadow-xl image-full">
                   <div class="card-body">
-                    <h2 class="card-title text-accent-content">Enjoy <i class="fa-solid fa-thumbs-up text-primary pl-2"></i></h2>
+                    <h2 class="card-title text-accent-content">Enjoy <i
+                        class="fa-solid fa-thumbs-up text-primary pl-2"></i></h2>
                     <p class="text-accent-content">listen to the similar songs results</p>
                     <p> </p>
                     <div class="card-actions justify-end">
@@ -135,16 +137,18 @@
 
           <div class="flex justify-center px-4 py-16 bg-base-100">
             <div class="flex flex-row space-x-10 content-center md:space-x-10 sm:space-x-5">
-              
+
               <div>
                 <div class="card w-96 bg-base-100 shadow-xl">
 
-                  <figure class="box-border h-50 w-100" ><img src="./img/developer.jpg" class="object-cover h-50 w-100" alt="developer img" /></figure>
+                  <figure class="box-border h-50 w-100"><img src="./img/developer.jpg" class="object-cover h-50 w-100"
+                      alt="developer img" /></figure>
 
 
 
                   <div class="card-body items-center text-center">
-                    <h2 class="card-title text-accent-content">Davi Neves<div class="badge badge-secondary">Developer</div>
+                    <h2 class="card-title text-accent-content">Davi Neves<div class="badge badge-secondary">Developer
+                      </div>
                       <div class="badge badge-primary">Designer</div>
                     </h2>
 
@@ -237,7 +241,41 @@
       <ul class="menu p-4 w-80 bg-base-100 text-base-content">
         <!-- Sidebar content here -->
 
-        dunno wat put hear
+        <div>
+
+
+          <div class="card w-auto bg-base-100 shadow-xl">
+            <figure class="px-10 pt-10 bg-white">
+              <img src="img/DonateQRCode.png" alt="Shoes" class="rounded-xl pb-2" />
+            </figure>
+            <div class="card-body items-center text-center">
+              <h2 class="card-title">Donate</h2>
+              <p>Donate using PayPal... Help us and out project</p>
+              <div class="card-actions">
+
+
+                  <div id="donate-button-container" class="p-4">
+                  <div id="donate-button"></div>
+                  <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+                  <script>
+                    PayPal.Donation.Button({
+                      env: 'production',
+                      hosted_button_id: '95A92USNFH8AN',
+                      image: {
+                        src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif',
+                        alt: 'Donate with PayPal button',
+                        title: 'PayPal - The safer, easier way to pay online!',
+                      }
+                    }).render('#donate-button');
+                  </script>
+                </div>
+
+                
+              </div>
+              
+            </div>
+          </div>
+        </div>
 
       </ul>
     </div>

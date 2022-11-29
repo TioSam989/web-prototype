@@ -449,9 +449,13 @@ searchInput.addEventListener("keypress", async (e) => {
 });
 
 document.querySelector('#searchContent').addEventListener('DOMNodeInserted', (e) => {
-    console.log(e.target)
-    let meh = e.target.querySelector('.playSong')
-    addEvent(meh)
+    // console.log(e.target)
+
+    if(!document.querySelector('#notAddEvent')){
+
+        let meh = e.target.querySelector('.playSong')
+        addEvent(meh)
+    }
 })
 
 searchBtnForReal.addEventListener('click', async () => {
