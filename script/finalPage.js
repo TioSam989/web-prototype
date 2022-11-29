@@ -1,27 +1,33 @@
-import {addEvent} from './functions'
+import { addEvent } from './functions'
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "../firebase"
-import { getUrlVar } from "./functions"
+import { getUrlVar, writeData } from "./functions"
 import { getDatabase, ref, onValue } from "firebase/database";
 
 const crrMusicId = getUrlVar('track')
 
 document.querySelector('#recMus').addEventListener('DOMNodeInserted', (e) => {
-    let targetPrimary = e.target
-    
-    let meh = targetPrimary.querySelector('.playSong')
-    addEvent(meh)
-  })
+  let targetPrimary = e.target
 
-  onAuthStateChanged(auth, user => {
-    if (user) {
+  let meh = targetPrimary.querySelector('.playSong')
+  addEvent(meh)
+})
 
-      var firebaseRef = getDatabase().ref(`${user.uid}`)
-      firebaseRef.push(crrMusicId)
-  
-    }
-  
-  });
-  
+
+onAuthStateChanged(auth, user => {
+
+
+  if (user) {
+
+    let time = new Date().getTime();
+    writeData(user.uid, crrMusicId, time)
+
+
+  }
+
+});
+
+
+
 
 

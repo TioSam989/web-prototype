@@ -1,7 +1,6 @@
 import { onAuthStateChanged, signOut, getAuth, sendEmailVerification } from "firebase/auth"
 import { auth, database } from "../firebase"
-import { getDatabase, ref, set } from "firebase/database"
-
+import { getDatabase, ref, child, push, update, set, onValue } from "firebase/database";
 
 const debouncedalertCute = debounce(alertCute, 2000)
 
@@ -9,6 +8,40 @@ function setLoading(cond = true, msg = 'Done') {
   console.log(cond)
   alert(cond)
   console.log(msg)
+}
+
+function gimmeDatePls(timestampedDate) {
+
+  const date = new Date(+timestampedDate)
+  const dateFormat = date.getHours() + ":" + date.getMinutes() + ", " + date.toDateString()
+
+  return dateFormat
+
+}
+
+function writeData(userId, valueMeh, timestempTime) {
+  var time = timestempTime
+  var dataValue = valueMeh;
+  var dataRef = push(ref(database, '/users/' + userId + '/history/'))
+
+  onValue((ref(database, '/users/' + userId + '/history/')), (snapshot) => {
+    var listSameSong = []
+    snapshot.forEach((childSnapshot) => {
+      const childKey = childSnapshot.key;
+      const childData = childSnapshot.val();
+
+      if (childData.trackId == valueMeh) {
+        listSameSong.push(valueMeh)
+      }
+    })
+
+    if (listSameSong.length === 0) {
+      set(dataRef, {
+        trackId: dataValue,
+        at: time
+      })
+    }
+  });
 }
 
 function checkifIndex() {
@@ -141,17 +174,17 @@ const appendAnchorTag = (whereToPlace, whichElement, reference, text) => {
 };
 
 
-  function writeUserData(userId) {
-    set(ref(database, 'users/' + userId), {
-      id: userId,
-    })
+function writeUserData(userId) {
+  set(ref(database, 'users/' + userId), {
+    id: userId,
+  })
     .then(() => {
       console.log('data saved successfully')
     })
     .catch((error) => {
       console.log('The write failed...')
     });
-  }
+}
 
 
 
@@ -199,7 +232,7 @@ function pageMustHaveAll() {
   }
 }
 
-function buildFinalMusicCard(name, band, img, trackId,sptLink, ytLink, sldcLink, song, place) {
+function buildFinalMusicCard(name, band, img, trackId, sptLink, ytLink, sldcLink, song, place) {
   place.innerHTML += `<div class=" animate__animated animate__fadeInDown card card-side bg-base-100 shadow-xl ">
   <div class="avatar">
       <div class="w-32 rounded">
@@ -245,9 +278,9 @@ function buildFinalMusicCard(name, band, img, trackId,sptLink, ytLink, sldcLink,
 </div>`
 }
 
-function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId, explicit=false) {
+function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId, explicit = false) {
 
-  
+
 
   place.innerHTML += `<div class=" animate__animated animate__fadeInDown card card-side bg-base-100 shadow-xl hover:border-secondary hover:border-l-8">
       <div class="avatar">
@@ -259,7 +292,7 @@ function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId,
           <h2 id="namePlace" class="card-title">${name}</h2>
           <p id="bandPlace">${band}</p>
           <div class="card-actions justify-end">
-          <a href="./musicSug.html?track=${trackId}&artist=${artistId}"><button class="btn btn-secondary">Get similar songs <i class="fa-solid fa-music pl-4"></i> </button></a>
+          <a id="${trackId}-btn" href="./musicSug.html?track=${trackId}&artist=${artistId}"><button class="btn btn-secondary">Get similar songs <i class="fa-solid fa-music pl-4"></i> </button></a>
           <button id="play-${trackId}" class="btn btn-primary playSong"><i class="fa-solid fa-play"></i>
             <audio id="audio-${trackId}">
               <source id="${trackId}" src="${song}" type="audio/mpeg">
@@ -276,7 +309,7 @@ function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId,
 
 function addEvent(ele) {
   ele.addEventListener('click', () => {
-      playMySng(ele)
+    playMySng(ele)
   })
 }
 
@@ -286,23 +319,23 @@ function playMySng(el) {
   let myAudio = el.querySelector('audio')
 
   if (myAudio.paused) {
-      myAudio.play()
-      icon.classList.remove('fa-play')
-      icon.classList.add('fa-pause')
-      
-      setInterval(function(){
-          
-          if (myAudio.paused) {
-              icon.classList.remove('fa-pause')
-              icon.classList.add('fa-play')
-          }
-      }, 1000);
-      
+    myAudio.play()
+    icon.classList.remove('fa-play')
+    icon.classList.add('fa-pause')
+
+    setInterval(function () {
+
+      if (myAudio.paused) {
+        icon.classList.remove('fa-pause')
+        icon.classList.add('fa-play')
+      }
+    }, 1000);
+
 
   } else {
-      myAudio.pause()
-      icon.classList.remove('fa-pause')
-      icon.classList.add('fa-play')
+    myAudio.pause()
+    icon.classList.remove('fa-pause')
+    icon.classList.add('fa-play')
   }
 
 
@@ -335,4 +368,4 @@ function storageItemControl(action, itemName, valueItem) {
   }
 }
 
-export { getCrrTheme, getUrlVar, buildFinalMusicCard, addEvent, playMySng, convertMsToMin, prepareString, addMusicControl, buildSimpleMusicCard, changeTheme, storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
+export { getCrrTheme, getUrlVar, gimmeDatePls, writeData, buildFinalMusicCard, addEvent, playMySng, convertMsToMin, prepareString, addMusicControl, buildSimpleMusicCard, changeTheme, storageItemControl, pageMustHaveAll, checkifIndex, setLoading, checkValue, validatorMeh, debouncedalertCute, addBtnLogOut, appendAnchorTag, writeUserData, redirectTo, alertCute }
