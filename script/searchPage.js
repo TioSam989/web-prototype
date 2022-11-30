@@ -19,9 +19,9 @@ let LoggedShitDataLongerBefore = `<span id="notAddEvent"></span> <div class="bg-
 
 <div>
 <div class="overflow-x-auto">
-    <table class="table table-normal xs:table-compact w-full">
+    <table id="musicHistoryPlace" class="table table-normal xs:table-compact w-full">
         <!-- head -->
-        <thead>
+        <thead >
             <tr>
                 <th></th>
                 <th>Music</th>
@@ -89,27 +89,49 @@ async function showLoggedData(musicList) {
   } else {
     place.innerHTML = LoggedShitDataLongerBefore
     var listObjs = []
+    var indexMeh = 0
     musicList.forEach(async (element) => {
+      indexMeh++
 
       let music = await getSptApiTrack(element.trackId)
 
       let msc = {
         name: music.name,
         artists: artists(music.artists, 'name'),
-        duration: music.duration_ms,
-        searchedAt: element.at
+        duration: convertMsToMin(music.duration_ms),
+        searchedAt: gimmeDatePls(element.at)
       }
+      let motherEl = document.createElement('tr')
+      let forRealMotherEl = document.createElement('tbody')
 
+      let firstEl = document.createElement('th')
+      firstEl.innerHTML = indexMeh
+
+      let secondEl = document.createElement('td')
+      secondEl.innerHTML = msc.name
+
+      let thirdEl = document.createElement('td')
+      thirdEl.innerHTML = msc.artists
+
+      let forthyEl = document.createElement('td')
+      forthyEl.innerHTML = msc.duration
+
+      let fiftyEl = document.createElement('td')
+      fiftyEl.innerHTML = msc.searchedAt
+
+      const newPlace = document.querySelector('#musicHistoryPlace')
 
       console.log(msc)
 
-      place.innerHTML += `<tr>
-      <th>Pos</th>
-      <td>${msc.name}</td>
-      <td>${msc.artists}</td>
-      <td>${convertMsToMin(msc.duration)}</td>
-      <td>${gimmeDatePls(msc.searchedAt)}</td>
-  </tr>`
+      motherEl.appendChild(firstEl)
+      motherEl.appendChild(secondEl)
+      motherEl.appendChild(thirdEl)
+      motherEl.appendChild(forthyEl)
+      motherEl.appendChild(fiftyEl)
+
+      forRealMotherEl.appendChild(motherEl)
+      newPlace.appendChild(forRealMotherEl)
+
 
 
       console.log(listObjs)
@@ -120,6 +142,16 @@ async function showLoggedData(musicList) {
 
   }
 
+}
+
+function addRenderEl(where, msc) {
+  where.innerHTML += `<tr>
+  <th>Pos</th>
+  <td>${msc.name}</td>
+  <td>${msc.artists}</td>
+  <td>${convertMsToMin(msc.duration)}</td>
+  <td>${gimmeDatePls(msc.searchedAt)}</td>
+</tr>`
 }
 
 function showUnloggedData() {
