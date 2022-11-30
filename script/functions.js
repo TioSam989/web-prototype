@@ -233,6 +233,9 @@ function pageMustHaveAll() {
 }
 
 function buildFinalMusicCard(name, band, img, trackId, sptLink, ytLink, sldcLink, song, place) {
+
+  
+
   place.innerHTML += `<div class=" animate__animated animate__fadeInDown card card-side bg-base-100 shadow-xl ">
   <div class="avatar">
       <div class="w-32 rounded">
@@ -276,6 +279,15 @@ function buildFinalMusicCard(name, band, img, trackId, sptLink, ytLink, sldcLink
   </div>
 
 </div>`
+
+if(!song){
+  let son = place.querySelector(`#myAudio-${trackId}`)
+  let dad = son.parentNode
+
+  dad.setAttribute('disabled','disabled')
+  dad.setAttribute('title', 'song not available')
+}
+
 }
 
 function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId, explicit = false) {
@@ -309,6 +321,7 @@ function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId,
 
 function addEvent(ele) {
   ele.addEventListener('click', () => {
+    console.log('event added')
     playMySng(ele)
   })
 }
