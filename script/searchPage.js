@@ -44,9 +44,6 @@ let LoggedShitNoDataLonger = `<span id="notAddEvent"></span><div>
 <div class="bg-base-500 text-center p-8 ">
   <p>No data to show yet</p>
 </div>
-<div class="bg-base-500 text-center ">
-  <a href="../pages/signIn.html" class="hover:text-secondary">Login <i class="fa-solid fa-link"></i></a> / <a href="../pages/signUp.html" class="hover:text-secondary">Register <i class="fa-solid fa-link"></i></a>
-</div>
 </div>`
 
 let UnloggedShit = `<span id="notAddEvent"></span><div>
