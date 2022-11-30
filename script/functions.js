@@ -315,6 +315,14 @@ function buildSimpleMusicCard(image, name, band, song, place, trackId, artistId,
       </div>
   </div>`
 
+  if(!song){
+    let son = place.querySelector(`#audio-${trackId}`)
+    let dad = son.parentNode
+  
+    dad.setAttribute('disabled','disabled')
+    dad.setAttribute('title', 'song not available')
+  }
+
 
   return true
 }
