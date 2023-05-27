@@ -10,7 +10,7 @@ Deploy project
 
 ```bash
   npm run build
-  firebase deplou
+  firebase deploy
 ```
 
 Server locally
