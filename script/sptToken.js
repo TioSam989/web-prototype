@@ -1,7 +1,7 @@
 
-const url = "https://accounts.spotify.com/api/token";
-const client_id = "f995004f4afe4c18aa5f6a018907d428";
-const client_secret = "7db2a5cdd5694142a2b59993dd339033";
+const url = "";
+const client_id = "";
+const client_secret = "";
 
 let tokenData = null
 let sptToken = async () => {
